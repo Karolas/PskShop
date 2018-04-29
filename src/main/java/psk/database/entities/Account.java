@@ -11,6 +11,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
+@NamedQueries({
+        @NamedQuery(name = "Account.findAllCount", query = "SELECT count(a.id) FROM Account a"),
+        @NamedQuery(name = "Account.selectAll", query = "Select a from Account a")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = "email")
