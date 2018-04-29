@@ -8,8 +8,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head/>
 <h:body>
-    <h:form>
-        <p:dataTable var="account" value="#{modUserFront.lazyModel}" rows="10"
+    <h:form id="usersForm">
+        <p:dataTable id="lazyUsers" var="account" value="#{modUserFront.lazyModel}" rows="10"
                      paginator="true"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                      rowsPerPageTemplate="10,25,50" lazy="true">
@@ -37,7 +37,7 @@
                 <h:outputText value="#{account.telephoneNr}" />
             </p:column>
             <p:column style="text-align: center">
-                <p:commandButton value="Block" actionListener="#{modUserFront.block}"  rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
+                <p:commandButton value="Block" actionListener="#{modUserFront.block}" rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
                     <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
                 </p:commandButton>
                 <p:commandButton value="Unblock" actionListener="#{modUserFront.unblock}" rendered="#{account.role eq 'Blocked'}">

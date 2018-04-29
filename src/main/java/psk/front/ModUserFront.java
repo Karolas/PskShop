@@ -2,6 +2,8 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.businessLogic.ModUserUtility;
@@ -10,6 +12,7 @@ import psk.database.entities.Account;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -52,10 +55,19 @@ public class ModUserFront implements Serializable{
 
     public void block(){
         modUserUtility.BlockUser(this.lazyModel.getRowData());
+        this.lazyModel.getRowData().setRole("Blocked");
+//        DataTable dataTable = (DataTable)  FacesContext.getCurrentInstance().getViewRoot().findComponent("usersForm:lazyUsers");
+//        dataTable.loadLazyData();
+        this.updateTable();
     }
 
     public void unblock(){
         modUserUtility.UnblockUser(this.lazyModel.getRowData());
+        this.lazyModel.getRowData().setRole("User");
+        this.updateTable();
     }
 
+    public void updateTable(){
+        RequestContext.getCurrentInstance().update("usersForm:lazyUsers");
+    }
 }

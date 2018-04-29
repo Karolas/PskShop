@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,28 +34,27 @@ public class AccountDAO implements Serializable {
         em.persist(account);
     }
 
+    @Transactional
     public void updateAccount(Account account) {
         Account account1 = em.find(Account.class, account.getId());
 
-        em.getTransaction().begin();
-        if (!account1.getFirstName().equals(account.getFirstName()))
+//        if (!account1.getFirstName().equals(account.getFirstName()))
             account1.setFirstName(account.getFirstName());
-
-        if (!account1.getLastName().equals(account.getLastName()))
+//
+//        if (!account1.getLastName().equals(account.getLastName()))
             account1.setLastName(account.getLastName());
-
-        if (!account1.getAddress().equals(account.getAddress()))
+//
+//        if (!account1.getAddress().equals(account.getAddress()))
             account1.setAddress(account.getAddress());
-
-        if (!account1.getPostalNr().equals(account.getPostalNr()))
+//
+//        if (!account1.getPostalNr().equals(account.getPostalNr()))
             account1.setPostalNr(account.getPostalNr());
-
-        if (!account1.getTelephoneNr().equals(account.getTelephoneNr()))
+//
+//        if (!account1.getTelephoneNr().equals(account.getTelephoneNr()))
             account1.setTelephoneNr(account.getTelephoneNr());
-
-        if (!account1.getRole().equals(account.getRole()))
+//
+//        if (!account1.getRole().equals(account.getRole()))
             account1.setRole(account.getRole());
-        em.getTransaction().commit();
     }
 
     private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {
