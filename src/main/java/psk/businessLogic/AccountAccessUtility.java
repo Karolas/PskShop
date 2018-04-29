@@ -98,34 +98,34 @@ public class AccountAccessUtility implements Serializable {
         accountDAO.updateAccount(account);
     }
 
-    @Secures
-    @LoggedIn
-    public boolean isLoggedIn() {
-        return authenticatedAccount != null;
-    }
-
-    @Secures
-    @AccountBlocked
-    public boolean isBlocked() {
-        return authenticatedAccount != null
-                && !accountGroups.contains("User")
-                && accountGroups.contains("Blocked");
-    }
-
-    @Secures
-    @AccountActive
-    public boolean isUser() {
-        return authenticatedAccount != null
-                && accountGroups.contains("User")
-                && !accountGroups.contains("Blocked");
-    }
-
-    @Secures
-    @AccountAdmin
-    public boolean isAdmin() {
-        return authenticatedAccount != null
-                && accountGroups.contains("Admin");
-    }
+//    @Secures
+//    @LoggedIn
+//    public boolean isLoggedIn() {
+//        return authenticatedAccount != null;
+//    }
+//
+//    @Secures
+//    @AccountBlocked
+//    public boolean isBlocked() {
+//        return authenticatedAccount != null
+//                && !accountGroups.contains("User")
+//                && accountGroups.contains("Blocked");
+//    }
+//
+//    @Secures
+//    @AccountActive
+//    public boolean isUser() {
+//        return authenticatedAccount != null
+//                && accountGroups.contains("User")
+//                && !accountGroups.contains("Blocked");
+//    }
+//
+//    @Secures
+//    @AccountAdmin
+//    public boolean isAdmin() {
+//        return authenticatedAccount != null
+//                && accountGroups.contains("Admin");
+//    }
 
     private void setAuthenticatedAccount(String email) {
         authenticatedAccount = accountDAO.selectAccountByEmail(email);
