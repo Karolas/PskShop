@@ -1,5 +1,6 @@
 package psk.database.dao;
 
+import org.primefaces.model.SortOrder;
 import psk.database.entities.Account;
 
 import javax.enterprise.context.RequestScoped;
@@ -7,8 +8,14 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @SessionScoped
 @Named
@@ -45,5 +52,56 @@ public class AccountDAO implements Serializable {
         if (!account1.getTelephoneNr().equals(account.getTelephoneNr()))
             account1.setTelephoneNr(account.getTelephoneNr());
         em.getTransaction().commit();
+    }
+
+    public Integer getAccountCount(){
+        return (Integer) em.createNamedQuery("Account.findAllCount").getSingleResult();
+    }
+
+    public List<Account> getAll(){
+        return em.createNamedQuery("Account.selectAll").getResultList();
+    }
+    private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {
+        Predicate filterCondition = cb.conjunction();
+        String wildCard = "%";
+        for (Map.Entry<String, Object> filter : filters.entrySet()) {
+            String value = wildCard + filter.getValue() + wildCard;
+            if (!filter.getValue().equals("")) {
+                javax.persistence.criteria.Path<String> path = myObj.get(filter.getKey());
+                filterCondition = cb.and(filterCondition, cb.like(path, value));
+            }
+        }
+        return filterCondition;
+    }
+
+    public int count(Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Account> myObj = cq.from(Account.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        cq.select(cb.count(myObj));
+        int a = em.createQuery(cq).getSingleResult().intValue();
+        return a;
+    }
+
+    public List<Account> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
+        Root<Account> myObj = cq.from(Account.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        if (sortField != null) {
+            if (sortOrder == SortOrder.ASCENDING) {
+                cq.orderBy(cb.asc(myObj.get(sortField)));
+            } else if (sortOrder == SortOrder.DESCENDING) {
+                cq.orderBy(cb.desc(myObj.get(sortField)));
+            }
+        }
+        return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
 }

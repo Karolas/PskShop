@@ -23,7 +23,7 @@
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>*.xhtml</welcome-file>
+        <welcome-file>users.xhtml</welcome-file>
     </welcome-file-list>
 
     <!--
