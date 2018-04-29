@@ -61,122 +61,47 @@ public class AccountDAO implements Serializable {
     public List<Account> getAll(){
         return em.createNamedQuery("Account.selectAll").getResultList();
     }
-//    public List<Account> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-//        List<Account> all = new ArrayList<Account>();
-//        all.addAll(this.baseService.getSiteDAO().getAll(first,pageSize,sortField,sortOrder,filters));
-//        return all;
-//    }
-//    public int count(String sortField, SortOrder sortOrder, Map<String, String> filters) {
-//        return this.baseService.getSiteDAO().getAll(-1,-1,null,null,filters).size();
-//    }
-//    public Collection<Account> getAll(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-//        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<Account> q = cb.createQuery(Site.class);
-//        Root<Account> site = q.from(Site.class);
-//        Join<Account,SiteType> siteType = site.join(Site_.siteType);
-//        q.select(site);
-//
-//        Path<?> path = getPath(sortField, site, siteType);
-//        if (sortOrder == null){
-//            //just don't sort
-//        }else if (sortOrder.equals(SortOrder.ASCENDING)){
-//            q.orderBy(cb.asc(path));
-//        }else if (sortOrder.equals(SortOrder.DESCENDING)){
-//            q.orderBy(cb.asc(path));
-//        }else if (sortOrder.equals(SortOrder.UNSORTED)){
-//            //just don't sort
-//        }else{
-//            //just don't sort
-//        }
-//
-//        //filter
-//        Predicate filterCondition = cb.conjunction();
-//        for (Map.Entry<String, String> filter : filters.entrySet()) {
-//            if (!filter.getValue().equals("")) {
-//                //try as string using like
-//                Path<String> pathFilter = getStringPath(filter.getKey(), site, siteType);
-//                if (pathFilter != null){
-//                    filterCondition = cb.and(filterCondition, cb.like(pathFilter, "%"+filter.getValue()+"%"));
-//                }else{
-//                    //try as non-string using equal
-//                    Path<?> pathFilterNonString = getPath(filter.getKey(), site, siteType);
-//                    filterCondition = cb.and(filterCondition, cb.equal(pathFilterNonString, filter.getValue()));
-//                }
-//            }
-//        }
-//        q.where(filterCondition);
-//
-//        //pagination
-//        TypedQuery<Account> tq = em.createQuery(q);
-//        if (pageSize >= 0){
-//            tq.setMaxResults(pageSize);
-//        }
-//        if (first >= 0){
-//            tq.setFirstResult(first);
-//        }
-//        return tq.getResultList();
-//    }
+    private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {
+        Predicate filterCondition = cb.conjunction();
+        String wildCard = "%";
+        for (Map.Entry<String, Object> filter : filters.entrySet()) {
+            String value = wildCard + filter.getValue() + wildCard;
+            if (!filter.getValue().equals("")) {
+                javax.persistence.criteria.Path<String> path = myObj.get(filter.getKey());
+                filterCondition = cb.and(filterCondition, cb.like(path, value));
+            }
+        }
+        return filterCondition;
+    }
 
-//    public List<Account> getAccountList(int start, int size,
-//                                         Map<String, Object> filters) {
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//        CriteriaQuery<Account> criteriaQuery = cb.createQuery(Account.class);
-//        Root<Account> root = criteriaQuery.from(Account.class);
-//        CriteriaQuery<Account> select = criteriaQuery.select(root);
-//
-//        if (filters != null && filters.size() > 0) {
-//            List<Predicate> predicates = new ArrayList<>();
-//            for (Map.Entry<String, Object> entry : filters.entrySet()) {
-//                String field = entry.getKey();
-//                Object value = entry.getValue();
-//                if (value == null) {
-//                    continue;
-//                }
-//
-//                Expression<String> expr = root.get(field).as(String.class);
-//                Predicate p = cb.like(cb.lower(expr),
-//                        "%" + value.toString().toLowerCase() + "%");
-//                predicates.add(p);
-//            }
-//            if (predicates.size() > 0) {
-//                criteriaQuery.where(cb.and(predicates.toArray
-//                        (new Predicate[predicates.size()])));
-//            }
-//        }
-//
-//        TypedQuery<Account> query = em.createQuery(select);
-//        query.setFirstResult(start);
-//        query.setMaxResults(size);
-//        List<Account> list = query.getResultList();
-//        return list;
-//    }
-//
-//    public int getFilteredRowCount(Map<String, Object> filters) {
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//        CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
-//        Root<Account> root = criteriaQuery.from(Account.class);
-//        CriteriaQuery<Long> select = criteriaQuery.select(cb.count(root));
-//
-//        if (filters != null && filters.size() > 0) {
-//            List<Predicate> predicates = new ArrayList<>();
-//            for (Map.Entry<String, Object> entry : filters.entrySet()) {
-//                String field = entry.getKey();
-//                Object value = entry.getValue();
-//                if (value == null) {
-//                    continue;
-//                }
-//
-//                Expression<String> expr = root.get(field).as(String.class);
-//                Predicate p = cb.like(cb.lower(expr),
-//                        "%" + value.toString().toLowerCase() + "%");
-//                predicates.add(p);
-//            }
-//            if (predicates.size() > 0) {
-//                criteriaQuery.where(cb.and(predicates.toArray
-//                        (new Predicate[predicates.size()])));
-//            }
-//        }
-//        Long count = em.createQuery(select).getSingleResult();
-//        return count.intValue();
-//    }
+    public int count(Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Account> myObj = cq.from(Account.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        cq.select(cb.count(myObj));
+        int a = em.createQuery(cq).getSingleResult().intValue();
+        return a;
+    }
+
+    public List<Account> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
+        Root<Account> myObj = cq.from(Account.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        if (sortField != null) {
+            if (sortOrder == SortOrder.ASCENDING) {
+                cq.orderBy(cb.asc(myObj.get(sortField)));
+            } else if (sortOrder == SortOrder.DESCENDING) {
+                cq.orderBy(cb.desc(myObj.get(sortField)));
+            }
+        }
+        return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
+    }
 }

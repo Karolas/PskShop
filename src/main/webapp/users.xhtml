@@ -9,31 +9,31 @@
 <h:head/>
 <h:body>
     <h:form>
-        <p:dataTable var="account" value="#{modUserFront.lazyModel}" rows="5"
+        <p:dataTable var="account" value="#{modUserFront.lazyModel}" rows="10"
                      paginator="true"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                     rowsPerPageTemplate="3,5,6" lazy="true">
-            <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains">
+                     rowsPerPageTemplate="10,25,50" lazy="true">
+            <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains" sortBy="#{account.email}" >
                 <h:outputText value="#{account.email}" />
             </p:column>
 
-            <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains">
+            <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains" sortBy="#{account.firstName}">
                 <h:outputText value="#{account.firstName}" />
             </p:column>
 
-            <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains">
+            <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains" sortBy="#{account.lastName}">
                 <h:outputText value="#{account.lastName}" />
             </p:column>
 
-            <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains">
+            <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains" sortBy="#{account.address}">
                 <h:outputText value="#{account.address}" />
             </p:column>
 
-            <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains">
+            <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains" sortBy="#{account.postalNr}">
                 <h:outputText value="#{account.postalNr}" />
             </p:column>
 
-            <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains">
+            <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
                 <h:outputText value="#{account.telephoneNr}" />
             </p:column>
 
