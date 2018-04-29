@@ -40,4 +40,7 @@ public class Account implements Serializable {
 
     @Column(name = "telephone_nr")
     private String telephoneNr;
+
+    @Column(name = "role")
+    private String role;
 }

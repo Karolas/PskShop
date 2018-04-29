@@ -57,6 +57,7 @@ public class RegistrationFront implements Serializable {
             account.setAddress(address);
             account.setLastName(lastName);
             account.setFirstName(firstName);
+            account.setRole("User");
 
             accountAccessUtility.addAccount(account, password);
         }

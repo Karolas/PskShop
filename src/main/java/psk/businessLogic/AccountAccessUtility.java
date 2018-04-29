@@ -46,8 +46,6 @@ public class AccountAccessUtility implements Serializable {
 
     private Account authenticatedAccount;
 
-    private List<String> accountGroups;
-
     private String baseRequestUri;
 
     @PostConstruct
@@ -90,52 +88,41 @@ public class AccountAccessUtility implements Serializable {
         account.setHashedPassword(hashPassword(password));
 
         accountDAO.insertAccount(account);
-
-        accountGroupsDAO.insertUserAccess(account.getId());
     }
 
     public void updateAccount(Account account) {
         accountDAO.updateAccount(account);
     }
 
-//    @Secures
-//    @LoggedIn
-//    public boolean isLoggedIn() {
-//        return authenticatedAccount != null;
-//    }
-//
-//    @Secures
-//    @AccountBlocked
-//    public boolean isBlocked() {
-//        return authenticatedAccount != null
-//                && !accountGroups.contains("User")
-//                && accountGroups.contains("Blocked");
-//    }
-//
-//    @Secures
-//    @AccountActive
-//    public boolean isUser() {
-//        return authenticatedAccount != null
-//                && accountGroups.contains("User")
-//                && !accountGroups.contains("Blocked");
-//    }
-//
-//    @Secures
-//    @AccountAdmin
-//    public boolean isAdmin() {
-//        return authenticatedAccount != null
-//                && accountGroups.contains("Admin");
-//    }
+    @Secures
+    @LoggedIn
+    public boolean isLoggedIn() {
+        return authenticatedAccount != null;
+    }
+
+    @Secures
+    @AccountBlocked
+    public boolean isBlocked() {
+        return authenticatedAccount != null
+                && authenticatedAccount.getRole().equals("Blocked");
+    }
+
+    @Secures
+    @AccountActive
+    public boolean isUser() {
+        return authenticatedAccount != null
+                && authenticatedAccount.getRole().equals("User");
+    }
+
+    @Secures
+    @AccountAdmin
+    public boolean isAdmin() {
+        return authenticatedAccount != null
+                && authenticatedAccount.getRole().equals("Admin");
+    }
 
     private void setAuthenticatedAccount(String email) {
         authenticatedAccount = accountDAO.selectAccountByEmail(email);
-
-        accountGroups = new ArrayList<>();
-
-        for(AccountGroups accountGroup :
-                accountGroupsDAO.selectGroupsById(authenticatedAccount.getId())) {
-            accountGroups.add(accountGroup.getId().getGroupName());
-        }
     }
 
     @Produces
