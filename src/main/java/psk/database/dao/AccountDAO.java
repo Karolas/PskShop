@@ -51,16 +51,12 @@ public class AccountDAO implements Serializable {
 
         if (!account1.getTelephoneNr().equals(account.getTelephoneNr()))
             account1.setTelephoneNr(account.getTelephoneNr());
+
+        if (!account1.getRole().equals(account.getRole()))
+            account1.setRole(account.getRole());
         em.getTransaction().commit();
     }
 
-    public Integer getAccountCount(){
-        return (Integer) em.createNamedQuery("Account.findAllCount").getSingleResult();
-    }
-
-    public List<Account> getAll(){
-        return em.createNamedQuery("Account.selectAll").getResultList();
-    }
     private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {
         Predicate filterCondition = cb.conjunction();
         String wildCard = "%";

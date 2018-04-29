@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import psk.businessLogic.ModUserUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
@@ -22,6 +23,9 @@ public class ModUserFront implements Serializable{
     LazyDataModel<Account> lazyModel;
 
     @Inject
+    ModUserUtility modUserUtility;
+
+    @Inject
     AccountDAO accountDAO;
     @PostConstruct
     public void init() {
@@ -32,7 +36,26 @@ public class ModUserFront implements Serializable{
                 lazyModel.setRowCount(accountDAO.count(filters));
                 return accountDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
             }
+            @Override
+            public Account getRowData(String rowKey) {
+                int intRowKey = Integer.parseInt(rowKey);
+                for(Account account : lazyModel) {
+                    if(account.getId() == intRowKey) {
+                        return account;
+                    }
+                }
+                return null;
+            }
         };
         lazyModel.setRowCount(accountDAO.count(new HashMap<String, Object> ()));
     }
+
+    public void block(){
+        modUserUtility.BlockUser(this.lazyModel.getRowData());
+    }
+
+    public void unblock(){
+        modUserUtility.UnblockUser(this.lazyModel.getRowData());
+    }
+
 }

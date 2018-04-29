@@ -36,6 +36,14 @@
             <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
                 <h:outputText value="#{account.telephoneNr}" />
             </p:column>
+            <p:column style="text-align: center">
+                <p:commandButton value="Block" actionListener="#{modUserFront.block}"  rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
+                    <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton value="Unblock" actionListener="#{modUserFront.unblock}" rendered="#{account.role eq 'Blocked'}">
+                    <p:confirm header="Confirmation" message="Do you really want to unban this user?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:column>
 
             <f:facet name="paginatorTopLeft">
                 <p:commandButton type="button" icon="fa fa-sync" />
@@ -45,6 +53,10 @@
                 <p:commandButton type="button" icon="fa fa-cloud-upload" />
             </f:facet>
         </p:dataTable>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
     </h:form>
 </h:body>
 </html>
