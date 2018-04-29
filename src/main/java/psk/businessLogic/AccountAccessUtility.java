@@ -1,10 +1,16 @@
 package psk.businessLogic;
 
+import org.apache.deltaspike.security.api.authorization.Secures;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import psk.businessLogic.authentication.AccountActive;
+import psk.businessLogic.authentication.AccountAdmin;
+import psk.businessLogic.authentication.AccountBlocked;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.AccountDAO;
+import psk.database.dao.AccountGroupsDAO;
 import psk.database.entities.Account;
+import psk.database.entities.accountGroup.AccountGroups;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
@@ -25,15 +31,22 @@ import java.net.PasswordAuthentication;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @Named
 @SessionScoped
-public class UserAccessUtility implements Serializable {
+public class AccountAccessUtility implements Serializable {
     @Inject
     private AccountDAO accountDAO;
 
+    @Inject
+    private AccountGroupsDAO accountGroupsDAO;
+
     private Account authenticatedAccount;
+
+    private List<String> accountGroups;
 
     private String baseRequestUri;
 
@@ -73,8 +86,56 @@ public class UserAccessUtility implements Serializable {
         }
     }
 
+    public void addAccount(Account account, String password) {
+        account.setHashedPassword(hashPassword(password));
+
+        accountDAO.insertAccount(account);
+
+        accountGroupsDAO.insertUserAccess(account.getId());
+    }
+
+    public void updateAccount(Account account) {
+        accountDAO.updateAccount(account);
+    }
+
+    @Secures
+    @LoggedIn
+    public boolean isLoggedIn() {
+        return authenticatedAccount != null;
+    }
+
+    @Secures
+    @AccountBlocked
+    public boolean isBlocked() {
+        return authenticatedAccount != null
+                && !accountGroups.contains("User")
+                && accountGroups.contains("Blocked");
+    }
+
+    @Secures
+    @AccountActive
+    public boolean isUser() {
+        return authenticatedAccount != null
+                && accountGroups.contains("User")
+                && !accountGroups.contains("Blocked");
+    }
+
+    @Secures
+    @AccountAdmin
+    public boolean isAdmin() {
+        return authenticatedAccount != null
+                && accountGroups.contains("Admin");
+    }
+
     private void setAuthenticatedAccount(String email) {
         authenticatedAccount = accountDAO.selectAccountByEmail(email);
+
+        accountGroups = new ArrayList<>();
+
+        for(AccountGroups accountGroup :
+                accountGroupsDAO.selectGroupsById(authenticatedAccount.getId())) {
+            accountGroups.add(accountGroup.getId().getGroupName());
+        }
     }
 
     @Produces
