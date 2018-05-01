@@ -1,5 +1,7 @@
 package psk.businessLogic;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.deltaspike.security.api.authorization.Secures;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
@@ -8,9 +10,7 @@ import psk.businessLogic.authentication.AccountAdmin;
 import psk.businessLogic.authentication.AccountBlocked;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.AccountDAO;
-import psk.database.dao.AccountGroupsDAO;
 import psk.database.entities.Account;
-import psk.database.entities.accountGroup.AccountGroups;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
@@ -19,21 +19,14 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.security.auth.callback.Callback;
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.callback.UnsupportedCallbackException;
-import javax.security.auth.login.LoginContext;
-import javax.security.auth.login.LoginException;
+import javax.inject.Provider;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.PasswordAuthentication;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 @Named
 @SessionScoped
@@ -42,11 +35,13 @@ public class AccountAccessUtility implements Serializable {
     private AccountDAO accountDAO;
 
     @Inject
-    private AccountGroupsDAO accountGroupsDAO;
-
-    private Account authenticatedAccount;
+    private Provider<AuthenticatedAccountHolder> authenticatedAccountHolderProvider;
 
     private String baseRequestUri;
+
+    @Getter
+    @Setter
+    private int testCounter;
 
     @PostConstruct
     public void postConstruct() {
@@ -61,17 +56,33 @@ public class AccountAccessUtility implements Serializable {
 
         try {
             Faces.login(email, hashedPassword);
-            setAuthenticatedAccount(email);
+            authenticatedAccountHolderProvider.get().initUser(email);
         } catch (ServletException e) {
             Messages.addGlobalWarn("Wrong user name or password. Please try again.");
             return;
         }
 
-        try {
-            Faces.redirect(baseRequestUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Faces.redirect(baseRequestUri);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public boolean isLoggedIn() {
+        return authenticatedAccountHolderProvider.get().isLoggedIn();
+    }
+
+    public boolean isBlocked() {
+        return authenticatedAccountHolderProvider.get().isBlocked();
+    }
+
+    public boolean isUser() {
+        return authenticatedAccountHolderProvider.get().isUser();
+    }
+
+    public boolean isAdmin() {
+        return authenticatedAccountHolderProvider.get().isAdmin();
     }
 
     public void logoutAccount() {
@@ -92,45 +103,6 @@ public class AccountAccessUtility implements Serializable {
 
     public void updateAccount(Account account) {
         accountDAO.updateAccount(account);
-    }
-
-    @Secures
-    @LoggedIn
-    public boolean isLoggedIn() {
-        return authenticatedAccount != null;
-    }
-
-    @Secures
-    @AccountBlocked
-    public boolean isBlocked() {
-        return authenticatedAccount != null
-                && authenticatedAccount.getRole().equals("Blocked");
-    }
-
-    @Secures
-    @AccountActive
-    public boolean isUser() {
-        return authenticatedAccount != null
-                && authenticatedAccount.getRole().equals("User");
-    }
-
-    @Secures
-    @AccountAdmin
-    public boolean isAdmin() {
-        return authenticatedAccount != null
-                && authenticatedAccount.getRole().equals("Admin");
-    }
-
-    private void setAuthenticatedAccount(String email) {
-        authenticatedAccount = accountDAO.selectAccountByEmail(email);
-    }
-
-    @Produces
-    @Named("authenticatedAccount")
-    @LoggedIn
-    @SessionScoped
-    private Account produceAuthenticatedAccount() {
-        return authenticatedAccount;
     }
 
     private String hashPassword(String password) {

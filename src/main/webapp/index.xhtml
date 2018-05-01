@@ -9,18 +9,18 @@
 <h:head/>
 <h:body>
    <h:form>
-      <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+      <p:button value="Login" outcome="login" rendered="#{!accountHolder.loggedIn}"/>
 
-      <h:panelGrid columns="2" cellpadding="5">
-         <h:outputLabel for="email" value="Email:" />
-         <p:inputText id="email" value="#{loginFront.email}" required="true" label="username" />
+      <h:panelGrid columns="2" rendered="#{accountHolder.loggedIn}">
+         <h:outputText value="email:" />
+         <h:outputText value="#{authenticatedAccount.email}" />
 
-         <h:outputLabel for="password" value="Password:" />
-         <p:password id="password" value="#{loginFront.password}" required="true" label="password" />
+         <h:outputText value="role:" />
+         <h:outputText value="#{authenticatedAccount.role}" />
 
          <f:facet name="footer">
-            <p:commandButton value="Login" update="growl" actionListener="#{loginFront.login}"
-                             oncomplete="users" />
+            <p:commandButton value="Logout" update="growl" actionListener="#{loginFront.logout}"
+                             action="index" ajax="false" />
          </f:facet>
       </h:panelGrid>
    </h:form>
