@@ -20,40 +20,41 @@ import java.util.*;
 
 @SessionScoped
 @Named
-public class ModUserFront implements Serializable{
+public class ModUserFront implements Serializable {
     @Getter
     @Setter
-    LazyDataModel<Account> lazyModel;
+    private LazyDataModel<Account> lazyModel;
 
     @Inject
-    ModUserUtility modUserUtility;
+    private ModUserUtility modUserUtility;
 
     @Inject
-    AccountDAO accountDAO;
+    private AccountDAO accountDAO;
+
     @PostConstruct
     public void init() {
-        lazyModel = new LazyDataModel<Account> () {
+        lazyModel = new LazyDataModel<Account>() {
 
             @Override
             public List<Account> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 lazyModel.setRowCount(accountDAO.count(filters));
                 return accountDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
             }
-            @Override
-            public Account getRowData(String rowKey) {
-                int intRowKey = Integer.parseInt(rowKey);
-                for(Account account : lazyModel) {
-                    if(account.getId() == intRowKey) {
-                        return account;
-                    }
-                }
-                return null;
-            }
+//            @Override
+//            public Account getRowData(String rowKey) {
+//                int intRowKey = Integer.parseInt(rowKey);
+//                for(Account account : lazyModel) {
+//                    if(account.getId() == intRowKey) {
+//                        return account;
+//                    }
+//                }
+//                return null;
+//            }
         };
-        lazyModel.setRowCount(accountDAO.count(new HashMap<String, Object> ()));
+        lazyModel.setRowCount(accountDAO.count(new HashMap<String, Object>()));
     }
 
-    public void block(){
+    public void block() {
         modUserUtility.BlockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("Blocked");
 //        DataTable dataTable = (DataTable)  FacesContext.getCurrentInstance().getViewRoot().findComponent("usersForm:lazyUsers");
@@ -61,13 +62,13 @@ public class ModUserFront implements Serializable{
         this.updateTable();
     }
 
-    public void unblock(){
+    public void unblock() {
         modUserUtility.UnblockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("User");
         this.updateTable();
     }
 
-    public void updateTable(){
+    public void updateTable() {
         RequestContext.getCurrentInstance().update("usersForm:lazyUsers");
     }
 }
