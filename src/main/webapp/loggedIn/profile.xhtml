@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+        <ui:define name="content">
+            <p:tabView>
+                <p:tab title="Update profile">
+                    <h:form>
+                        <p:panel id="profilePannel" header="#{authenticatedAccount.email}">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="firstname" value="Firstname:" />
+                            <p:inputText id="firstname" value="#{profileFront.account.firstName}" label="Firstname"/>
+
+                            <p:outputLabel for="lastname" value="Lastname:" />
+                            <p:inputText id="lastname" value="#{profileFront.account.lastName}" label="Lastname" />
+
+                            <p:outputLabel for="address" value="Address:" />
+                            <p:inputText id="address" value="#{profileFront.account.address}" label="Address" />
+
+                            <p:outputLabel for="postalNr" value="Postal Nr.:" />
+                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}" label="Postal Nr." />
+
+                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}" label="Telephone Nr." />
+                        </h:panelGrid>
+
+                        <p:commandButton value="Save" update="profilePannel" actionListener="#{profileFront.updateProfile}" icon="ui-icon-check" />
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+                <p:tab title="Change password">
+                    <h:form>
+                        <p:panel id="passwordPannel" header="#{authenticatedAccount.email}">
+                            <p:messages id="msgs" />
+
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel for="password" value="New password:" />
+                                <p:password id="password" value="#{profileFront.password}" required="true" label="Password">
+                                    <f:validateLength minimum="8" />
+                                    <f:validator validatorId="passwordValidator" />
+                                </p:password>
+                                <p:message for="password" showDetail="true" showSummary="false" display="icon" />
+
+                                <p:outputLabel for="passwordConfirm" value="Confirm new password:" />
+                                <p:password id="passwordConfirm" value="#{profileFront.repeatPassword}" required="true" label="Password">
+                                    <f:validateLength minimum="8" />
+                                </p:password>
+                                <p:message for="passwordConfirm" showDetail="true" showSummary="false" display="icon" />
+
+                                <p:commandButton value="Save" update="passwordPannel" actionListener="#{profileFront.updatePassword}" icon="ui-icon-check" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

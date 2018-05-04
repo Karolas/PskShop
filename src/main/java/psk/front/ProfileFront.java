@@ -1,10 +1,17 @@
 package psk.front;
 
+import com.sun.istack.internal.Nullable;
+import lombok.Getter;
+import lombok.Setter;
 import psk.businessLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.entities.Account;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -17,9 +24,25 @@ public class ProfileFront implements Serializable {
 
     @Inject
     @LoggedIn
+    @Getter
     private Account account;
 
-    public void updateProfile() {
+    @Getter
+    @Setter
+    private String password;
+
+    @Getter
+    @Setter
+    private String repeatPassword;
+
+    public void updateProfile(ActionEvent actionEvent) {
         accountAccessUtility.updateAccount(account);
+    }
+
+    public void updatePassword(ActionEvent actionEvent) {
+        accountAccessUtility.updatePassword(account, password);
+
+        password = null;
+        repeatPassword = null;
     }
 }

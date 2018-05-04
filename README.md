@@ -16,13 +16,13 @@ To add test users:
 
 | id  | email| hashed_password          |
 | --- | ---- | ------------------------ |
-| 1   | test | aMr9Uy1fDNsGJStF4vWZ9Q== |    
+| 0   | test | aMr9Uy1fDNsGJStF4vWZ9Q== |    
 
 2. In the *account_groups* table insert row:
 
 | account_id | group_name |
 | ---------- | ---------- |
-| 1          | User       |
+| 0          | User       |
 
 3. The login info for this user:
     * Email: test
@@ -33,13 +33,13 @@ To add test users:
 
 | id  | email | hashed_password          |
 | --- | ----- | ------------------------ |
-| 2   | admin | gwBdINtuCcv9k+V3I2z1vQ== |    
+| -1  | admin | gwBdINtuCcv9k+V3I2z1vQ== |    
 
 2. In the *account_groups* table insert row:
 
 | account_id | group_name |
 | ---------- | ---------- |
-| 2          | Admin      |
+| -1         | Admin      |
 
 3. The login info for this user:
     * Email: admin

@@ -8,21 +8,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head/>
 <h:body>
-   <h:form>
-      <p:button value="Login" outcome="login" rendered="#{!accountHolder.loggedIn}"/>
+   <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+      <ui:define name="content">
+         <h:form>
+            <p:messages id="msgs" />
 
-      <h:panelGrid columns="2" rendered="#{accountHolder.loggedIn}">
-         <h:outputText value="email:" />
-         <h:outputText value="#{authenticatedAccount.email}" />
+            <h:panelGrid columns="2" rendered="#{accountHolder.loggedIn}">
+               <h:outputText value="email:" />
+               <h:outputText value="#{authenticatedAccount.email}" />
 
-         <h:outputText value="role:" />
-         <h:outputText value="#{authenticatedAccount.role}" />
+               <h:outputText value="role:" />
+               <h:outputText value="#{authenticatedAccount.role}" />
 
-         <f:facet name="footer">
-            <p:commandButton value="Logout" update="growl" actionListener="#{loginFront.logout}"
-                             action="index" ajax="false" />
-         </f:facet>
-      </h:panelGrid>
-   </h:form>
+               <f:facet name="footer">
+                  <p:commandButton value="Logout" update="growl" actionListener="#{loginFront.logout}"
+                                   action="index" ajax="false" />
+               </f:facet>
+            </h:panelGrid>
+         </h:form>
+      </ui:define>
+   </ui:composition>
 </h:body>
 </html>

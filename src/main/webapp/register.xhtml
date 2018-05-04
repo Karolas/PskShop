@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+        <ui:define name="content">
+            <h:form id="registration">
+                <p:panel id="panel" header="New User">
+
+                    <p:messages id="msgs" />
+
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="email" value="Email:" />
+                        <p:inputText id="email" value="#{registrationFront.email}" required="true" label="Email">
+                            <f:validator validatorId="emailValidator" />
+                        </p:inputText>
+                        <p:message for="email" showDetail="true" showSummary="false" display="icon" />
+
+                        <p:outputLabel for="password" value="Password:" />
+                        <p:password id="password" value="#{registrationFront.password}" required="true" label="Password">
+                            <f:validateLength minimum="8" />
+                            <f:validator validatorId="passwordValidator" />
+                        </p:password>
+                        <p:message for="password" showDetail="true" showSummary="false" display="icon" />
+
+                        <p:outputLabel for="passwordConfirm" value="Confirm password:" />
+                        <p:password id="passwordConfirm" value="#{registrationFront.repeatPassword}" required="true" label="Password">
+                            <f:validateLength minimum="8" />
+                        </p:password>
+                        <p:message for="passwordConfirm" showDetail="true" showSummary="false" display="icon" />
+                    </h:panelGrid>
+
+                    <p:separator />
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="firstname" value="Firstname:" />
+                        <p:inputText id="firstname" value="#{registrationFront.firstName}" label="Firstname"/>
+
+                        <p:outputLabel for="lastname" value="Lastname:" />
+                        <p:inputText id="lastname" value="#{registrationFront.lastName}" label="Lastname" />
+
+                        <p:outputLabel for="address" value="Address:" />
+                        <p:inputText id="address" value="#{registrationFront.address}" label="Address" />
+
+                        <p:outputLabel for="postalNr" value="Postal Nr.:" />
+                        <p:inputText id="postalNr" value="#{registrationFront.postalNr}" label="Postal Nr." />
+
+                        <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                        <p:inputText id="telephoneNr" value="#{registrationFront.telephoneNr}" label="Telephone Nr." />
+                    </h:panelGrid>
+
+                    <p:commandButton value="Register" update="panel" actionListener="#{registrationFront.register}" icon="ui-icon-check" />
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

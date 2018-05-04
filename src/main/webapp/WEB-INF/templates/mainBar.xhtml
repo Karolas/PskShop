@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>test</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="topBarLoggedIn" rendered="#{accountHolder.loggedIn}">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Profile" action="loggedIn/profile.xhtml" ajax="false"
+                                     icon="ui-icon-person" />
+                    <p:commandButton value="Admin page" rendered="#{accountHolder.admin}"
+                                     action="admin/users.xhtml" ajax="false"
+                                     icon="ui-icon-extlink" />
+                </f:facet>
+
+                <f:facet name="right">
+                    <p:commandButton value="Logout"
+                                     actionListener="#{loginFront.logout}" action="index.xhtml" ajax="false"
+                                     icon="ui-icon-close" />
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+
+        <h:form id="topBar" rendered="#{!accountHolder.loggedIn}">
+            <p:toolbar>
+                <f:facet name="right">
+                    <p:commandButton value="Register" action="register.xhtml" ajax="false"
+                                     icon="ui-icon-extlink"/>
+                    <p:commandButton value="Login" action="login.xhtml" ajax="false"
+                                     icon="ui-icon-extlink"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+
+        <ui:insert name="content" />
+    </h:body>
+</f:view>
+</html>

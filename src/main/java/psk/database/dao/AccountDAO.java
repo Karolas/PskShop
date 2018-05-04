@@ -24,12 +24,21 @@ public class AccountDAO implements Serializable {
     @Inject
     private EntityManager em;
 
+    @Transactional
     public Account selectAccountByEmail(String email) {
         return em.createQuery("SELECT a FROM Account a WHERE a.email = :accEmail", Account.class)
                 .setParameter("accEmail", email)
                 .getSingleResult();
     }
 
+    @Transactional
+    public boolean isAccountExists(String email) {
+        return em.createQuery("SELECT a FROM Account a WHERE a.email = :accEmail", Account.class)
+                .setParameter("accEmail", email)
+                .getResultList().size() != 0;
+    }
+
+    @Transactional
     public void insertAccount(Account account) {
         em.persist(account);
     }
@@ -55,6 +64,13 @@ public class AccountDAO implements Serializable {
 //
 //        if (!account1.getRole().equals(account.getRole()))
             account1.setRole(account.getRole());
+    }
+
+    @Transactional
+    public void updatePassword(Account account, String hashedPassword) {
+        Account account1 = em.find(Account.class, account.getId());
+
+        account1.setHashedPassword(hashedPassword);
     }
 
     private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {

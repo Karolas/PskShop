@@ -12,7 +12,7 @@ import java.io.Serializable;
 @SessionScoped
 public class ModUserUtility implements Serializable{
     @Inject
-    AccountDAO accountDAO;
+    private AccountDAO accountDAO;
 
     public void BlockUser(Account account){
         account.setRole("Blocked");

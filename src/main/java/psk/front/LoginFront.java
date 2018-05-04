@@ -31,8 +31,9 @@ public class LoginFront implements Serializable {
     public void login(ActionEvent actionEvent) {
         accountAccessUtility.loginAccount(email, password);
 
-        if(accountAccessUtility.isLoggedIn())
+        if(accountAccessUtility.isLoggedIn()) {
             password = null;
+        }
     }
 
     public void redirectLogin() {
@@ -45,8 +46,6 @@ public class LoginFront implements Serializable {
                 } else {
                     ec.redirect("index.xhtml");
                 }
-            } else {
-                ec.redirect("login.xhtml");
             }
         } catch (IOException e) {
             e.printStackTrace();

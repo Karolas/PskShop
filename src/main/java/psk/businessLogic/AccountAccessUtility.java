@@ -17,10 +17,13 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.servlet.ServletException;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -58,8 +61,11 @@ public class AccountAccessUtility implements Serializable {
             Faces.login(email, hashedPassword);
             authenticatedAccountHolderProvider.get().initUser(email);
         } catch (ServletException e) {
-            Messages.addGlobalWarn("Wrong user name or password. Please try again.");
-            return;
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Login Error: Wrong user name or password. Please try again.",
+                            "Wrong user name or password."));
+//            Messages.addGlobalWarn("Wrong user name or password. Please try again.");
         }
 
 //        try {
@@ -103,6 +109,14 @@ public class AccountAccessUtility implements Serializable {
 
     public void updateAccount(Account account) {
         accountDAO.updateAccount(account);
+
+        authenticatedAccountHolderProvider.get().initUser(account.getEmail());
+    }
+
+    public void updatePassword(Account account, String password) {
+        String hashedPassword = hashPassword(password);
+
+        accountDAO.updatePassword(account, hashedPassword);
     }
 
     private String hashPassword(String password) {
