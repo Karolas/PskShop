@@ -8,39 +8,28 @@
 The database used is PostgreSQL.  
 It can be downloaded [here.](https://www.postgresql.org/download/)  
 The SQLs to create tables are under src > main > resources > sqlScripts
+In src > main > webapp > WEB-INF > resources.xml make sure that username and password matches the one you use for your database.
 
 
 To add test users:   
 ##### Add normal user
 1. In the *accounts* table insert row:  
 
-| id  | email| hashed_password          |
-| --- | ---- | ------------------------ |
-| 0   | test | aMr9Uy1fDNsGJStF4vWZ9Q== |    
+| id  | email| hashed_password          | role |
+| --- | ---- | ------------------------ | ---- |
+| 0   | test | aMr9Uy1fDNsGJStF4vWZ9Q== | User |  
 
-2. In the *account_groups* table insert row:
-
-| account_id | group_name |
-| ---------- | ---------- |
-| 0          | User       |
-
-3. The login info for this user:
+2. The login info for this user:
     * Email: test
     * Password: test
     
 ##### Add admin user
 1. In the *accounts* table insert row:  
 
-| id  | email | hashed_password          |
-| --- | ----- | ------------------------ |
-| -1  | admin | gwBdINtuCcv9k+V3I2z1vQ== |    
+| id  | email | hashed_password          | role  |
+| --- | ----- | ------------------------ | ----- |
+| -1  | admin | gwBdINtuCcv9k+V3I2z1vQ== | Admin |  
 
-2. In the *account_groups* table insert row:
-
-| account_id | group_name |
-| ---------- | ---------- |
-| -1         | Admin      |
-
-3. The login info for this user:
+2. The login info for this user:
     * Email: admin
     * Password: admin

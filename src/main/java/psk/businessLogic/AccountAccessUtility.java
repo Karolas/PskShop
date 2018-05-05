@@ -2,13 +2,8 @@ package psk.businessLogic;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.deltaspike.security.api.authorization.Secures;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
-import psk.businessLogic.authentication.AccountActive;
-import psk.businessLogic.authentication.AccountAdmin;
-import psk.businessLogic.authentication.AccountBlocked;
-import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
@@ -16,14 +11,12 @@ import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.servlet.ServletException;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -68,11 +61,9 @@ public class AccountAccessUtility implements Serializable {
 //            Messages.addGlobalWarn("Wrong user name or password. Please try again.");
         }
 
-//        try {
-//            Faces.redirect(baseRequestUri);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        if(isBlocked()) {
+            logoutAccount();
+        }
     }
 
     public boolean isLoggedIn() {
