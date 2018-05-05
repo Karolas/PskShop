@@ -2,17 +2,15 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import psk.businessLogic.ModUserUtility;
+import psk.businessLogic.ModAcountUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -20,13 +18,13 @@ import java.util.*;
 
 @SessionScoped
 @Named
-public class ModUserFront implements Serializable {
+public class ModAccountFront implements Serializable {
     @Getter
     @Setter
     private LazyDataModel<Account> lazyModel;
 
     @Inject
-    private ModUserUtility modUserUtility;
+    private ModAcountUtility modUserUtility;
 
     @Inject
     private AccountDAO accountDAO;

@@ -47,8 +47,6 @@ public class LoginFront implements Serializable {
                     ec.redirect("admin/users.xhtml");
                 } else if(accountAccessUtility.isUser()) {
                     ec.redirect("index.xhtml");
-                } else {
-                    ec.redirect("login.xhtml?blocked=true");
                 }
             }
         } catch (IOException e) {

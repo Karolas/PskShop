@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 @WebFilter(urlPatterns = "/loggedIn/*")
-public class UserFilter implements Filter, Serializable {
+public class AccountFilter implements Filter, Serializable {
     @Inject
     private Instance<AuthenticatedAccountHolder> authenticatedAccountHolder;
 

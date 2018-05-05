@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class ModUserUtility implements Serializable{
+public class ModAcountUtility implements Serializable{
     @Inject
     private AccountDAO accountDAO;
 
