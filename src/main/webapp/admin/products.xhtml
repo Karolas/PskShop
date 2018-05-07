@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <h:form id="usersForm">
+        <p:dataTable id="lazyProducts" var="product" value="#{modAccountFront.lazyModel}" rows="10"
+                     paginator="true"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                     rowsPerPageTemplate="10,25,50" lazy="true">
+            <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains" sortBy="#{account.email}" >
+                <h:outputText value="#{account.email}" />
+            </p:column>
+
+            <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains" sortBy="#{account.firstName}">
+                <h:outputText value="#{account.firstName}" />
+            </p:column>
+
+            <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains" sortBy="#{account.lastName}">
+                <h:outputText value="#{account.lastName}" />
+            </p:column>
+
+            <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains" sortBy="#{account.address}">
+                <h:outputText value="#{account.address}" />
+            </p:column>
+
+            <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains" sortBy="#{account.postalNr}">
+                <h:outputText value="#{account.postalNr}" />
+            </p:column>
+
+            <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
+                <h:outputText value="#{account.telephoneNr}" />
+            </p:column>
+            <p:column style="text-align: center">
+                <p:commandButton value="Block" actionListener="#{modAccountFront.block}" rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
+                    <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton value="Unblock" actionListener="#{modAccountFront.unblock}" rendered="#{account.role eq 'Blocked'}">
+                    <p:confirm header="Confirmation" message="Do you really want to unban this user?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="paginatorTopLeft">
+                <p:commandButton type="button" icon="fa fa-sync" />
+            </f:facet>
+
+            <f:facet name="paginatorBottomRight">
+                <p:commandButton type="button" icon="fa fa-cloud-upload" />
+            </f:facet>
+        </p:dataTable>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+    </h:form>
+</h:body>
+</html>
