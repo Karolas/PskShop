@@ -1,16 +1,12 @@
 package psk.front;
 
-import com.sun.istack.internal.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import psk.businessLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.entities.Account;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;

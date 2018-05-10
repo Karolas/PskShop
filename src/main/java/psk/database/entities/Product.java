@@ -7,8 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -34,5 +32,5 @@ public class Product implements Serializable {
     private String description;
 
     @Column(name = "image")
-    private Byte[] image;
+    private byte[] image;
 }

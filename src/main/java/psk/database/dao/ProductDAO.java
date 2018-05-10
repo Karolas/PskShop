@@ -2,11 +2,21 @@ package psk.database.dao;
 
 import psk.database.entities.Product;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.List;
 
-public class ProductDAO {
+@SessionScoped
+@Named
+public class ProductDAO implements Serializable {
     @Inject
     private EntityManager em;
 
@@ -36,5 +46,32 @@ public class ProductDAO {
     public void deleteProduct(Integer id) {
         em.createQuery("DELETE FROM Product p WHERE p.id = :id")
             .setParameter("id", id);
+    }
+
+    @Transactional
+    public List<Product> selectAllProducts() {
+        return em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+    }
+
+    @Transactional
+    public List<Product> getResultList(int first, int pageSize, String productNameCriteria) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+        Root<Product> myObj = cq.from(Product.class);
+
+        Predicate condition = cb.like(myObj.get("name"), "%" + productNameCriteria + "%");
+
+        cq.where(condition);
+
+        return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
+    }
+
+    @Transactional
+    public int count(String productNameCriteria) {
+        long count = em.createQuery("SELECT COUNT(1) FROM Product p WHERE p.name like :name", Long.class)
+                .setParameter("name", "%" + productNameCriteria + "%").getSingleResult();
+
+
+        return (int)count;
     }
 }

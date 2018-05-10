@@ -3,11 +3,8 @@ package psk.front;
 import lombok.Getter;
 import lombok.Setter;
 import psk.businessLogic.AccountAccessUtility;
-import psk.businessLogic.authentication.LoggedIn;
-import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -15,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Map;
 
 @SessionScoped
 @Named
