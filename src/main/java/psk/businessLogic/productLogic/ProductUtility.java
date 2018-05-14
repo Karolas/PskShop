@@ -35,4 +35,7 @@ public class ProductUtility implements Serializable {
     public List<Product> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         return productDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
     }
+    public void updateProduct(Product product){
+        productDAO.updateProduct(product);
+    }
 }

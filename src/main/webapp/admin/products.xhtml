@@ -31,7 +31,9 @@
             <!--TODO image-->
 
             <p:column style="text-align: center; width: 100px;">
-                <h:button value="Edit" outcome="edit-product.xhtml" />
+                <p:commandButton value="Edit" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select}">
+                    <f:ajax />
+                </p:commandButton>
             </p:column>
 
             <f:facet name="paginatorTopLeft">

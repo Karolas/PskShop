@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <title>Edit product</title>
+</h:head>
+
+<h:body>
+    <h1>Edit product</h1>
+
+    <h:form id="edit-product">
+                <p:panelGrid  id="product-detail" columns="1" rendered="#{not empty modProductFront.selectedProduct}"
+                              columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
+                    <p:outputLabel for="name" value="Name:"/>
+                    <p:inputText id="name" value="#{modProductFront.selectedProduct.name}"/>
+                    <p:message for="name"/>
+
+                    <p:outputLabel for="price" value="Price:"/>
+                    <p:inputText id="price" value="#{modProductFront.selectedProduct.price}"/>
+                    <p:message for="price"/>
+
+                    <p:outputLabel for="amount" value="Amount:"/>
+                    <p:inputText id="amount" value="#{modProductFront.selectedProduct.amount}"/>
+                    <p:message for="amount"/>
+
+                    <p:outputLabel for="description" value="Description:"/>
+                    <p:inputText id="description" value="#{modProductFront.selectedProduct.description}"/>
+                    <p:message for="description"/>
+
+                    <o:graphicImage value="#{imageUtility.getImage(modProductFront.selectedProduct.id)}"/>
+
+                    <p:fileUpload fileUploadListener="#{modProductFront.fileUpload}"
+                                  multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                    <p:commandButton value="Update" actionListener="#{modProductFront.updateProduct}"
+                                     icon="ui-icon-check" style="margin-top: 1em"
+                                     update=":edit-product:product-detail"/>
+                </p:panelGrid>
+        <p:messages globalOnly="true"/>
+    </h:form>
+
+</h:body>
+</html>
+
