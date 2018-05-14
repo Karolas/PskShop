@@ -40,7 +40,7 @@ public class LoginFront implements Serializable {
         try {
             if(accountAccessUtility.isLoggedIn()) {
                 if(accountAccessUtility.isAdmin()) {
-                    ec.redirect("admin/users.xhtml");
+                    ec.redirect("index.xhtml");
                 } else if(accountAccessUtility.isUser()) {
                     ec.redirect("index.xhtml");
                 }

@@ -1,5 +1,8 @@
 package psk.database.dao;
 
+import org.primefaces.model.SortOrder;
+import psk.Utils;
+import psk.database.entities.Account;
 import psk.database.entities.Product;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,12 +16,16 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @SessionScoped
 @Named
 public class ProductDAO implements Serializable {
     @Inject
     private EntityManager em;
+
+    @Inject
+    private Utils utils;
 
     @Transactional
     public void insertProduct(Product product) {
@@ -73,5 +80,35 @@ public class ProductDAO implements Serializable {
 
 
         return (int)count;
+    }
+
+
+    public int countWithilters(Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Product> myObj = cq.from(Product.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        cq.select(cb.count(myObj));
+        int a = em.createQuery(cq).getSingleResult().intValue();
+        return a;
+    }
+
+    private Predicate getFilterCondition(CriteriaBuilder cb, Root<Product> myObj, Map<String, Object> filters) {
+        return utils.getFilterCondition(cb, myObj, filters);
+    }
+
+    public List<Product> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+        Root<Product> myObj = cq.from(Product.class);
+        Predicate filterCondition = this.getFilterCondition(cb, myObj, filters);
+        if(filterCondition.getExpressions().size() != 0) {
+            cq.where(filterCondition);
+        }
+        cq = utils.getSortOrder(cq, cb, myObj, sortOrder, sortField);
+        return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
 }

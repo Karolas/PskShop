@@ -1,6 +1,7 @@
 package psk.database.dao;
 
 import org.primefaces.model.SortOrder;
+import psk.Utils;
 import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;
@@ -18,6 +19,9 @@ import java.util.Map;
 public class AccountDAO implements Serializable {
     @Inject
     private EntityManager em;
+
+    @Inject
+    private Utils utils;
 
     @Transactional
     public Account selectAccountByEmail(String email) {
@@ -69,16 +73,7 @@ public class AccountDAO implements Serializable {
     }
 
     private Predicate getFilterCondition(CriteriaBuilder cb, Root<Account> myObj, Map<String, Object> filters) {
-        Predicate filterCondition = cb.conjunction();
-        String wildCard = "%";
-        for (Map.Entry<String, Object> filter : filters.entrySet()) {
-            String value = wildCard + filter.getValue() + wildCard;
-            if (!filter.getValue().equals("")) {
-                javax.persistence.criteria.Path<String> path = myObj.get(filter.getKey());
-                filterCondition = cb.and(filterCondition, cb.like(path, value));
-            }
-        }
-        return filterCondition;
+        return utils.getFilterCondition(cb, myObj, filters);
     }
 
     public int count(Map<String, Object> filters) {
@@ -102,13 +97,7 @@ public class AccountDAO implements Serializable {
         if(filterCondition.getExpressions().size() != 0) {
             cq.where(filterCondition);
         }
-        if (sortField != null) {
-            if (sortOrder == SortOrder.ASCENDING) {
-                cq.orderBy(cb.asc(myObj.get(sortField)));
-            } else if (sortOrder == SortOrder.DESCENDING) {
-                cq.orderBy(cb.desc(myObj.get(sortField)));
-            }
-        }
+        cq = utils.getSortOrder(cq, cb, myObj, sortOrder, sortField);
         return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
 }

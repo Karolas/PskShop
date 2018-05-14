@@ -21,7 +21,7 @@ public class ImageUtility {
     public byte[] getImage(Integer productId) {
 
         byte[] imageBytes = productUtility.getImage(productId);
-
+        if(imageBytes == null) return null;
         try {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
 

@@ -8,41 +8,30 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head/>
 <h:body>
-    <h:form id="usersForm">
-        <p:dataTable id="lazyProducts" var="product" value="#{modAccountFront.lazyModel}" rows="10"
+    <h:form id="productsForm">
+        <p:dataTable id="lazyProducts" var="product" value="#{modProductFront.lazyModel}" rows="10"
                      paginator="true"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                      rowsPerPageTemplate="10,25,50" lazy="true">
-            <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains" sortBy="#{account.email}" >
-                <h:outputText value="#{account.email}" />
+            <p:column headerText="Name" filterBy="#{product.name}" filterMatchMode="contains" sortBy="#{product.name}" >
+                <h:outputText value="#{product.name}" />
             </p:column>
 
-            <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains" sortBy="#{account.firstName}">
-                <h:outputText value="#{account.firstName}" />
+            <p:column headerText="Price" filterBy="#{product.price}" filterMatchMode="contains" sortBy="#{product.price}">
+                <h:outputText value="#{product.price}" />
             </p:column>
 
-            <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains" sortBy="#{account.lastName}">
-                <h:outputText value="#{account.lastName}" />
+            <p:column headerText="Amount" filterBy="#{product.amount}" filterMatchMode="contains" sortBy="#{product.amount}">
+                <h:outputText value="#{product.amount}" />
             </p:column>
 
-            <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains" sortBy="#{account.address}">
-                <h:outputText value="#{account.address}" />
+            <p:column headerText="Description" filterBy="#{product.description}" filterMatchMode="contains" sortBy="#{product.description}">
+                <h:outputText value="#{product.description}" />
             </p:column>
+            <!--TODO image-->
 
-            <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains" sortBy="#{account.postalNr}">
-                <h:outputText value="#{account.postalNr}" />
-            </p:column>
-
-            <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
-                <h:outputText value="#{account.telephoneNr}" />
-            </p:column>
-            <p:column style="text-align: center">
-                <p:commandButton value="Block" actionListener="#{modAccountFront.block}" rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
-                    <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
-                </p:commandButton>
-                <p:commandButton value="Unblock" actionListener="#{modAccountFront.unblock}" rendered="#{account.role eq 'Blocked'}">
-                    <p:confirm header="Confirmation" message="Do you really want to unban this user?" icon="ui-icon-alert" />
-                </p:commandButton>
+            <p:column style="text-align: center; width: 100px;">
+                <h:button value="Edit" outcome="edit-product.xhtml" />
             </p:column>
 
             <f:facet name="paginatorTopLeft">
