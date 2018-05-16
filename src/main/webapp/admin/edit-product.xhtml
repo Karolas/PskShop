@@ -11,11 +11,15 @@
 </h:head>
 
 <h:body>
-    <h1>Edit product</h1>
+    <h1></h1>
 
     <h:form id="edit-product">
                 <p:panelGrid  id="product-detail" columns="1" rendered="#{not empty modProductFront.selectedProduct}"
                               columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
+                    <f:facet name="header">
+                        <h:outputText value="Edit product" rendered="#{modProductFront.selectedProduct.id ne null}"></h:outputText>
+                        <h:outputText value="Create product" rendered="#{modProductFront.selectedProduct.id eq null}"></h:outputText>
+                    </f:facet>
                     <p:outputLabel for="name" value="Name:"/>
                     <p:inputText id="name" value="#{modProductFront.selectedProduct.name}"/>
                     <p:message for="name"/>
@@ -32,14 +36,17 @@
                     <p:inputText id="description" value="#{modProductFront.selectedProduct.description}"/>
                     <p:message for="description"/>
 
-                    <o:graphicImage value="#{imageUtility.getImage(modProductFront.selectedProduct.id)}"/>
+                    <o:graphicImage rendered="#{modProductFront.selectedProduct.id ne null}" value="#{imageUtility.getImage(modProductFront.selectedProduct.id)}"/>
 
                     <p:fileUpload fileUploadListener="#{modProductFront.fileUpload}"
                                   multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
                     <p:commandButton value="Update" actionListener="#{modProductFront.updateProduct}"
                                      icon="ui-icon-check" style="margin-top: 1em"
-                                     update=":edit-product:product-detail"/>
+                                     update=":edit-product:product-detail" rendered="#{modProductFront.selectedProduct.id ne null}"/>
+                    <p:commandButton value="Create" actionListener="#{modProductFront.createProduct}"
+                                     icon="ui-icon-check" style="margin-top: 1em"
+                                     update=":edit-product:product-detail" rendered="#{modProductFront.selectedProduct.id eq null}"/>
                 </p:panelGrid>
         <p:messages globalOnly="true"/>
     </h:form>

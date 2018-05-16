@@ -52,7 +52,8 @@ public class ProductDAO implements Serializable {
     @Transactional
     public void deleteProduct(Integer id) {
         em.createQuery("DELETE FROM Product p WHERE p.id = :id")
-            .setParameter("id", id);
+            .setParameter("id", id)
+            .executeUpdate();
     }
 
     @Transactional

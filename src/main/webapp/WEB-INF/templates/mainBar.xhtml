@@ -16,13 +16,13 @@
         <h:form id="topBarLoggedIn" rendered="#{accountHolder.loggedIn}">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Profile" action="loggedIn/profile.xhtml" ajax="false"
+                    <p:commandButton value="Profile" action="loggedIn/profile.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-person" />
                     <p:commandButton value="Admin page" rendered="#{accountHolder.admin}"
-                                     action="admin/users.xhtml" ajax="false"
+                                     action="admin/users.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
                     <p:commandButton value="Modify products" rendered="#{accountHolder.admin}"
-                                     action="admin/products.xhtml" ajax="false"
+                                     action="admin/products.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
                 </f:facet>
 

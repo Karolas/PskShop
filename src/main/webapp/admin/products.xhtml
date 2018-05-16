@@ -13,6 +13,11 @@
                      paginator="true"
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                      rowsPerPageTemplate="10,25,50" lazy="true">
+            <f:facet name="header">
+                <p:commandButton value="Create" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select(true)}">
+                    <f:ajax />
+                </p:commandButton>
+            </f:facet>
             <p:column headerText="Name" filterBy="#{product.name}" filterMatchMode="contains" sortBy="#{product.name}" >
                 <h:outputText value="#{product.name}" />
             </p:column>
@@ -31,10 +36,17 @@
             <!--TODO image-->
 
             <p:column style="text-align: center; width: 100px;">
-                <p:commandButton value="Edit" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select}">
+                <p:commandButton value="Edit" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select(false)}">
                     <f:ajax />
                 </p:commandButton>
             </p:column>
+
+            <p:column style="text-align: center; width: 100px;">
+                <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}">
+                    <p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:column>
+
 
             <f:facet name="paginatorTopLeft">
                 <p:commandButton type="button" icon="fa fa-sync" />

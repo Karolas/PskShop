@@ -27,6 +27,7 @@ import java.util.Map;
 @SessionScoped
 @Named
 public class ModProductFront implements Serializable {
+
     private byte[] bytes;
     @Getter
     @Setter
@@ -56,16 +57,15 @@ public class ModProductFront implements Serializable {
         lazyModel.setRowCount(productUtility.getProductsCountByFilters(new HashMap<String, Object>()));
     }
 
-    public void select(){
-        selectedProduct = this.lazyModel.getRowData();
-    }
-
-    public void upload() {
-        System.out.print("Ikeliau");
+    public void select(boolean isNew){
+        if(isNew)  {
+            selectedProduct = new Product();
+        } else {
+            selectedProduct = this.lazyModel.getRowData();
+        }
     }
 
     public void fileUpload(FileUploadEvent event) throws IOException {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
         InputStream is = event.getFile().getInputstream();
         ByteArrayOutputStream out = new ByteArrayOutputStream();//FileOutputStream(file);
         byte buf[] = new byte[1024];
@@ -80,5 +80,21 @@ public class ModProductFront implements Serializable {
     public void updateProduct() {
         selectedProduct.setImage(bytes);
         productUtility.updateProduct(selectedProduct);
+    }
+
+    public void createProduct() {
+        selectedProduct.setImage(bytes);
+        productUtility.createProduct(selectedProduct);
+    }
+
+    public void deleteProduct(){
+        selectedProduct = this.lazyModel.getRowData();
+        productUtility.deleteProduct(selectedProduct);
+        this.init();
+        this.updateTable();
+    }
+
+    public void updateTable() {
+        RequestContext.getCurrentInstance().update("productsForm:lazyProducts");
     }
 }

@@ -38,4 +38,10 @@ public class ProductUtility implements Serializable {
     public void updateProduct(Product product){
         productDAO.updateProduct(product);
     }
+    public void createProduct(Product product) {
+        productDAO.insertProduct(product);
+    }
+    public void deleteProduct(Product product) {
+        productDAO.deleteProduct(product.getId());
+    }
 }
