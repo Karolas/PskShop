@@ -9,20 +9,20 @@
 <f:view>
     <h:head>
         <meta charset="UTF-8"/>
-        <title>test</title>
+        <title>Admin page</title>
         <h:outputStylesheet name="css/styles.css" />
     </h:head>
 
     <h:body>
-        <h:form id="topBarLoggedIn" rendered="#{accountHolder.loggedIn}">
+        <h:form id="topBarAdmin" rendered="#{accountHolder.admin}">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true" ajax="false"
+                    <p:commandButton value="Main site" action="/index.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-home" />
-                    <p:commandButton value="Profile" action="loggedIn/profile.xhtml?faces-redirect=true" ajax="false"
-                                     icon="ui-icon-person" />
-                    <p:commandButton value="Admin page" rendered="#{accountHolder.admin}"
-                                     action="/admin/users.xhtml?faces-redirect=true" ajax="false"
+                    <p:commandButton value="Users" action="/admin/users.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-extlink" />
+                    <p:commandButton value="Products" rendered="#{accountHolder.admin}"
+                                     action="/admin/products.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
                 </f:facet>
 

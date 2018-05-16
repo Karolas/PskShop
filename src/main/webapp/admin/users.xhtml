@@ -8,55 +8,59 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head/>
 <h:body>
-    <h:form id="usersForm">
-        <p:dataTable id="lazyUsers" var="account" value="#{modAccountFront.lazyModel}" rows="10"
-                     paginator="true"
-                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                     rowsPerPageTemplate="10,25,50" lazy="true">
-            <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains" sortBy="#{account.email}" >
-                <h:outputText value="#{account.email}" />
-            </p:column>
+    <ui:composition template="/WEB-INF/templates/adminBar.xhtml">
+        <ui:define name="content">
+            <h:form id="usersForm">
+                <p:dataTable id="lazyUsers" var="account" value="#{modAccountFront.lazyModel}" rows="10"
+                             paginator="true"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                             rowsPerPageTemplate="10,25,50" lazy="true">
+                    <p:column headerText="Email" filterBy="#{account.email}" filterMatchMode="contains" sortBy="#{account.email}" >
+                        <h:outputText value="#{account.email}" />
+                    </p:column>
 
-            <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains" sortBy="#{account.firstName}">
-                <h:outputText value="#{account.firstName}" />
-            </p:column>
+                    <p:column headerText="First name" filterBy="#{account.firstName}" filterMatchMode="contains" sortBy="#{account.firstName}">
+                        <h:outputText value="#{account.firstName}" />
+                    </p:column>
 
-            <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains" sortBy="#{account.lastName}">
-                <h:outputText value="#{account.lastName}" />
-            </p:column>
+                    <p:column headerText="Last name" filterBy="#{account.lastName}" filterMatchMode="contains" sortBy="#{account.lastName}">
+                        <h:outputText value="#{account.lastName}" />
+                    </p:column>
 
-            <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains" sortBy="#{account.address}">
-                <h:outputText value="#{account.address}" />
-            </p:column>
+                    <p:column headerText="Address" filterBy="#{account.address}" filterMatchMode="contains" sortBy="#{account.address}">
+                        <h:outputText value="#{account.address}" />
+                    </p:column>
 
-            <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains" sortBy="#{account.postalNr}">
-                <h:outputText value="#{account.postalNr}" />
-            </p:column>
+                    <p:column headerText="Postal number" filterBy="#{account.postalNr}" filterMatchMode="contains" sortBy="#{account.postalNr}">
+                        <h:outputText value="#{account.postalNr}" />
+                    </p:column>
 
-            <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
-                <h:outputText value="#{account.telephoneNr}" />
-            </p:column>
-            <p:column style="text-align: center">
-                <p:commandButton value="Block" actionListener="#{modAccountFront.block}" rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
-                    <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
-                </p:commandButton>
-                <p:commandButton value="Unblock" actionListener="#{modAccountFront.unblock}" rendered="#{account.role eq 'Blocked'}">
-                    <p:confirm header="Confirmation" message="Do you really want to unban this user?" icon="ui-icon-alert" />
-                </p:commandButton>
-            </p:column>
+                    <p:column headerText="Telephone number" filterBy="#{account.telephoneNr}" filterMatchMode="contains" sortBy="#{account.telephoneNr}">
+                        <h:outputText value="#{account.telephoneNr}" />
+                    </p:column>
+                    <p:column style="text-align: center">
+                        <p:commandButton value="Block" actionListener="#{modAccountFront.block}" rendered="#{account.role eq 'User' and account.role ne 'Admin'}">
+                            <p:confirm header="Confirmation" message="Do you really want to ban this user?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:commandButton value="Unblock" actionListener="#{modAccountFront.unblock}" rendered="#{account.role eq 'Blocked'}">
+                            <p:confirm header="Confirmation" message="Do you really want to unban this user?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
 
-            <f:facet name="paginatorTopLeft">
-                <p:commandButton type="button" icon="fa fa-sync" />
-            </f:facet>
+                    <f:facet name="paginatorTopLeft">
+                        <p:commandButton type="button" icon="fa fa-sync" />
+                    </f:facet>
 
-            <f:facet name="paginatorBottomRight">
-                <p:commandButton type="button" icon="fa fa-cloud-upload" />
-            </f:facet>
-        </p:dataTable>
-        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-        </p:confirmDialog>
-    </h:form>
+                    <f:facet name="paginatorBottomRight">
+                        <p:commandButton type="button" icon="fa fa-cloud-upload" />
+                    </f:facet>
+                </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>
