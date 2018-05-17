@@ -43,6 +43,11 @@ public class ImageUtility {
         }
     }
 
+    public byte[] getImageFull(Integer productId) {
+        byte[] imageBytes = productUtility.getImage(productId);
+        return imageBytes;
+    }
+
     private Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
 
         int original_width = imgSize.width;

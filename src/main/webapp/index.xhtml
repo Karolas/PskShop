@@ -8,8 +8,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:o="http://omnifaces.org/ui">
 <h:head/>
 <h:body>
-   <h:outputStylesheet library="css" name="styles.css" />
-
    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
       <ui:define name="content">
          <h:form>
@@ -32,14 +30,14 @@
                   Products for Sale
                </f:facet>
 
-               <h:commandLink action="#{productFront.testSelection(product)}">
+               <h:commandLink action="#{productFront.redirectToProductView(product)}">
                   <p:panel header="#{product.name}" style="text-align:center">
                      <h:panelGrid columns="1" style="width:100%">
                         <o:graphicImage value="#{imageUtility.getImage(product.id)}"/>
 
-                        <h:outputText value="#{product.price}" >
+                        <p:outputLabel value="#{product.price}" >
                            <f:convertNumber type="currency" currencySymbol="€" />
-                        </h:outputText>
+                        </p:outputLabel>
                      </h:panelGrid>
                   </p:panel>
                </h:commandLink>

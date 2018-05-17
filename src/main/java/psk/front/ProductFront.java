@@ -9,8 +9,11 @@ import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,10 @@ public class ProductFront implements Serializable {
     @Setter
     private Product selectedProduct;
 
+    @Getter
+    @Setter
+    private int productAmount;
+
     @PostConstruct
     public void loadProducts() {
         products = new LazyDataModel<Product>() {
@@ -42,5 +49,21 @@ public class ProductFront implements Serializable {
                 return productUtility.getProductsPage(first, pageSize, searchString);
             }
         };
+    }
+
+    public void addToCart() {
+
+    }
+
+    public void redirectToProductView(Product product) {
+        selectedProduct = product;
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            ec.redirect("productView.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

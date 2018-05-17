@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:o="http://omnifaces.org/ui">
+<h:head/>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <p:panel header="Product info">
+                    <p:panelGrid style="width: 100%;">
+                        <p:row>
+                            <p:column rowspan="4" style="width: 60%; margin: 0px auto;">
+                                <o:graphicImage value="#{imageUtility.getImageFull(productFront.selectedProduct.id)}"
+                                                style="display: block; margin: 0px auto;"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel style="font-weight: bold;" value="#{productFront.selectedProduct.name}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Amount: #{productFront.selectedProduct.amount}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Add to cart: " />
+
+                                <p:inputText id="sliderTxt" value="#{productFront.productAmount}" />
+                                <p:slider style="width: 50%;" for="sliderTxt" minValue="0" maxValue="#{productFront.selectedProduct.amount}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="#{productFront.selectedProduct.price}" >
+                                    <f:convertNumber type="currency" currencySymbol="€" />
+                                </p:outputLabel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:outputLabel value="#{productFront.selectedProduct.description}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Add to cart" actionListener="#{productFront.addToCart()}" />
+                    </f:facet>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
