@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.omnifaces.util.Faces;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
+import psk.database.entities.CartProducts;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.SecretKeyFactory;
@@ -22,12 +23,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.List;
 
 @Named
 @SessionScoped
 public class AccountAccessUtility implements Serializable {
     @Inject
     private AccountDAO accountDAO;
+
+    @Inject CartUtility cartUtility;
 
     @Inject
     private Provider<AuthenticatedAccountHolder> authenticatedAccountHolderProvider;
@@ -44,6 +48,8 @@ public class AccountAccessUtility implements Serializable {
     }
 
     public void loginAccount(String email, String password) {
+        List<CartProducts> cartProducts = cartUtility.getCartProducts();
+
         Faces.invalidateSession();
         Faces.getSession(true);
 
@@ -52,6 +58,8 @@ public class AccountAccessUtility implements Serializable {
         try {
             Faces.login(email, hashedPassword);
             authenticatedAccountHolderProvider.get().initUser(email);
+
+            cartUtility.mergeCart(cartProducts);
         } catch (ServletException e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,

@@ -50,7 +50,9 @@
                     </p:panelGrid>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Add to cart" actionListener="#{productFront.addToCart()}" />
+                        <p:commandButton value="Add to cart"
+                                         actionListener="#{cartFront.addToCart(productFront.selectedProduct,
+                                                                               productFront.productAmount)}" />
                     </f:facet>
                 </p:panel>
             </h:form>

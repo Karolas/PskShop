@@ -3,6 +3,7 @@ package psk.front;
 import lombok.Getter;
 import lombok.Setter;
 import psk.businessLogic.AccountAccessUtility;
+import psk.businessLogic.CartUtility;
 import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;
@@ -19,6 +20,9 @@ import java.io.Serializable;
 public class RegistrationFront implements Serializable {
     @Inject
     private AccountAccessUtility accountAccessUtility;
+
+    @Inject
+    private CartUtility cartUtility;
 
     @Getter
     @Setter
@@ -63,6 +67,8 @@ public class RegistrationFront implements Serializable {
         account.setRole("User");
 
         accountAccessUtility.addAccount(account, password);
+
+        cartUtility.createCart(account.getId());
 
         registerRedirect();
     }

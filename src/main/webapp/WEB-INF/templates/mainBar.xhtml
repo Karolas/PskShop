@@ -18,8 +18,10 @@
                 <f:facet name="left">
                     <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-home" />
-                    <p:commandButton value="Profile" action="loggedIn/profile.xhtml?faces-redirect=true" ajax="false"
+                    <p:commandButton value="Profile" action="/loggedIn/profile.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-person" />
+                    <p:commandButton value="Cart" action="/cart.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-cart" />
                     <p:commandButton value="Admin page" rendered="#{accountHolder.admin}"
                                      action="/admin/users.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
@@ -35,9 +37,16 @@
 
         <h:form id="topBar" rendered="#{!accountHolder.loggedIn}">
             <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-home" />
+                    <p:commandButton value="Cart" action="/cart.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-cart" />
+                </f:facet>
                 <f:facet name="right">
                     <p:commandButton value="Register" action="register.xhtml" ajax="false"
                                      icon="ui-icon-extlink"/>
+
                     <p:commandButton value="Login" action="login.xhtml" ajax="false"
                                      icon="ui-icon-extlink"/>
                 </f:facet>

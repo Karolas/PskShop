@@ -53,9 +53,9 @@
                                     <f:validateLength minimum="8" />
                                 </p:password>
                                 <p:message for="passwordConfirm" showDetail="true" showSummary="false" display="icon" />
-
-                                <p:commandButton value="Save" update="passwordPannel" actionListener="#{profileFront.updatePassword}" icon="ui-icon-check" />
                             </h:panelGrid>
+
+                            <p:commandButton value="Save" update="passwordPannel" actionListener="#{profileFront.updatePassword}" icon="ui-icon-check" />
                         </p:panel>
                     </h:form>
                 </p:tab>

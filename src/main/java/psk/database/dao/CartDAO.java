@@ -1,6 +1,7 @@
 package psk.database.dao;
 
 
+import psk.database.entities.Account;
 import psk.database.entities.Cart;
 
 import javax.enterprise.context.SessionScoped;
@@ -17,7 +18,17 @@ public class CartDAO implements Serializable {
     private EntityManager em;
 
     @Transactional
-    public void insertProduct(Cart cart) {
-        em.persist(cart);
+    public void createCart(Cart cart) { em.persist(cart); }
+
+    @Transactional
+    public Cart getCartById(Integer id) {
+        return em.find(Cart.class, id);
+    }
+
+    @Transactional
+    public Cart getCartByAccId(Integer accountId) {
+        return em.createQuery("SELECT c FROM Cart c WHERE c.accountId = :accID", Cart.class)
+                .setParameter("accID", accountId)
+                .getSingleResult();
     }
 }
