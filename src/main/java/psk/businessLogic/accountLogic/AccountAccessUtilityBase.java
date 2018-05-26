@@ -1,8 +1,9 @@
-package psk.businessLogic;
+package psk.businessLogic.accountLogic;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.omnifaces.util.Faces;
+import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 import psk.database.entities.CartProducts;
@@ -27,11 +28,9 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class AccountAccessUtility implements Serializable {
+public class AccountAccessUtilityBase implements Serializable, AccountAccessUtility {
     @Inject
     private AccountDAO accountDAO;
-
-    @Inject CartUtility cartUtility;
 
     @Inject
     private Provider<AuthenticatedAccountHolder> authenticatedAccountHolderProvider;
@@ -48,7 +47,7 @@ public class AccountAccessUtility implements Serializable {
     }
 
     public void loginAccount(String email, String password) {
-        List<CartProducts> cartProducts = cartUtility.getCartProducts();
+        //List<CartProducts> cartProducts = cartUtility.getCartProducts();
 
         Faces.invalidateSession();
         Faces.getSession(true);
@@ -59,7 +58,7 @@ public class AccountAccessUtility implements Serializable {
             Faces.login(email, hashedPassword);
             authenticatedAccountHolderProvider.get().initUser(email);
 
-            cartUtility.mergeCart(cartProducts);
+            //cartUtility.mergeCart(cartProducts);
         } catch (ServletException e) {
             FacesContext.getCurrentInstance()
                     .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,

@@ -1,5 +1,6 @@
-package psk.businessLogic;
+package psk.businessLogic.cartLogic;
 
+import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.CartDAO;
 import psk.database.dao.CartProductDAO;
@@ -57,14 +58,43 @@ public class CartUtility implements Serializable {
     public void addProductToCart(Product product, Integer amount) {
         if(accountAccessUtility.isLoggedIn()) {
             Cart cart = cartDAO.getCartById(cartId);
-            cartProductDAO.createLink(cart, product, amount);
+
+            if(cartProductDAO.isProductInCart(cart, product)) {
+                CartProducts cartProduct = cartProductDAO.selectCartProduct(cart, product);
+
+                cartProductDAO.updateAmount(cartProduct, cartProduct.getAmount() + amount);
+            } else {
+                cartProductDAO.insertCartProduct(cart, product, amount);
+            }
+
         } else {
-            CartProducts cartProduct = new CartProducts();
-            cartProduct.setProduct(product);
-            cartProduct.setAmount(amount);
-            offlineCartProducts.add(cartProduct);
+            boolean isProductInCart = false;
+
+            for(CartProducts cartProduct: offlineCartProducts) {
+                if(cartProduct.getProduct().getId().equals(product.getId())) {
+                    product.setAmount(product.getAmount() + amount);
+                    isProductInCart = true;
+                    break;
+                }
+            }
+
+            if(!isProductInCart) {
+                CartProducts cartProduct = new CartProducts();
+                cartProduct.setProduct(product);
+                cartProduct.setAmount(amount);
+                offlineCartProducts.add(cartProduct);
+            }
         }
 
+    }
+
+    @Transactional
+    public void removeFromCart(CartProducts cartProduct) {
+        if(accountAccessUtility.isLoggedIn()) {
+            cartProductDAO.deleteCartProduct(cartProduct);
+        } else {
+            offlineCartProducts.remove(cartProduct);
+        }
     }
 
     @Transactional

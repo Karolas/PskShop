@@ -2,8 +2,8 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
-import psk.businessLogic.AccountAccessUtility;
-import psk.businessLogic.CartUtility;
+import psk.businessLogic.accountLogic.AccountAccessUtility;
+import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;

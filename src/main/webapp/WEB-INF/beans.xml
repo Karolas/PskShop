@@ -9,4 +9,7 @@
     <alternatives>
         <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
     </alternatives>
+    <decorators>
+        <class>psk.businessLogic.cartLogic.cartAccAccessUtilityDecorator</class>
+    </decorators>
 </beans>

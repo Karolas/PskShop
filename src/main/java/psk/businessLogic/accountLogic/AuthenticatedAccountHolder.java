@@ -1,4 +1,4 @@
-package psk.businessLogic;
+package psk.businessLogic.accountLogic;
 
 import lombok.Getter;
 import psk.businessLogic.authentication.LoggedIn;

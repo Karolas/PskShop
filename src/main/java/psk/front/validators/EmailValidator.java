@@ -12,7 +12,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import org.primefaces.validate.ClientValidator;
-import psk.businessLogic.AuthenticatedAccountHolder;
 import psk.database.dao.AccountDAO;
 
 @FacesValidator("emailValidator")

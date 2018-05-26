@@ -26,7 +26,8 @@ public class Cart implements Serializable {
 
     @OneToMany(
             mappedBy = "cart",
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.MERGE,
+                       CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
     private List<CartProducts> products = new ArrayList<>();

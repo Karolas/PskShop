@@ -1,6 +1,6 @@
 package psk.front.filters;
 
-import psk.businessLogic.AuthenticatedAccountHolder;
+import psk.businessLogic.accountLogic.AuthenticatedAccountHolder;
 
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;

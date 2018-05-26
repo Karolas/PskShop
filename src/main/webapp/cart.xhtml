@@ -11,9 +11,9 @@
 <h:body>
     <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
         <ui:define name="content">
-            <h:form>
+            <h:form id="cartForm">
                 <p:panel id="cart" header="Your cart" style="margin-bottom:20px">
-                    <p:dataTable var="cartProduct" value="#{cartFront.cartProducts}" id="cartProducts">
+                    <p:dataTable id="cartProductsTable" var="cartProduct" value="#{cartFront.cartProducts}">
                         <p:column headerText="Image">
                             <o:graphicImage value="#{imageUtility.getImage(cartProduct.product.id)}"/>
                         </p:column>
@@ -29,7 +29,8 @@
                             </p:outputLabel>
                         </p:column>
                         <p:column headerText="Action">
-                            <p:commandButton value="Remove" />
+                            <p:commandButton value="Remove" action="#{cartFront.removeFromCart(cartProduct)}"
+                                             ajax="false"/>
                         </p:column>
                     </p:dataTable>
                 </p:panel>

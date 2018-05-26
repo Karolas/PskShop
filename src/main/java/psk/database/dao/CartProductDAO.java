@@ -19,7 +19,16 @@ public class CartProductDAO implements Serializable {
     private EntityManager em;
 
     @Transactional
-    public void createLink(Cart cart, Product product, Integer amount) {
+    public CartProducts selectCartProduct(Cart cart, Product product) {
+        CartProductsPK cartProductsPK = new CartProductsPK();
+        cartProductsPK.setProductId(product.getId());
+        cartProductsPK.setCartId(cart.getId());
+
+        return em.find(CartProducts.class, cartProductsPK);
+    }
+
+    @Transactional
+    public void insertCartProduct(Cart cart, Product product, Integer amount) {
         CartProducts cartProducts = new CartProducts();
         CartProductsPK cartProductsPK = new CartProductsPK();
 
@@ -32,5 +41,30 @@ public class CartProductDAO implements Serializable {
         cartProducts.setAmount(amount);
 
         em.persist(cartProducts);
+    }
+
+    @Transactional
+    public boolean isProductInCart(Cart cart, Product product) {
+        CartProductsPK cartProductsPK = new CartProductsPK();
+        cartProductsPK.setCartId(cart.getId());
+        cartProductsPK.setProductId(product.getId());
+
+        long count =  (long)em.createQuery("SELECT COUNT(1) FROM CartProducts cp WHERE cp.id = :id")
+                            .setParameter("id", cartProductsPK)
+                            .getSingleResult();
+
+        return count > 0;
+    }
+
+    @Transactional
+    public void updateAmount(CartProducts cartProduct, Integer amount) {
+        em.find(CartProducts.class, cartProduct.getId()).setAmount(amount);
+    }
+
+    @Transactional
+    public void deleteCartProduct(CartProducts cartProduct) {
+        CartProducts cartProducts = em.find(CartProducts.class, cartProduct.getId());
+
+        em.remove(cartProducts);
     }
 }

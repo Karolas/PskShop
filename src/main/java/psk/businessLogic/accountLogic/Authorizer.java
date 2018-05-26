@@ -1,4 +1,4 @@
-package psk.businessLogic;
+package psk.businessLogic.accountLogic;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 import psk.businessLogic.authentication.AccountActive;
