@@ -33,6 +33,13 @@
                                              ajax="false"/>
                         </p:column>
                     </p:dataTable>
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{cartFront.totalPrice}">
+                            <f:convertNumber type="currency" currencySymbol="€" />
+                        </p:outputLabel>
+                        <p:outputLabel value="You have to login to order" rendered="#{!accountHolder.loggedIn}"/>
+                        <p:commandButton value="Order" rendered="#{accountHolder.loggedIn}" />
+                    </f:facet>
                 </p:panel>
             </h:form>
         </ui:define>

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @SessionScoped
@@ -25,8 +26,8 @@ public class CartFront implements Serializable {
         return cartUtility.getCartProducts();
     }
 
-    public void addToCart(Product product, Integer amount) {
-        cartUtility.addProductToCart(product, amount);
+    public void addToCart(Product product) {
+        cartUtility.addProductToCart(product, 1);
     }
 
     public void removeFromCart(CartProducts cartProduct) {
@@ -37,5 +38,17 @@ public class CartFront implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = new BigDecimal(0);
+
+        for (CartProducts cartProduct: getCartProducts()) {
+            BigDecimal productPrice = cartProduct.getProduct().getPrice()
+                                        .multiply(new BigDecimal(cartProduct.getAmount()));
+            totalPrice = totalPrice.add(productPrice);
+        }
+
+        return totalPrice;
     }
 }

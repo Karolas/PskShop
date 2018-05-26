@@ -14,25 +14,12 @@
                 <p:panel header="Product info">
                     <p:panelGrid style="width: 100%;">
                         <p:row>
-                            <p:column rowspan="4" style="width: 60%; margin: 0px auto;">
+                            <p:column rowspan="2" style="width: 60%; margin: 0px auto;">
                                 <o:graphicImage value="#{imageUtility.getImageFull(productFront.selectedProduct.id)}"
                                                 style="display: block; margin: 0px auto;"/>
                             </p:column>
                             <p:column>
                                 <p:outputLabel style="font-weight: bold;" value="#{productFront.selectedProduct.name}" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel value="Amount: #{productFront.selectedProduct.amount}" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel value="Add to cart: " />
-
-                                <p:inputText id="sliderTxt" value="#{productFront.productAmount}" />
-                                <p:slider style="width: 50%;" for="sliderTxt" minValue="0" maxValue="#{productFront.selectedProduct.amount}"/>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -51,8 +38,7 @@
 
                     <f:facet name="footer">
                         <p:commandButton value="Add to cart"
-                                         actionListener="#{cartFront.addToCart(productFront.selectedProduct,
-                                                                               productFront.productAmount)}" />
+                                         actionListener="#{cartFront.addToCart(productFront.selectedProduct)}" />
                     </f:facet>
                 </p:panel>
             </h:form>

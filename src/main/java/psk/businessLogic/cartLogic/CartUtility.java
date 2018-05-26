@@ -72,7 +72,7 @@ public class CartUtility implements Serializable {
 
             for(CartProducts cartProduct: offlineCartProducts) {
                 if(cartProduct.getProduct().getId().equals(product.getId())) {
-                    product.setAmount(product.getAmount() + amount);
+                    cartProduct.setAmount(cartProduct.getAmount() + amount);
                     isProductInCart = true;
                     break;
                 }
