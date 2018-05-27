@@ -3,6 +3,7 @@ package psk.database.dao;
 
 import org.primefaces.model.SortOrder;
 import psk.Utils;
+import psk.database.entities.Account;
 import psk.database.entities.Order;
 
 import javax.enterprise.context.SessionScoped;
@@ -37,6 +38,7 @@ public class OrderDAO implements Serializable {
         order1.setStatus(order.getStatus());
         order1.setProducts(order.getProducts());
     }
+
     @Transactional
     public Order getOrderById(Integer id) {
         return em.find(Order.class, id);
@@ -46,11 +48,13 @@ public class OrderDAO implements Serializable {
     public int count(String productNameCriteria) {
         long count = em.createQuery("SELECT COUNT(1) FROM Product p WHERE p.name like :name", Long.class)
                 .setParameter("name", "%" + productNameCriteria + "%").getSingleResult();
-
-
         return (int)count;
     }
 
+    public List<Order> getAllOrders(Account account) {
+        return em.createQuery("SELECT o FROM  Order o where o.account.id = :accountId")
+                .setParameter("accountId", account.getId()).getResultList();
+    }
 
     public int countWithilters(Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -69,6 +73,7 @@ public class OrderDAO implements Serializable {
         return utils.getFilterCondition(cb, myObj, filters);
     }
 
+    @Transactional
     public List<Order> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);

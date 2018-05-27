@@ -25,6 +25,10 @@ public class Order implements Serializable {
     @Column(name= "order_created")
     private Timestamp orderCreated;
 
+    @JoinColumn(name = "account_id", referencedColumnName = "ID")
+    @ManyToOne
+    private Account account;
+
     @OneToMany(
             mappedBy = "order",
             cascade = {CascadeType.MERGE,
