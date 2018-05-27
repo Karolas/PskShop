@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Title</title>
+</head>
+<body>
+
+
+<ui:composition template="/WEB-INF/templates/adminBar.xhtml">
+    <ui:define name="content">
+        <h:form id="purchaseHistoryForm">
+            <p:dataTable id="lazyPurchaseHistoryItems" var="historyItem" value="#{modPurchaseHistoryFront.lazyModel}" rows="10"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                         rowsPerPageTemplate="10,25,50" lazy="true">
+<!--TODO LAZY = true-->
+                <f:facet name="header">
+                    <p:commandButton value="Create" action="/admin/edit-product?faces-redirect=true" actionListener="#{modPurchaseHistoryFront.select(true)}">
+                        <f:ajax />
+                    </p:commandButton>
+                </f:facet>
+                <p:column headerText="Name" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
+                    <h:outputText value="#{historyItem.id}" />
+                </p:column>
+
+                <p:column headerText="Price" filterBy="#{historyItem.status}" filterMatchMode="contains" sortBy="#{historyItem.status}">
+                    <h:outputText value="#{historyItem.status}" />
+                </p:column>
+
+                <p:column headerText="Amount" filterBy="#{historyItem.orderCreated}" filterMatchMode="contains" sortBy="#{historyItem.orderCreated}">
+                    <h:outputText value="#{historyItem.orderCreated}" />
+                </p:column>
+
+                <!--TODO image-->
+
+                <p:column style="text-align: center; width: 100px;">
+                    <p:commandButton value="Edit" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select(false)}">
+                        <f:ajax />
+                    </p:commandButton>
+                </p:column>
+
+                <p:column style="text-align: center; width: 100px;">
+                    <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}">
+                        <p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+
+                <f:facet name="paginatorTopLeft">
+                    <p:commandButton type="button" icon="fa fa-sync" />
+                </f:facet>
+
+                <f:facet name="paginatorBottomRight">
+                    <p:commandButton type="button" icon="fa fa-cloud-upload" />
+                </f:facet>
+            </p:dataTable>
+            <!--<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">-->
+                <!--<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />-->
+                <!--<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />-->
+            <!--</p:confirmDialog>-->
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+
+</body>
+</html>

@@ -8,11 +8,11 @@
         <param-value>Development</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
-        <!--<param-value>admin</param-value>-->
-    </context-param>
+    <!--<context-param>-->
+        <!--<param-name>primefaces.THEME</param-name>-->
+        <!--<param-value>bootstrap</param-value>-->
+        <!--&lt;!&ndash;<param-value>admin</param-value>&ndash;&gt;-->
+    <!--</context-param>-->
 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
