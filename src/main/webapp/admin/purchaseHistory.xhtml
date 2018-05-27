@@ -20,12 +20,6 @@
                          paginator="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="10,25,50" lazy="true">
-
-                <f:facet name="header">
-                    <p:commandButton value="Create" action="/admin/edit-product?faces-redirect=true" actionListener="#{modPurchaseHistoryFront.select()}">
-                        <f:ajax />
-                    </p:commandButton>
-                </f:facet>
                 <p:column headerText="Purchase ID" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
                     <h:outputText value="#{historyItem.id}" />
                 </p:column>
@@ -39,7 +33,7 @@
                 </p:column>
 
                 <p:column style="text-align: center; width: 100px;">
-                    <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.select()}" rendered="#{historyItem.status eq 'In progress'}">
+                    <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.select}" rendered="#{historyItem.status eq 'In Progress'}">
                         <f:ajax />
                     </p:commandButton>
                 </p:column>

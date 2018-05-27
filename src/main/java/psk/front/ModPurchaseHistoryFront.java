@@ -23,7 +23,6 @@ import java.util.Map;
 @Named
 public class ModPurchaseHistoryFront {
 
-    private byte[] bytes;
     @Getter
     @Setter
     private LazyDataModel<Order> lazyModel;
@@ -53,6 +52,7 @@ public class ModPurchaseHistoryFront {
     }
 
     public void select() {
+        System.out.println("lala");
         selectedOrder = this.lazyModel.getRowData();
         selectedOrder.setStatus("Completed");
         purchaseHistoryUtility.updateOrder(selectedOrder);
