@@ -3,10 +3,12 @@ package psk.front;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import psk.businessLogic.cartLogic.CartUtility;
+import psk.database.entities.Cart;
 import psk.database.entities.CartProducts;
 import psk.database.entities.Product;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -51,5 +53,15 @@ public class CartFront implements Serializable {
         }
 
         return totalPrice;
+    }
+
+    public void redirectToPaymentData(Cart cart) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            ec.redirect("paymentData.xhtml?productId=" + cart.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

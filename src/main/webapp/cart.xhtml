@@ -38,7 +38,8 @@
                             <f:convertNumber type="currency" currencySymbol="€" />
                         </p:outputLabel>
                         <p:outputLabel value="You have to login to order" rendered="#{!accountHolder.loggedIn}"/>
-                        <p:commandButton value="Order" rendered="#{accountHolder.loggedIn}" />
+                        <p:commandButton value="Order" action="paymentData?faces-redirect=true"
+                                         rendered="#{accountHolder.loggedIn}" icon="ui-icon-check" />
                     </f:facet>
                 </p:panel>
             </h:form>

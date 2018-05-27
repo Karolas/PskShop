@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+        <ui:define name="content">
+            <p:tabView>
+                <p:tab title="Delivery and payment data">
+                    <h:form>
+                        <p:panel id="paymentDataPannel" header="#{authenticatedAccount.email}">
+                        <p:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="firstname" value="Delivery firstname:" />
+                            <p:inputText id="firstname" value="#{profileFront.account.firstName}" label="Delivery firstname"/>
+
+                            <p:outputLabel for="lastname" value="Delivery lastname:" />
+                            <p:inputText id="lastname" value="#{profileFront.account.lastName}" label="Delivery lastname" />
+
+                            <p:outputLabel for="address" value="Delivery address:" />
+                            <p:inputText id="address" value="#{profileFront.account.address}" label="Delivery address" />
+
+                            <p:outputLabel for="postalNr" value="Delivery postal Nr.:" />
+                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}" label="Delivery postal Nr." />
+
+                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}" label="Telephone Nr." />
+                        </p:panelGrid>
+                        <p:separator/>
+                        <p:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="cardHolder" value="Card holder:" />
+                            <p:inputText id="cardHolder" value="#{paymentFront.cardHolder}" label="Card holder"/>
+
+                            <p:outputLabel for="cardNumber" value="Card number:" />
+                            <p:inputText id="cardNumber" value="#{paymentFront.cardNumber}" label="Card number"/>
+
+                            <p:outputLabel for="expirationYear" value="Card expiration year:" />
+                            <p:inputText id="expirationYear" value="#{paymentFront.expirationYear}" label="Card expiration year"/>
+
+                            <p:outputLabel for="expirationMonth" value="Card expiration month:" />
+                            <p:inputText id="expirationMonth" value="#{paymentFront.expirationMonth}" label="Card expiration month"/>
+
+                            <p:outputLabel for="cvv" value="cvv security code:" />
+                            <p:inputText id="cvv" value="#{paymentFront.cvv}" label="cvv security code"/>
+                        </p:panelGrid>
+
+                        <p:commandButton value="Pay" />
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+<!--                <p:tab title="Change password">
+                    <h:form>
+                        <p:panel id="passwordPannel" header="#{authenticatedAccount.email}">
+                            <p:messages id="msgs" />
+
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel for="password" value="New password:" />
+                                <p:password id="password" value="#{profileFront.password}" required="true" label="Password">
+                                    <f:validateLength minimum="8" />
+                                    <f:validator validatorId="passwordValidator" />
+                                </p:password>
+                                <p:message for="password" showDetail="true" showSummary="false" display="icon" />
+
+                                <p:outputLabel for="passwordConfirm" value="Confirm new password:" />
+                                <p:password id="passwordConfirm" value="#{profileFront.repeatPassword}" required="true" label="Password">
+                                    <f:validateLength minimum="8" />
+                                </p:password>
+                                <p:message for="passwordConfirm" showDetail="true" showSummary="false" display="icon" />
+                            </h:panelGrid>
+
+                            <p:commandButton value="Save" update="passwordPannel" actionListener="#{profileFront.updatePassword}" icon="ui-icon-check" />
+                        </p:panel>
+                    </h:form>
+                </p:tab>-->
+            </p:tabView>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
