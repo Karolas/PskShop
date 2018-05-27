@@ -45,4 +45,20 @@ public class OrderFront {
         orderProductList.add(orderProduct);
         orderProductList.add(orderProduct);
     }
+
+    public BigDecimal getTotalPrice(Integer amount, BigDecimal price){
+        return price.multiply(new BigDecimal(amount));
+    }
+
+    public BigDecimal getTotalPriceOfOrder(Order order) {
+        BigDecimal totalPrice = new BigDecimal(0);
+
+        for (OrderProduct orderProduct: order.getProducts()) {
+            BigDecimal productPrice = orderProduct.getPrice()
+                    .multiply(new BigDecimal(orderProduct.getAmount()));
+            totalPrice = totalPrice.add(productPrice);
+        }
+
+        return totalPrice;
+    }
 }
