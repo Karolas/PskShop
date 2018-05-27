@@ -1,34 +1,35 @@
 package psk.database.entities;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "orders")
 @Getter
 @Setter
-public class Cart implements Serializable {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "account_id")
-    private Integer accountId;
+    @Column(name = "status")
+    private String status;
+
+    @Column(name= "order_created")
+    private Timestamp orderCreated;
 
     @OneToMany(
-            mappedBy = "cart",
+            mappedBy = "order",
             cascade = {CascadeType.MERGE,
                        CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
-    private List<CartProducts> products = new ArrayList<>();
+    private List<OrderProduct> products = new ArrayList<>();
 }
