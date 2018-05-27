@@ -14,6 +14,7 @@ import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -56,6 +57,16 @@ public class ModProductFront implements Serializable {
             }
         };
         lazyModel.setRowCount(productUtility.getProductsCountByFilters(new HashMap<String, Object>()));
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        if(params.size() > 0){
+            Integer productId = new Integer(params.get("productId"));
+            if(productId == 0){
+                selectedProduct = new Product();
+            } else {
+                selectedProduct = productUtility.getProduct(productId);
+            }
+        }
     }
 
     public void select(boolean isNew){
@@ -63,6 +74,20 @@ public class ModProductFront implements Serializable {
             selectedProduct = new Product();
         } else {
             selectedProduct = this.lazyModel.getRowData();
+        }
+    }
+
+    public void redirectToEditProductEdit(Product product) {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            if(product == null){
+                ec.redirect("edit-product.xhtml?productId=0");
+            } else {
+                ec.redirect("edit-product.xhtml?productId=" + product.getId());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -11,6 +11,8 @@
 <h:body>
     <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
         <ui:define name="content">
+            <p:panel header="You have no orders." rendered="#{empty orderFront.orderList}">
+            </p:panel>
             <h:form>
                 <p:dataScroller value="#{orderFront.orderList}" var="order" chunkSize="10">
                     <p:panel header="Order information">
@@ -33,8 +35,8 @@
                                   </h:panelGrid>
                               </p:outputPanel>
                           </h:panelGrid>
-                            <p:repeat value="#{order.products}" var="product">
-                                <hr/>
+                        <hr style="background: grey; height: 3px"/>
+                        <p:repeat value="#{order.products}" var="product">
 
                                 <h:panelGrid  columns="8" cellpadding="20">
                                     <h:outputText value="Name:" />
@@ -52,9 +54,9 @@
                                         <f:convertNumber type="currency" currencySymbol="€" />
                                     </p:outputLabel>
                                 </h:panelGrid>
-                            </p:repeat>
+                            <hr/>
+                        </p:repeat>
                         </p:panel>
-                    <hr style="background: grey; height: 3px"/>
                 </p:dataScroller>
             </h:form>
         </ui:define>
