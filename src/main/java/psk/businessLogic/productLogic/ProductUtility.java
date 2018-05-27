@@ -7,6 +7,7 @@ import psk.database.entities.Product;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,10 @@ public class ProductUtility implements Serializable {
     @Inject
     private ProductDAO productDAO;
 
+    @Inject
+    private ImageProvider imageProvider;
+
+    @Transactional
     public Product getProduct(Integer productId) {
         return productDAO.selectProductById(productId);
     }
@@ -42,8 +47,11 @@ public class ProductUtility implements Serializable {
     public void updateProduct(Product product){
         productDAO.updateProduct(product);
     }
-    public void createProduct(Product product) {
+
+    public void createProduct(Product product, byte[] image) {
         productDAO.insertProduct(product);
+
+        imageProvider.saveImage(image, product.getId());
     }
     public void deleteProduct(Product product) {
         productDAO.deleteProduct(product.getId());

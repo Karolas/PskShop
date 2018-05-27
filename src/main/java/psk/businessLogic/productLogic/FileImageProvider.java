@@ -63,9 +63,10 @@ public class FileImageProvider implements ImageProvider {
             ByteArrayInputStream bais = new ByteArrayInputStream(image);
             BufferedImage bufferedImage = ImageIO.read(bais);
             if(listOfFiles != null) {
-                ImageIO.write(bufferedImage, "png", new File(imageLocation + "\\" + listOfFiles.length));
+                ImageIO.write(bufferedImage, "png",
+                        new File(productImageLocation + "\\" + listOfFiles.length + ".png"));
             } else {
-                ImageIO.write(bufferedImage, "png", new File(imageLocation + "\\0"));
+                ImageIO.write(bufferedImage, "png", new File(productImageLocation + "\\0.png"));
             }
             bais.close();
         }

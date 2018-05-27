@@ -27,8 +27,8 @@ public class DBImageProvider implements ImageProvider {
         return productUtility.getImage(productId);
     }
 
-    @Override
+    @Transactional
     public void saveImage(byte[] image, Integer productId) {
-
+        productUtility.getProduct(productId).setImage(image);
     }
 }
