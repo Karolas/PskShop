@@ -11,9 +11,10 @@ import psk.database.entities.Order;
 import psk.database.entities.OrderProduct;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @ViewScoped
 @Named
-public class ModPurchaseHistoryFront {
+public class ModPurchaseHistoryFront implements Serializable {
 
     @Getter
     @Setter

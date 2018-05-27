@@ -28,22 +28,23 @@
                     <h:outputText value="#{historyItem.orderCreated}" />
                 </p:column>
 
+                <p:column headerText="Ordered by" filterBy="#{historyItem.account.firstName}" filterMatchMode="contains" sortBy="#{historyItem.account.firstName}">
+                    <h:outputText value="#{historyItem.account.firstName} #{historyItem.account.lastName}" />
+                </p:column>
+
+                <p:column headerText="Products" filterBy="#{historyItem.products}" filterMatchMode="contains" sortBy="#{historyItem.products}">
+                    <h:outputText value="#{historyItem.products}" />
+                </p:column>
+
                 <p:column headerText="Status" filterBy="#{historyItem.status}" filterMatchMode="contains" sortBy="#{historyItem.status}">
                     <h:outputText value="#{historyItem.status}" />
                 </p:column>
 
                 <p:column style="text-align: center; width: 100px;">
                     <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.select}" rendered="#{historyItem.status eq 'In Progress'}">
-                        <f:ajax />
+                        <p:confirm header="Confirmation" message="Do you really want to confirm this purchase?" icon="ui-icon-alert" />
                     </p:commandButton>
                 </p:column>
-
-                <!--confirmation-->
-                <!--<p:column style="text-align: center; width: 100px;">-->
-                    <!--<p:commandButton value="Confirm" actionListener="#{modProductFront.deleteProduct}">-->
-                        <!--<p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />-->
-                    <!--</p:commandButton>-->
-                <!--</p:column>-->
 
                 <f:facet name="paginatorTopLeft">
                     <p:commandButton type="button" icon="fa fa-sync" />
@@ -53,10 +54,10 @@
                     <p:commandButton type="button" icon="fa fa-cloud-upload" />
                 </f:facet>
             </p:dataTable>
-            <!--<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">-->
-                <!--<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />-->
-                <!--<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />-->
-            <!--</p:confirmDialog>-->
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 </ui:composition>
