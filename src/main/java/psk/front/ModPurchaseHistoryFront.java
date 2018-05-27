@@ -38,6 +38,10 @@ public class ModPurchaseHistoryFront implements Serializable {
     @Getter
     @Setter
     private UploadedFile uploadedFile;
+//
+//    @Getter
+//    @Setter
+//    private  selectedProducts ArrayList<Product>;
 
     @PostConstruct
     public void init() {
