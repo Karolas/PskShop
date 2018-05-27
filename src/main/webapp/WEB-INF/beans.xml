@@ -8,6 +8,8 @@
 
     <alternatives>
         <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
+
+        <class>psk.businessLogic.productLogic.DBImageProvider</class>
     </alternatives>
     <decorators>
         <class>psk.businessLogic.cartLogic.cartAccAccessUtilityDecorator</class>

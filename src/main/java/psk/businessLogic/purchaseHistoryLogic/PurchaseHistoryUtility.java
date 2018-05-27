@@ -37,8 +37,8 @@ public class PurchaseHistoryUtility implements Serializable {
     public List<Order> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         return orderDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
     }
-    public void updateProduct(Order order){
-        orderDAO.updateProduct(order);
+    public void updateOrder(Order order){
+        orderDAO.updateOrder(order);
     }
 //    public void createProduct(Order order) {
 //        orderDAO.insertProduct(order);
