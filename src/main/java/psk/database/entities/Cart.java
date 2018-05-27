@@ -21,7 +21,7 @@ public class Cart implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "acount_id")
+    @Column(name = "account_id")
     private Integer accountId;
 
     @OneToMany(
