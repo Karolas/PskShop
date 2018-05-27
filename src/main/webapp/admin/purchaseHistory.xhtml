@@ -20,38 +20,36 @@
                          paginator="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="10,25,50" lazy="true">
-<!--TODO LAZY = true-->
+
                 <f:facet name="header">
-                    <p:commandButton value="Create" action="/admin/edit-product?faces-redirect=true" actionListener="#{modPurchaseHistoryFront.select(true)}">
+                    <p:commandButton value="Create" action="/admin/edit-product?faces-redirect=true" actionListener="#{modPurchaseHistoryFront.select()}">
                         <f:ajax />
                     </p:commandButton>
                 </f:facet>
-                <p:column headerText="Name" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
+                <p:column headerText="Purchase ID" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
                     <h:outputText value="#{historyItem.id}" />
                 </p:column>
 
-                <p:column headerText="Price" filterBy="#{historyItem.status}" filterMatchMode="contains" sortBy="#{historyItem.status}">
-                    <h:outputText value="#{historyItem.status}" />
-                </p:column>
-
-                <p:column headerText="Amount" filterBy="#{historyItem.orderCreated}" filterMatchMode="contains" sortBy="#{historyItem.orderCreated}">
+                <p:column headerText="Date" filterBy="#{historyItem.orderCreated}" filterMatchMode="contains" sortBy="#{historyItem.orderCreated}">
                     <h:outputText value="#{historyItem.orderCreated}" />
                 </p:column>
 
-                <!--TODO image-->
+                <p:column headerText="Status" filterBy="#{historyItem.status}" filterMatchMode="contains" sortBy="#{historyItem.status}">
+                    <h:outputText value="#{historyItem.status}" />
+                </p:column>
 
                 <p:column style="text-align: center; width: 100px;">
-                    <p:commandButton value="Edit" action="/admin/edit-product?faces-redirect=true" actionListener="#{modProductFront.select(false)}">
+                    <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.select()}" rendered="#{historyItem.status eq 'In progress'}">
                         <f:ajax />
                     </p:commandButton>
                 </p:column>
 
-                <p:column style="text-align: center; width: 100px;">
-                    <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}">
-                        <p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />
-                    </p:commandButton>
-                </p:column>
-
+                <!--confirmation-->
+                <!--<p:column style="text-align: center; width: 100px;">-->
+                    <!--<p:commandButton value="Confirm" actionListener="#{modProductFront.deleteProduct}">-->
+                        <!--<p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />-->
+                    <!--</p:commandButton>-->
+                <!--</p:column>-->
 
                 <f:facet name="paginatorTopLeft">
                     <p:commandButton type="button" icon="fa fa-sync" />
