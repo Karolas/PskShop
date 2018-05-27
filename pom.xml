@@ -106,6 +106,7 @@
             <artifactId>admin-theme</artifactId>
             <version>1.0.0-RC15</version>
         </dependency>
+
         <!-- DeltaSpike CORE -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
