@@ -11,12 +11,13 @@ import psk.database.entities.Account;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.*;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class ModAccountFront implements Serializable {
     @Getter

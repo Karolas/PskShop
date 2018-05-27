@@ -8,6 +8,7 @@ import psk.database.entities.Product;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class CartFront implements Serializable {
 

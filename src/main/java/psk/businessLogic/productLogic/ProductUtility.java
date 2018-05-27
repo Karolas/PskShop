@@ -17,6 +17,10 @@ public class ProductUtility implements Serializable {
     @Inject
     private ProductDAO productDAO;
 
+    public Product getProduct(Integer productId) {
+        return productDAO.selectProductById(productId);
+    }
+
     public byte[] getImage(Integer productId) {
         return productDAO.selectProductById(productId).getImage();
     }

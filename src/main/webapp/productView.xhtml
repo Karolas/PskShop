@@ -15,30 +15,30 @@
                     <p:panelGrid style="width: 100%;">
                         <p:row>
                             <p:column rowspan="2" style="width: 60%; margin: 0px auto;">
-                                <o:graphicImage value="#{imageUtility.getImageFull(productFront.selectedProduct.id)}"
+                                <o:graphicImage value="#{imageUtility.getImageFull(productDetailFront.product.id)}"
                                                 style="display: block; margin: 0px auto;"/>
                             </p:column>
                             <p:column>
-                                <p:outputLabel style="font-weight: bold;" value="#{productFront.selectedProduct.name}" />
+                                <p:outputLabel style="font-weight: bold;" value="#{productDetailFront.product.name}" />
                             </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:outputLabel value="#{productFront.selectedProduct.price}" >
+                                <p:outputLabel value="#{productDetailFront.product.price}" >
                                     <f:convertNumber type="currency" currencySymbol="€" />
                                 </p:outputLabel>
                             </p:column>
                         </p:row>
                         <p:row>
                             <p:column colspan="2">
-                                <p:outputLabel value="#{productFront.selectedProduct.description}" />
+                                <p:outputLabel value="#{productDetailFront.product.description}" />
                             </p:column>
                         </p:row>
                     </p:panelGrid>
 
                     <f:facet name="footer">
                         <p:commandButton value="Add to cart"
-                                         actionListener="#{cartFront.addToCart(productFront.selectedProduct)}" />
+                                         actionListener="#{cartFront.addToCart(productDetailFront.product)}" />
                     </f:facet>
                 </p:panel>
             </h:form>

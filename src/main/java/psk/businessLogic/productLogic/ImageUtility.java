@@ -1,5 +1,7 @@
 package psk.businessLogic.productLogic;
 
+import org.omnifaces.cdi.GraphicImageBean;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -10,8 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@Named
-@ApplicationScoped
+@GraphicImageBean
 public class ImageUtility {
     private static Dimension MAX_DIMENSION = new Dimension(200, 200);
 

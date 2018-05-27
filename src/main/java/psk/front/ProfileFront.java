@@ -8,11 +8,12 @@ import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class ProfileFront implements Serializable {
     @Inject

@@ -30,7 +30,7 @@
                   Products for Sale
                </f:facet>
 
-               <h:commandLink action="#{productFront.redirectToProductView(product)}">
+               <h:commandLink action="#{productFront.redirectToProductView(product)}" ajax="true">
                   <p:panel header="#{product.name}" style="text-align:center">
                      <h:panelGrid columns="1" style="width:100%">
                         <o:graphicImage value="#{imageUtility.getImage(product.id)}"/>
