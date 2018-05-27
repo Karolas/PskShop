@@ -22,6 +22,8 @@
                                      icon="ui-icon-person" />
                     <p:commandButton value="Cart" action="/cart.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-cart" />
+                    <p:commandButton value="Order history" action="/orderHistory.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-calendar" rendered="#{accountHolder.loggedIn}"/>
                     <p:commandButton value="Admin page" rendered="#{accountHolder.admin}"
                                      action="/admin/users.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
