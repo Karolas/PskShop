@@ -2,6 +2,7 @@ package psk.businessLogic.purchaseHistoryLogic;
 
 import org.primefaces.model.SortOrder;
 import psk.database.dao.OrderDAO;
+import psk.database.entities.Account;
 import psk.database.entities.Order;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,13 +14,17 @@ import java.util.Map;
 
 @Named
 @SessionScoped
-public class purchaseHistoryUtility implements Serializable {
+public class PurchaseHistoryUtility implements Serializable {
 
     @Inject
     private OrderDAO orderDAO;
 
     public int getProductsCount(String nameCriteria) {
         return orderDAO.count(nameCriteria);
+    }
+
+    public List<Order> getAllOrders(Account account){
+        return orderDAO.getAllOrders(account);
     }
 
 //    public List<Order> getProductsPage(int first, int pageSize, String nameCriteria) {

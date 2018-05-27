@@ -6,11 +6,9 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
-import psk.businessLogic.productLogic.ProductUtility;
-import psk.businessLogic.purchaseHistoryLogic.purchaseHistoryUtility;
+import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
 import psk.database.entities.Order;
 import psk.database.entities.OrderProduct;
-import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
@@ -31,7 +29,7 @@ public class ModPurchaseHistoryFront {
     private LazyDataModel<Order> lazyModel;
 
     @Inject
-    private purchaseHistoryUtility purchaseHistoryUtility;
+    private PurchaseHistoryUtility purchaseHistoryUtility;
 
     @Getter
     @Setter
