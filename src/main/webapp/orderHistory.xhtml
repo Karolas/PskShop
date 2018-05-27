@@ -13,32 +13,47 @@
         <ui:define name="content">
             <h:form>
                 <p:dataScroller value="#{orderFront.orderList}" var="order" chunkSize="10">
-                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                          <p:outputPanel>
-                              <h:panelGrid columns="6" cellpadding="20">
-                                  <h:outputText value="Order number:" />
-                                  <h:outputText value="##{order.id}" style="font-weight: bold"/>
+                    <p:panel header="Order information">
+                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                              <p:outputPanel>
+                                  <h:panelGrid columns="8" cellpadding="20">
+                                      <h:outputText value="Order number:" />
+                                      <h:outputText value="##{order.id}" style="font-weight: bold"/>
 
-                                  <h:outputText value="Order status:" />
-                                  <h:outputText value="#{order.status}" style="font-weight: bold"/>
+                                      <h:outputText value="Order status:" />
+                                      <h:outputText value="#{order.status}" style="font-weight: bold"/>
 
-                                  <h:outputText value="Order date:" />
-                                  <h:outputText value="#{order.orderCreated}" style="font-weight: bold"/>
-                              </h:panelGrid>
-                          </p:outputPanel>
-                      </h:panelGrid>
-                        <p:repeat value="#{order.products}" var="product">
-                            <hr/>
+                                      <h:outputText value="Order date:" />
+                                      <h:outputText value="#{order.orderCreated}" style="font-weight: bold"/>
 
-                            <h:panelGrid  columns="4" cellpadding="20">
+                                      <h:outputText value="Price:" />
+                                      <h:outputText value="#{orderFront.getTotalPriceOfOrder(order)}" style="font-weight: bold">
+                                          <f:convertNumber type="currency" currencySymbol="€" />
+                                      </h:outputText>
+                                  </h:panelGrid>
+                              </p:outputPanel>
+                          </h:panelGrid>
+                            <p:repeat value="#{order.products}" var="product">
+                                <hr/>
 
-                            <h:outputText value="Name:" />
-                            <h:outputText value="#{product.name}" style="font-weight: bold"/>
+                                <h:panelGrid  columns="8" cellpadding="20">
+                                    <h:outputText value="Name:" />
+                                    <h:outputText value="#{product.name}" style="font-weight: bold"/>
 
-                            <h:outputText value="Order status:" />
-                            <h:outputText value="#{product.amount}" style="font-weight: bold"/>
-                            </h:panelGrid>
-                        </p:repeat>
+                                    <h:outputText value="Quantity:" />
+                                    <h:outputText value="#{product.amount}" style="font-weight: bold"/>
+
+                                    <h:outputText value="Price per item:" />
+                                    <h:outputText value="#{product.price}" style="font-weight: bold">
+                                        <f:convertNumber type="currency" currencySymbol="€" />
+                                    </h:outputText>
+                                    <h:outputText value="Total price:"/>
+                                    <p:outputLabel value="#{orderFront.getTotalPrice(product.amount, product.price)}">
+                                        <f:convertNumber type="currency" currencySymbol="€" />
+                                    </p:outputLabel>
+                                </h:panelGrid>
+                            </p:repeat>
+                        </p:panel>
                     <hr style="background: grey; height: 3px"/>
                 </p:dataScroller>
             </h:form>

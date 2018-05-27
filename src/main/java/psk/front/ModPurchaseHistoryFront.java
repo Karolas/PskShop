@@ -23,7 +23,6 @@ import java.util.Map;
 @Named
 public class ModPurchaseHistoryFront {
 
-    private byte[] bytes;
     @Getter
     @Setter
     private LazyDataModel<Order> lazyModel;
@@ -39,14 +38,6 @@ public class ModPurchaseHistoryFront {
     @Setter
     private UploadedFile uploadedFile;
 
-    @Getter
-    @Setter
-    private List<Order> orderList = new ArrayList<>();
-
-    @Getter
-    @Setter
-    private List<OrderProduct> orderProductList = new ArrayList<>();
-
     @PostConstruct
     public void init() {
         lazyModel = new LazyDataModel<Order>() {
@@ -60,13 +51,13 @@ public class ModPurchaseHistoryFront {
         lazyModel.setRowCount(purchaseHistoryUtility.getProductsCountByFilters(new HashMap<String, Object>()));
     }
 
-//    public void select(boolean isNew) {
-//        if (isNew) {
-//            selectedOrder = new Order();
-//        } else {
-//            selectedOrder = this.lazyModel.getRowData();
-//        }
-//    }
+    public void select() {
+        System.out.println("lala");
+        selectedOrder = this.lazyModel.getRowData();
+        selectedOrder.setStatus("Completed");
+        purchaseHistoryUtility.updateOrder(selectedOrder);
+        this.updateTable();
+    }
 
 //    public void updateProduct() {
 //        selectedProduct.setImage(bytes);
