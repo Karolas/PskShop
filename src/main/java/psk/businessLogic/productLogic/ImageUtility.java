@@ -2,10 +2,8 @@ package psk.businessLogic.productLogic;
 
 import org.omnifaces.cdi.GraphicImageBean;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -17,14 +15,16 @@ public class ImageUtility {
     private static Dimension MAX_DIMENSION = new Dimension(200, 200);
 
     @Inject
-    private ProductUtility productUtility;
+    private ImageProvider imageProvider;
 
     public byte[] getImage(Integer productId) {
 
-        byte[] imageBytes = productUtility.getImage(productId);
+        byte[] imageBytes = imageProvider.getImage(productId, 0);
         if(imageBytes == null) return null;
         try {
-            BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageBytes);
+
+            BufferedImage image = ImageIO.read(byteArrayInputStream);
 
             Dimension scaledImageDimension = getScaledDimension(new Dimension(image.getWidth(), image.getHeight()), MAX_DIMENSION);
 
@@ -45,7 +45,7 @@ public class ImageUtility {
     }
 
     public byte[] getImageFull(Integer productId) {
-        byte[] imageBytes = productUtility.getImage(productId);
+        byte[] imageBytes = imageProvider.getImage(productId, 0);
         return imageBytes;
     }
 
