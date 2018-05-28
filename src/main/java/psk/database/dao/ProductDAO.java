@@ -46,7 +46,7 @@ public class ProductDAO implements Serializable {
         product1.setPrice(product.getPrice());
         product1.setAmount(product.getAmount());
         product1.setDescription(product.getDescription());
-        product1.setImage(product.getImage());
+        product1.setMainImageId(product.getMainImageId());
     }
 
     @Transactional

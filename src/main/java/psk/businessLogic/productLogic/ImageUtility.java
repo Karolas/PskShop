@@ -13,20 +13,33 @@ import java.io.IOException;
 @GraphicImageBean
 public class ImageUtility {
     private static Dimension MAX_DIMENSION = new Dimension(200, 200);
+    private static Dimension MAX_DIMENSION_FULL = new Dimension(1200, 800);
 
     @Inject
     private ImageProvider imageProvider;
 
-    public byte[] getImage(Integer productId) {
+    public byte[] getImage(Integer imageId) {
 
-        byte[] imageBytes = imageProvider.getImage(productId, 0);
-        if(imageBytes == null) return null;
+        byte[] imageBytes = imageProvider.getImage(imageId);
+        if(imageBytes == null) return new byte[0];
+
+        return rescaleImage(imageBytes, MAX_DIMENSION);
+    }
+
+    public byte[] getImageFull(Integer imageId) {
+        byte[] imageBytes = imageProvider.getImage(imageId);
+        if(imageBytes == null) return new byte[0];
+
+        return rescaleImage(imageBytes, MAX_DIMENSION_FULL);
+    }
+
+    private byte[] rescaleImage(byte[] imageBytes, Dimension dimension) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageBytes);
 
             BufferedImage image = ImageIO.read(byteArrayInputStream);
 
-            Dimension scaledImageDimension = getScaledDimension(new Dimension(image.getWidth(), image.getHeight()), MAX_DIMENSION);
+            Dimension scaledImageDimension = getScaledDimension(new Dimension(image.getWidth(), image.getHeight()), dimension);
 
             BufferedImage scaledImage =
                     toBufferedImage(image.getScaledInstance((int)scaledImageDimension.getWidth(), (int)scaledImageDimension.getHeight(), Image.SCALE_DEFAULT));
@@ -40,13 +53,8 @@ public class ImageUtility {
             return imageInByte;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new byte[0];
         }
-    }
-
-    public byte[] getImageFull(Integer productId) {
-        byte[] imageBytes = imageProvider.getImage(productId, 0);
-        return imageBytes;
     }
 
     private Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {

@@ -2,7 +2,9 @@ package psk.businessLogic.productLogic;
 
 import org.primefaces.model.SortOrder;
 import psk.database.dao.ProductDAO;
+import psk.database.dao.ProductImageDAO;
 import psk.database.entities.Product;
+import psk.database.entities.ProductImage;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -19,6 +21,9 @@ public class ProductUtility implements Serializable {
     private ProductDAO productDAO;
 
     @Inject
+    private ProductImageDAO productImageDAO;
+
+    @Inject
     private ImageProvider imageProvider;
 
     @Transactional
@@ -26,9 +31,9 @@ public class ProductUtility implements Serializable {
         return productDAO.selectProductById(productId);
     }
 
-    public byte[] getImage(Integer productId) {
-        return productDAO.selectProductById(productId).getImage();
-    }
+//    public byte[] getImage(Integer productId) {
+//        return productDAO.selectProductById(productId).getImage();
+//    }
 
     public int getProductsCount(String nameCriteria) {
         return productDAO.count(nameCriteria);
@@ -48,11 +53,22 @@ public class ProductUtility implements Serializable {
         productDAO.updateProduct(product);
     }
 
-    public void createProduct(Product product, byte[] image) {
+    public void createProduct(Product product) {
         productDAO.insertProduct(product);
-
-        imageProvider.saveImage(image, product.getId());
     }
+
+    public void addImageToProduct(Product product, byte[] image) {
+
+        ProductImage productImage = productImageDAO.createProductImage(product.getId());
+
+        imageProvider.saveImage(image, productImage.getId());
+
+        if(product.getMainImageId() == null) {
+            product.setMainImageId(productImage.getId());
+            updateProduct(product);
+        }
+    }
+
     public void deleteProduct(Product product) {
         productDAO.deleteProduct(product.getId());
     }

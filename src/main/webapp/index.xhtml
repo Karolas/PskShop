@@ -33,7 +33,7 @@
                <h:commandLink action="#{productFront.redirectToProductView(product)}" ajax="true">
                   <p:panel header="#{product.name}" style="text-align:center">
                      <h:panelGrid columns="1" style="width:100%">
-                        <o:graphicImage value="#{imageUtility.getImage(product.id)}"/>
+                        <o:graphicImage value="#{imageUtility.getImage(product.mainImageId)}"/>
 
                         <p:outputLabel value="#{product.price}" >
                            <f:convertNumber type="currency" currencySymbol="€" />

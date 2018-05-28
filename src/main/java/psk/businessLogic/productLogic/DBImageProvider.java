@@ -22,13 +22,14 @@ public class DBImageProvider implements ImageProvider {
 //    @AsyncComp
 //    private EntityManager entityManager;
 
-    public byte[] getImage(Integer productId, int index) {
+    public byte[] getImage(Integer index) {
 //        return entityManager.find(Product.class, productId).getImage();
-        return productUtility.getImage(productId);
+//        return productUtility.getImage(productId);
+        return new byte[0];
     }
 
     @Transactional
     public void saveImage(byte[] image, Integer productId) {
-        productUtility.getProduct(productId).setImage(image);
+//        productUtility.getProduct(productId).setImage(image);
     }
 }

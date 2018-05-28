@@ -104,12 +104,14 @@ public class ModProductFront implements Serializable {
     }
 
     public void updateProduct() {
-        selectedProduct.setImage(bytes);
+//        selectedProduct.setImage(bytes);
         productUtility.updateProduct(selectedProduct);
     }
 
     public void createProduct() {
-        productUtility.createProduct(selectedProduct, bytes);
+        productUtility.createProduct(selectedProduct);
+
+        productUtility.addImageToProduct(selectedProduct, bytes);
     }
 
     public void deleteProduct(){

@@ -15,7 +15,7 @@
                 <p:panel id="cart" header="Your cart" style="margin-bottom:20px">
                     <p:dataTable id="cartProductsTable" var="cartProduct" value="#{cartFront.cartProducts}">
                         <p:column headerText="Image">
-                            <o:graphicImage value="#{imageUtility.getImage(cartProduct.product.id)}"/>
+                            <o:graphicImage value="#{imageUtility.getImage(cartProduct.product.mainImageId)}"/>
                         </p:column>
                         <p:column headerText="Name">
                             <p:outputLabel value="#{cartProduct.product.name}" />
@@ -37,7 +37,7 @@
                         <p:outputLabel value="#{cartFront.totalPrice}">
                             <f:convertNumber type="currency" currencySymbol="€" />
                         </p:outputLabel>
-                        <p:outputLabel value="You have to login to order" rendered="#{!accountHolder.loggedIn}"/>
+                        <p:outputLabel value=" You have to login to order" rendered="#{!accountHolder.loggedIn}"/>
                         <p:commandButton value="Order" action="paymentData?faces-redirect=true"
                                          rendered="#{accountHolder.loggedIn}" icon="ui-icon-check" />
                     </f:facet>

@@ -14,9 +14,13 @@
                 <p:panel header="Product info">
                     <p:panelGrid style="width: 100%;">
                         <p:row>
-                            <p:column rowspan="2" style="width: 60%; margin: 0px auto;">
-                                <o:graphicImage value="#{imageUtility.getImageFull(productDetailFront.product.id)}"
-                                                style="display: block; margin: 0px auto;"/>
+                            <p:column rowspan="3" style="width: 60%; margin: 0px auto;">
+                                <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 100%;text-align:center" numVisible="1" style="width:1200px" cricular="true">
+                                    <h:panelGrid columns="1" style="width:100%">
+                                        <o:graphicImage value="#{imageUtility.getImageFull(productImage.id)}"
+                                                        style="display: block; margin: 0px auto;"/>
+                                    </h:panelGrid>
+                                </p:carousel>
                             </p:column>
                             <p:column>
                                 <p:outputLabel style="font-weight: bold;" value="#{productDetailFront.product.name}" />
@@ -30,11 +34,20 @@
                             </p:column>
                         </p:row>
                         <p:row>
-                            <p:column colspan="2">
+                            <p:column>
                                 <p:outputLabel value="#{productDetailFront.product.description}" />
                             </p:column>
                         </p:row>
                     </p:panelGrid>
+
+                    <p:dataTable value="#{productDetailFront.product.productAttributeList}" var="attribute" type="ordered">
+                        <p:column headerText="Attribute">
+                            <p:outputLabel value="#{attribute.attributeName}" />
+                        </p:column>
+                        <p:column headerText="Description">
+                            <p:outputLabel value="#{attribute.attributeDescription}" />
+                        </p:column>
+                    </p:dataTable>
 
                     <f:facet name="footer">
                         <p:commandButton value="Add to cart"
