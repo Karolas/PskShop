@@ -11,6 +11,7 @@ import psk.businessLogic.ModAcountUtility;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.dao.ProductDAO;
 import psk.database.entities.Product;
+import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -132,6 +133,17 @@ public class ModProductFront implements Serializable {
 
     public void makeAsMainImage(Integer imageId){
         selectedProduct.setMainImageId(imageId);
+    }
+
+    public void deleteImage(Integer imageId){
+        Optional<ProductImage> prodImg = selectedProduct.getProductImageList().stream().filter(x -> x.getId() == imageId).findFirst();
+        if(prodImg.isPresent()){
+            selectedProduct.getProductImageList().remove(prodImg);
+        }
+        if(selectedProduct.getMainImageId() == imageId){
+            selectedProduct.setMainImageId(selectedProduct.getProductImageList().size() > 0 ?
+                selectedProduct.getProductImageList().get(0).getId() : null);
+        }
     }
 
     public void updateTable() {
