@@ -5,6 +5,7 @@ import org.primefaces.model.SortOrder;
 import psk.Utils;
 import psk.database.entities.Account;
 import psk.database.entities.Order;
+import psk.database.entities.ProductImage;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -29,7 +30,9 @@ public class OrderDAO implements Serializable {
     Utils utils;
 
     @Transactional
-    public void createOrder(Order order) { em.persist(order); }
+    public void createOrder(Order order) {
+        em.persist(order);
+    }
 
     @Transactional
     public void updateOrder(Order order) {

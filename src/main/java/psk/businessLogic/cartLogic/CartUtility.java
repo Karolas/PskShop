@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,16 @@ public class CartUtility implements Serializable {
         if (accountAccessUtility.isLoggedIn()) {
             cartId = cartDAO.getCartByAccId(account.getId()).getId();
         }
+    }
+
+    public BigDecimal getCartFullPrice() {
+        BigDecimal price = new BigDecimal(0);
+
+        for (CartProducts cartProduct: getCartProducts()) {
+            price = price.add(cartProduct.getProduct().getPrice().multiply(new BigDecimal(cartProduct.getAmount())));
+        }
+
+        return price;
     }
 
     @Transactional

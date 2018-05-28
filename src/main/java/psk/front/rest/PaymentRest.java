@@ -80,6 +80,8 @@ public class PaymentRest {
             JSONObject myResponse = new JSONObject(getStringFromInputStream(inputStream));
             inputStream.close();
 
+            myResponse.put("status", status);
+
             return myResponse;
         } else if(status == 402) {
             InputStream errorStream = conn.getErrorStream();
@@ -87,6 +89,8 @@ public class PaymentRest {
             System.out.println(errorResponse.getString("error"));
             System.out.println(errorResponse.getString("message"));
             errorStream.close();
+
+            errorResponse.put("status", status);
 
             return errorResponse;
         } else {
@@ -99,6 +103,7 @@ public class PaymentRest {
 
         errorResponse.put("error","UnexpectedError");
         errorResponse.put("message","An unexpected error has occured.");
+        errorResponse.put("status", -1);
 
         return errorResponse;
     }

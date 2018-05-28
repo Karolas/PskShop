@@ -1,14 +1,21 @@
 package psk.businessLogic.purchaseHistoryLogic;
 
 import org.primefaces.model.SortOrder;
+import psk.businessLogic.authentication.LoggedIn;
+import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.dao.OrderDAO;
-import psk.database.entities.Account;
-import psk.database.entities.Order;
+import psk.database.dao.OrderProductDAO;
+import psk.database.entities.*;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +24,17 @@ import java.util.Map;
 public class PurchaseHistoryUtility implements Serializable {
 
     @Inject
+    @LoggedIn
+    private Account account;
+
+    @Inject
+    private CartUtility cartUtility;
+
+    @Inject
     private OrderDAO orderDAO;
+
+    @Inject
+    private OrderProductDAO orderProductDAO;
 
     public int getProductsCount(String nameCriteria) {
         return orderDAO.count(nameCriteria);
@@ -40,6 +57,38 @@ public class PurchaseHistoryUtility implements Serializable {
     public void updateOrder(Order order){
         orderDAO.updateOrder(order);
     }
+
+    @Transactional
+    public void addOrder(String orderId, String timestamp) {
+        Order order = new Order();
+        order.setStatus("Ordered");
+
+        order.setAccount(account);
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'");
+            Date parsedDate = dateFormat.parse(timestamp);
+            Timestamp orderTimestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+            order.setOrderCreated(orderTimestamp);
+        } catch (ParseException e) {
+            order.setOrderCreated(null);
+        }
+
+        orderDAO.createOrder(order);
+
+        for (CartProducts cartProduct: cartUtility.getCartProducts()) {
+            OrderProduct orderProduct = new OrderProduct();
+
+            orderProduct.setName(cartProduct.getProduct().getName());
+            orderProduct.setPrice(cartProduct.getProduct().getPrice());
+            orderProduct.setAmount(cartProduct.getAmount());
+            orderProduct.setOrder(order);
+
+            orderProductDAO.insertOrderProduct(orderProduct);
+        }
+    }
+
 //    public void createProduct(Order order) {
 //        orderDAO.insertProduct(order);
 //    }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
+        <ui:define name="content">
+            <p:tabView>
+                <p:tab title="Delivery and payment data">
+                    <h:form>
+                        <p:messages id="msgs" />
+
+                        <p:panel id="paymentDataPannel" header="Fill out payment information">
+                        <p:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="firstname" value="Delivery firstname:" />
+                            <p:inputText id="firstname" value="#{profileFront.account.firstName}"
+                                         label="Delivery firstname" required="true"/>
+
+                            <p:outputLabel for="lastname" value="Delivery lastname:" />
+                            <p:inputText id="lastname" value="#{profileFront.account.lastName}"
+                                         label="Delivery lastname" required="true"/>
+
+                            <p:outputLabel for="address" value="Delivery address:" />
+                            <p:inputText id="address" value="#{profileFront.account.address}"
+                                         label="Delivery address" required="true"/>
+
+                            <p:outputLabel for="postalNr" value="Delivery postal Nr.:" />
+                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}"
+                                         label="Delivery postal Nr." required="true"/>
+
+                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}"
+                                         label="Telephone Nr." required="true"/>
+                        </p:panelGrid>
+                        <p:separator/>
+                        <p:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="cardHolder" value="Card holder:" />
+                            <p:inputText id="cardHolder" value="#{paymentFront.cardHolder}"
+                                         label="Card holder" required="true"/>
+
+                            <p:outputLabel for="cardNumber" value="Card number:" />
+                            <p:inputText id="cardNumber" value="#{paymentFront.cardNumber}"
+                                         label="Card number" required="true"/>
+
+                            <p:outputLabel for="expirationYear" value="Card expiration year:" />
+                            <p:inputText id="expirationYear" value="#{paymentFront.expirationYear}"
+                                         label="Card expiration year" required="true"/>
+
+                            <p:outputLabel for="expirationMonth" value="Card expiration month:" />
+                            <p:inputText id="expirationMonth" value="#{paymentFront.expirationMonth}"
+                                         label="Card expiration month" required="true"/>
+
+                            <p:outputLabel for="cvv" value="cvv security code:" />
+                            <p:inputText id="cvv" value="#{paymentFront.cvv}"
+                                         label="cvv security code" required="true"/>
+                        </p:panelGrid>
+
+                        <p:commandButton value="Pay" action="#{paymentFront.pay()}" />
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
