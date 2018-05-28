@@ -27,7 +27,7 @@ import java.util.*;
 @Named
 public class ModProductFront implements Serializable {
 
-    private byte[] bytes;
+    private List<byte[]> imagesBytes = new ArrayList<>();
     @Getter
     @Setter
     private LazyDataModel<Product> lazyModel;
@@ -102,21 +102,25 @@ public class ModProductFront implements Serializable {
         int len;
         while ((len = is.read(buf)) > 0)
             out.write(buf, 0, len);
-        bytes = out.toByteArray();
+        imagesBytes.add(out.toByteArray());
         is.close();
         out.close();
     }
 
     public void updateProduct() {
 //        selectedProduct.setImage(bytes);
+        for(byte[] img: imagesBytes){
+            productUtility.addImageToProduct(selectedProduct, img);
+        }
         productUtility.updateProduct(selectedProduct);
         redirectToEditProductEdit(selectedProduct);
     }
 
     public void createProduct() {
         productUtility.createProduct(selectedProduct);
-
-        productUtility.addImageToProduct(selectedProduct, bytes);
+        for(byte[] img: imagesBytes){
+            productUtility.addImageToProduct(selectedProduct, img);
+        }
     }
 
     public void deleteProduct(){
@@ -124,6 +128,10 @@ public class ModProductFront implements Serializable {
         productUtility.deleteProduct(selectedProduct);
         this.init();
         this.updateTable();
+    }
+
+    public void makeAsMainImage(Integer imageId){
+        selectedProduct.setMainImageId(imageId);
     }
 
     public void updateTable() {

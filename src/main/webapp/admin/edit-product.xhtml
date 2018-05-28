@@ -36,12 +36,13 @@
                             <p:inputText id="description" value="#{modProductFront.selectedProduct.description}"/>
                             <p:message for="description"/>
 
-                            <p:carousel rendered="#{not empty modProductFront.images}" value="#{modProductFront.images}" var="imageId" headerText="Custom" numVisible="1" easing="easeOutBounce" style="width:250px" cricular="true">
-                                <o:graphicImage rendered="#{modProductFront.selectedProduct.id ne null}" value="#{imageUtility.getImage(imageId)}"/>
+                            <p:carousel rendered="#{not empty modProductFront.selectedProduct.productImageList}" value="#{modProductFront.selectedProduct.productImageList}" var="productImage" headerText="Custom" numVisible="1" easing="easeOutBounce" style="width:250px" cricular="true">
+                                <o:graphicImage value="#{imageUtility.getImage(productImage.id)}"/>
+                                <p:commandButton action="#{modProductFront.makeAsMainImage(productImage.id)}" value="Make main picture"/>
                             </p:carousel>
 
                             <p:fileUpload fileUploadListener="#{modProductFront.fileUpload}"
-                                          multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                          multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
                             <p:commandButton value="Update" actionListener="#{modProductFront.updateProduct}"
                                              icon="ui-icon-check" style="margin-top: 1em"
