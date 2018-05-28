@@ -21,10 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ViewScoped
 @Named
@@ -46,6 +43,9 @@ public class ModProductFront implements Serializable {
     @Setter
     private UploadedFile uploadedFile;
 
+    @Getter
+    private List<Integer> images = new ArrayList<>();
+
     @PostConstruct
     public void init() {
         lazyModel = new LazyDataModel<Product>() {
@@ -65,6 +65,10 @@ public class ModProductFront implements Serializable {
                 selectedProduct = new Product();
             } else {
                 selectedProduct = productUtility.getProduct(productId);
+                if(selectedProduct.getMainImageId() != null){
+                    images.add(selectedProduct.getMainImageId());
+                    images.add(selectedProduct.getMainImageId());
+                }
             }
         }
     }
@@ -106,6 +110,7 @@ public class ModProductFront implements Serializable {
     public void updateProduct() {
 //        selectedProduct.setImage(bytes);
         productUtility.updateProduct(selectedProduct);
+        redirectToEditProductEdit(selectedProduct);
     }
 
     public void createProduct() {
