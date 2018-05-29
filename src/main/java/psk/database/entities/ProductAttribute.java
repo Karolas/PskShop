@@ -1,5 +1,6 @@
 package psk.database.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Table(name = "product_attributes")
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"productId", "attributeName"})
 public class ProductAttribute implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +19,7 @@ public class ProductAttribute implements Serializable {
     private Integer id;
 
     @Column(name = "product_id")
-    private String productId;
+    private Integer productId;
 
     @Column(name = "attribute_name")
     private String attributeName;

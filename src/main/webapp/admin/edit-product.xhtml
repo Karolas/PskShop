@@ -37,7 +37,7 @@
                     <p:message for="description"/>
                 </p:panelGrid>
 
-                <h:panelGrid id="image-main" columns="1" styleClass="ui-noborder">
+                <p:panelGrid id="image-main" columns="1" styleClass="ui-noborder">
                     <p:outputLabel value="Main image: "
                                    rendered="#{modProductEditFront.mainImageLocal ne -1 or modProductEditFront.mainImage ne -1 }"/>
                     <o:graphicImage id="mainImageLocal" value="#{imageUtility.getImageLocal(modProductEditFront.mainImageLocal)}"
@@ -46,9 +46,9 @@
                     <o:graphicImage id="mainImage" value="#{imageUtility.getImage(modProductEditFront.mainImage)}"
                                     lastModified="#{modProductEditFront.lastModified}"
                                     rendered="#{modProductEditFront.mainImage ne -1}"/>
-                </h:panelGrid>
+                </p:panelGrid>
 
-                <h:panelGrid id="image-detail-local" columns="1" styleClass="ui-noborder">
+                <p:panelGrid id="image-detail-local" columns="1" styleClass="ui-noborder">
                     <p:carousel rendered="#{not empty modProductEditFront.imagesBytes}" value="#{modProductEditFront.imageIds}"
                                 var="imageId" headerText="New products images"
                                 numVisible="1" style="width:250px" cricular="true">
@@ -60,9 +60,9 @@
                                              value="Remove image" update=":edit-product:image-detail-local :edit-product:image-main" />
                         </p:panelGrid>
                     </p:carousel>
-                </h:panelGrid>
+                </p:panelGrid>
 
-                <h:panelGrid id="image-detail" columns="1" styleClass="ui-noborder"
+                <p:panelGrid id="image-detail" columns="1" styleClass="ui-noborder"
                              rendered="#{not modProductEditFront.newProduct}">
                     <p:carousel rendered="#{not empty modProductEditFront.selectedProduct.productImageList}"
                                 value="#{modProductEditFront.selectedProduct.productImageList}"
@@ -81,7 +81,35 @@
                                              rendered="#{modProductEditFront.isMarkedForRemoval(productImage)}"/>
                         </p:panelGrid>
                     </p:carousel>
-                </h:panelGrid>
+                </p:panelGrid>
+
+                <p:panelGrid id="product-attributes" columns="1">
+                    <p:dataTable value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
+                                 widgetVar="attrNew" type="ordered">
+
+                        <p:column headerText="Attribute">
+                            <p:outputLabel value="#{attribute.attributeName}"/>
+                        </p:column>
+                        <p:column headerText="Description">
+                            <p:outputLabel value="#{attribute.attributeDescription}"/>
+                        </p:column>
+                        <p:column>
+                            <h:commandLink value="Delete"
+                                           action="#{modProductEditFront.onRowDelete(attribute)}" />
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:panelGrid columns="1">
+                        <p:outputLabel for="attributeName" value="Attribute name:"/>
+                        <p:inputText id="attributeName" value="#{modProductEditFront.attributeName}"/>
+
+                        <p:outputLabel for="attributeDescription" value="Attribute description:"/>
+                        <p:inputText id="attributeDescription" value="#{modProductEditFront.attributeDescription}"/>
+                    </p:panelGrid>
+
+                    <p:commandButton value="Add new row"
+                                     actionListener="#{modProductEditFront.onAddNew()}" update="product-attributes"/>
+                </p:panelGrid>
 
                 <p:fileUpload fileUploadListener="#{modProductEditFront.fileUpload}" mode="advanced" auto="true"
                               multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"

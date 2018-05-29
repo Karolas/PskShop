@@ -7,6 +7,7 @@ import psk.businessLogic.productLogic.ImageUtility;
 import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.entities.Product;
+import psk.database.entities.ProductAttribute;
 import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
@@ -65,6 +66,14 @@ public class ModProductEditFront implements Serializable {
     @Setter
     private boolean isNewProduct;
 
+    @Getter
+    @Setter
+    private String attributeName;
+
+    @Getter
+    @Setter
+    private String attributeDescription;
+
     @PostConstruct
     public void init() {
         lastModified = System.currentTimeMillis();
@@ -83,6 +92,7 @@ public class ModProductEditFront implements Serializable {
             isNewProduct = false;
         } else {
             selectedProduct = new Product();
+            selectedProduct.setProductAttributeList(new HashSet<>());
             isNewProduct = true;
         }
     }
@@ -120,6 +130,8 @@ public class ModProductEditFront implements Serializable {
             productUtility.removeImageFromProduct(productImage);
         }
 
+        productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
+
         imageUtility.setModified();
 
         return "/admin/products.xhtml";
@@ -127,12 +139,17 @@ public class ModProductEditFront implements Serializable {
 
     public String createProduct() {
         productUtility.createProduct(selectedProduct);
+
         for(int i = 0; i < imagesBytes.size(); i++){
             if(i == mainImageLocal) {
                 productUtility.addMainImageToProduct(selectedProduct, imagesBytes.get(i));
             } else {
                 productUtility.addImageToProduct(selectedProduct, imagesBytes.get(i));
             }
+        }
+
+        for(ProductAttribute productAttribute: selectedProduct.getProductAttributeList()) {
+            productUtility.addAtrtributeToProduct(selectedProduct, productAttribute);
         }
 
         imageUtility.setModified();
@@ -178,5 +195,21 @@ public class ModProductEditFront implements Serializable {
         if(mainImageLocal.equals(imageId)) {
             mainImageLocal = 0;
         }
+    }
+
+    public void onRowDelete(ProductAttribute attribute) {
+        selectedProduct.getProductAttributeList().remove(attribute);
+    }
+
+    public void onAddNew() {
+        ProductAttribute productAttribute = new ProductAttribute();
+        productAttribute.setAttributeName(attributeName);
+        productAttribute.setAttributeDescription(attributeDescription);
+        if(!isNewProduct) {
+            productAttribute.setProductId(selectedProduct.getId());
+            productAttribute.setProduct(selectedProduct);
+        }
+
+        selectedProduct.getProductAttributeList().add(productAttribute);
     }
 }
