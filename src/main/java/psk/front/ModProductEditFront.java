@@ -175,6 +175,7 @@ public class ModProductEditFront implements Serializable {
         imagesToBeRemoved.add(productImage);
         if(selectedProduct.getMainImageId().equals(productImage.getId())) {
             mainImageLocal = null;
+            selectedProduct.setMainImageId(null);
         }
     }
 

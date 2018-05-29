@@ -15,6 +15,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,27 +63,33 @@ public class ProductDAO implements Serializable {
     }
 
     @Transactional
-    public List<Product> getResultList(int first, int pageSize, String productNameCriteria) {
+    public List<Product> getResultList(int first, int pageSize, String productNameCriteria, Integer categoryId) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> myObj = cq.from(Product.class);
+        List<Predicate> predicates = new ArrayList<Predicate>();
 
-        Predicate condition = cb.like(myObj.get("name"), "%" + productNameCriteria + "%");
-
-        cq.where(condition);
+        predicates.add(cb.like(myObj.get("name"), "%" + productNameCriteria + "%"));
+        if(categoryId != null){
+            predicates.add(cb.equal(myObj.get("category"), categoryId));
+        }
+        cq.where(predicates.toArray(new Predicate[]{}));
 
         return em.createQuery(cq).setFirstResult(first).setMaxResults(pageSize).getResultList();
     }
 
     @Transactional
-    public int count(String productNameCriteria) {
-        long count = em.createQuery("SELECT COUNT(1) FROM Product p WHERE p.name like :name", Long.class)
-                .setParameter("name", "%" + productNameCriteria + "%").getSingleResult();
-
-
+    public int count(String productNameCriteria, Integer categoryId) {
+        long count;
+        if(categoryId == null){
+            count = em.createQuery("SELECT COUNT(1) FROM Product p WHERE p.name like :name", Long.class)
+                    .setParameter("name", "%" + productNameCriteria + "%").getSingleResult();
+        } else {
+            count = em.createQuery("SELECT COUNT(1) FROM Product p WHERE p.name like :name AND p.category.id = :categoryId", Long.class)
+                    .setParameter("name", "%" + productNameCriteria + "%").setParameter("categoryId", categoryId).getSingleResult();
+        }
         return (int)count;
     }
-
 
     public int countWithilters(Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

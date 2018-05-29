@@ -36,6 +36,10 @@ public class Product implements Serializable {
     @Column(name = "main_image_id")
     private Integer mainImageId;
 
+    @JoinColumn(name = "category", referencedColumnName = "ID")
+    @ManyToOne
+    private ProductCategory category;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductImage> productImageList;
 

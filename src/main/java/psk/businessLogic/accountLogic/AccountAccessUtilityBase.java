@@ -90,7 +90,6 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
 
     public void logoutAccount() {
         Faces.invalidateSession();
-
         try {
             Faces.redirect(Faces.getRequestBaseURL()); // arba kitur, kur norime patekti po logout.
         } catch (IOException e) {

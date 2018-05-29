@@ -81,7 +81,11 @@
                                              rendered="#{modProductEditFront.isMarkedForRemoval(productImage)}"/>
                         </p:panelGrid>
                     </p:carousel>
+                    <p:fileUpload fileUploadListener="#{modProductEditFront.fileUpload}" mode="advanced" auto="true"
+                                  multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  update=":edit-product:image-detail :edit-product:image-detail-local"/>
                 </p:panelGrid>
+
 
                 <p:panelGrid id="product-attributes" columns="1">
                     <p:dataTable value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
@@ -110,10 +114,6 @@
                     <p:commandButton value="Add new row"
                                      actionListener="#{modProductEditFront.onAddNew()}" update="product-attributes"/>
                 </p:panelGrid>
-
-                <p:fileUpload fileUploadListener="#{modProductEditFront.fileUpload}" mode="advanced" auto="true"
-                              multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                              update=":edit-product:image-detail :edit-product:image-detail-local"/>
 
                 <p:commandButton value="Update" action="#{modProductEditFront.updateProduct}"
                                  icon="ui-icon-check" style="margin-top: 1em"

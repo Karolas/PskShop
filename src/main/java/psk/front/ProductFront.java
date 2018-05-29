@@ -2,6 +2,7 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.omnifaces.cdi.Param;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.businessLogic.productLogic.ProductUtility;
@@ -29,6 +30,9 @@ public class ProductFront implements Serializable {
     @Setter
     private String searchString = "";
 
+    @Inject @Param(name="categoryId")
+    private Integer categoryId;
+
     @Getter
     @Setter
     private LazyDataModel<Product> products;
@@ -42,8 +46,8 @@ public class ProductFront implements Serializable {
         products = new LazyDataModel<Product>() {
             @Override
             public List<Product> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                products.setRowCount(productUtility.getProductsCount(searchString));
-                return productUtility.getProductsPage(first, pageSize, searchString);
+                products.setRowCount(productUtility.getProductsCount(searchString, categoryId));
+                return productUtility.getProductsPage(first, pageSize, searchString, categoryId);
             }
         };
     }

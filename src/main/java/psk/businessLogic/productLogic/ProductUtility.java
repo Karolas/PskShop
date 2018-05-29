@@ -2,10 +2,12 @@ package psk.businessLogic.productLogic;
 
 import org.primefaces.model.SortOrder;
 import psk.database.dao.ProductAttributeDAO;
+import psk.database.dao.ProductCategoryDAO;
 import psk.database.dao.ProductDAO;
 import psk.database.dao.ProductImageDAO;
 import psk.database.entities.Product;
 import psk.database.entities.ProductAttribute;
+import psk.database.entities.ProductCategory;
 import psk.database.entities.ProductImage;
 
 import javax.enterprise.context.SessionScoped;
@@ -16,12 +18,17 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Named
 @SessionScoped
 public class ProductUtility implements Serializable {
     @Inject
     private ProductDAO productDAO;
+
+    @Inject
+    private ProductCategoryDAO productCategoryDAO;
 
     @Inject
     private ProductImageDAO productImageDAO;
@@ -49,8 +56,13 @@ public class ProductUtility implements Serializable {
         productDAO.deleteProduct(product.getId());
     }
 
-    public int getProductsCount(String nameCriteria) {
-        return productDAO.count(nameCriteria);
+    public int getProductsCount(String nameCriteria, Integer categoryId) {
+        int count = 0;
+        List<ProductCategory> subCategories = productCategoryDAO.getSubCategorieByParent(categoryId);
+        for(int i=0; i<subCategories.size(); i++){
+            count += productDAO.count(nameCriteria, subCategories.get(i).getId());
+        }
+        return productDAO.count(nameCriteria, categoryId) + count;
     }
 
     public void addImageToProduct(Product product, byte[] image) {
@@ -107,8 +119,15 @@ public class ProductUtility implements Serializable {
         productAttributeDAO.deleteProductAttribute(productAttribute);
     }
 
-    public List<Product> getProductsPage(int first, int pageSize, String nameCriteria) {
-        return productDAO.getResultList(first, pageSize, nameCriteria);
+    public List<Product> getProductsPage(int first, int pageSize, String nameCriteria, Integer categoryId) {
+        List<Product> productsList = productDAO.getResultList(first, pageSize, nameCriteria, categoryId);
+        List<ProductCategory> subCategories = productCategoryDAO.getSubCategorieByParent(categoryId);
+        for(int i=0; i<subCategories.size(); i++){
+            productsList = Stream.concat(productsList.stream(), productDAO.getResultList(first, pageSize, nameCriteria,
+                    subCategories.get(i).getId()).stream())
+                    .collect(Collectors.toList());
+        }
+        return productsList;
     }
 
     public int getProductsCountByFilters(Map<String, Object> filters){

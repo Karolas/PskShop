@@ -10,6 +10,8 @@
     <h:head>
         <meta charset="UTF-8"/>
         <title>test</title>
+        <h:outputStylesheet name="css/styles.css" />
+
     </h:head>
 
     <h:body>
@@ -54,8 +56,22 @@
                 </f:facet>
             </p:toolbar>
         </h:form>
-
-        <ui:insert name="content" />
+        <h:form style="float:left; width: 20%;">
+            <!--<p:menu model="#{layoutFront.menuModel}" />-->
+            <p:panelGrid columns="1">
+                <ui:repeat value="#{layoutFront.cats}" var="categorie">
+                    <p:commandButton style="width: 100%; border: none; background-color: darkolivegreen" value="#{categorie.name}"
+                        action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
+                    <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
+                        <p:commandButton style="width: 100%; border: none;" value="#{subCategorie.name}"
+                                         action="#{layoutFront.redirectToProductSearchWithCategory(subCategorie.id)}"/>
+                    </ui:repeat>
+                </ui:repeat>
+            </p:panelGrid>
+        </h:form>
+        <div style="float:left; width: 80%;">
+            <ui:insert name="content" />
+        </div>
     </h:body>
 </f:view>
 </html>
