@@ -62,11 +62,20 @@ public class ProductUtility implements Serializable {
         ProductImage productImage = productImageDAO.createProductImage(product.getId());
 
         imageProvider.saveImage(image, productImage.getId());
+    }
 
-        if(product.getMainImageId() == null) {
-            product.setMainImageId(productImage.getId());
-            updateProduct(product);
-        }
+    public void addMainImageToProduct(Product product, byte[] image) {
+
+        ProductImage productImage = productImageDAO.createProductImage(product.getId());
+
+        imageProvider.saveImage(image, productImage.getId());
+
+        product.setMainImageId(productImage.getId());
+        updateProduct(product);
+    }
+
+    public void removeImageFromProduct(ProductImage productImage) {
+        productImageDAO.removeProductImage(productImage);
     }
 
     public void deleteProduct(Product product) {

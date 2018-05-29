@@ -1,5 +1,6 @@
 package psk.database.primaryKeys;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"cartId", "productId"})
 public class CartProductsPK implements Serializable {
     @Column(name = "CART_ID")
     private Integer cartId;

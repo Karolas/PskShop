@@ -26,4 +26,11 @@ public class ProductImageDAO implements Serializable {
 
         return productImage;
     }
+
+    @Transactional
+    public void removeProductImage(ProductImage productImage) {
+        ProductImage productImage1Db = em.find(ProductImage.class, productImage.getId());
+
+        em.remove(productImage1Db);
+    }
 }

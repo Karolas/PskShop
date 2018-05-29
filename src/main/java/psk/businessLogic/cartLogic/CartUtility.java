@@ -17,7 +17,9 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Named
 @SessionScoped
@@ -38,7 +40,7 @@ public class CartUtility implements Serializable {
     @Inject
     private CartProductDAO cartProductDAO;
 
-    private List<CartProducts> offlineCartProducts = new ArrayList<>();
+    private Set<CartProducts> offlineCartProducts = new HashSet<>();
 
     @PostConstruct
     public void init() {
@@ -57,10 +59,15 @@ public class CartUtility implements Serializable {
         return price;
     }
 
-    @Transactional
-    public List<CartProducts> getCartProducts() {
+    public Set<CartProducts> getCartProducts() {
         if(accountAccessUtility.isLoggedIn())
-            return cartDAO.getCartById(cartId).getProducts();
+        {
+            Cart cart = cartDAO.getCartById(cartId);
+
+            Set<CartProducts> cartProducts = cart.getProducts();
+
+            return cartProducts;
+        }
         else
             return offlineCartProducts;
     }
@@ -116,7 +123,7 @@ public class CartUtility implements Serializable {
         cartDAO.createCart(cart);
     }
 
-    public void mergeCart(List<CartProducts> cartProducts) {
+    public void mergeCart(Set<CartProducts> cartProducts) {
         for (CartProducts cartProduct: cartProducts) {
             addProductToCart(cartProduct.getProduct(), cartProduct.getAmount());
         }

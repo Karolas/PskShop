@@ -11,6 +11,7 @@ import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Decorator
 public abstract class cartAccAccessUtilityDecorator implements AccountAccessUtility, Serializable {
@@ -25,7 +26,7 @@ public abstract class cartAccAccessUtilityDecorator implements AccountAccessUtil
 
     @Override
     public void loginAccount(String email, String password) {
-        List<CartProducts> cartProducts = cartUtility.getCartProducts();
+        Set<CartProducts> cartProducts = cartUtility.getCartProducts();
         accountAccessUtility.loginAccount(email, password);
         cartUtility.mergeCart(cartProducts);
     }

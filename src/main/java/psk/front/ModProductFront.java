@@ -8,12 +8,14 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
 import psk.businessLogic.ModAcountUtility;
+import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.dao.ProductDAO;
 import psk.database.entities.Product;
 import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -28,7 +30,6 @@ import java.util.*;
 @Named
 public class ModProductFront implements Serializable {
 
-    private List<byte[]> imagesBytes = new ArrayList<>();
     @Getter
     @Setter
     private LazyDataModel<Product> lazyModel;
@@ -39,13 +40,6 @@ public class ModProductFront implements Serializable {
     @Getter
     @Setter
     private Product selectedProduct;
-
-    @Getter
-    @Setter
-    private UploadedFile uploadedFile;
-
-    @Getter
-    private List<Integer> images = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -58,20 +52,6 @@ public class ModProductFront implements Serializable {
             }
         };
         lazyModel.setRowCount(productUtility.getProductsCountByFilters(new HashMap<String, Object>()));
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        if(params.size() > 0){
-            Integer productId = new Integer(params.get("productId"));
-            if(productId == 0){
-                selectedProduct = new Product();
-            } else {
-                selectedProduct = productUtility.getProduct(productId);
-                if(selectedProduct.getMainImageId() != null){
-                    images.add(selectedProduct.getMainImageId());
-                    images.add(selectedProduct.getMainImageId());
-                }
-            }
-        }
     }
 
     public void select(boolean isNew){
@@ -87,7 +67,7 @@ public class ModProductFront implements Serializable {
 
         try {
             if(product == null){
-                ec.redirect("edit-product.xhtml?productId=0");
+                ec.redirect("edit-product.xhtml");
             } else {
                 ec.redirect("edit-product.xhtml?productId=" + product.getId());
             }
@@ -96,54 +76,11 @@ public class ModProductFront implements Serializable {
         }
     }
 
-    public void fileUpload(FileUploadEvent event) throws IOException {
-        InputStream is = event.getFile().getInputstream();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();//FileOutputStream(file);
-        byte buf[] = new byte[1024];
-        int len;
-        while ((len = is.read(buf)) > 0)
-            out.write(buf, 0, len);
-        imagesBytes.add(out.toByteArray());
-        is.close();
-        out.close();
-    }
-
-    public void updateProduct() {
-//        selectedProduct.setImage(bytes);
-        for(byte[] img: imagesBytes){
-            productUtility.addImageToProduct(selectedProduct, img);
-        }
-        productUtility.updateProduct(selectedProduct);
-        redirectToEditProductEdit(selectedProduct);
-    }
-
-    public void createProduct() {
-        productUtility.createProduct(selectedProduct);
-        for(byte[] img: imagesBytes){
-            productUtility.addImageToProduct(selectedProduct, img);
-        }
-    }
-
     public void deleteProduct(){
         selectedProduct = this.lazyModel.getRowData();
         productUtility.deleteProduct(selectedProduct);
         this.init();
         this.updateTable();
-    }
-
-    public void makeAsMainImage(Integer imageId){
-        selectedProduct.setMainImageId(imageId);
-    }
-
-    public void deleteImage(Integer imageId){
-        Optional<ProductImage> prodImg = selectedProduct.getProductImageList().stream().filter(x -> x.getId() == imageId).findFirst();
-        if(prodImg.isPresent()){
-            selectedProduct.getProductImageList().remove(prodImg);
-        }
-        if(selectedProduct.getMainImageId() == imageId){
-            selectedProduct.setMainImageId(selectedProduct.getProductImageList().size() > 0 ?
-                selectedProduct.getProductImageList().get(0).getId() : null);
-        }
     }
 
     public void updateTable() {

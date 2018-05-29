@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart")
@@ -30,5 +31,5 @@ public class Cart implements Serializable {
                        CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
-    private List<CartProducts> products = new ArrayList<>();
+    private Set<CartProducts> products;
 }

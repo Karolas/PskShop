@@ -18,6 +18,7 @@
                                 <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 100%;text-align:center" numVisible="1" style="width:1200px" cricular="true">
                                     <h:panelGrid columns="1" style="width:100%">
                                         <o:graphicImage value="#{imageUtility.getImageFull(productImage.id)}"
+                                                        lastModified="#{imageUtility.lastModified}"
                                                         style="display: block; margin: 0px auto;"/>
                                     </h:panelGrid>
                                 </p:carousel>

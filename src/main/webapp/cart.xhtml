@@ -15,7 +15,8 @@
                 <p:panel id="cart" header="Your cart" style="margin-bottom:20px">
                     <p:dataTable id="cartProductsTable" var="cartProduct" value="#{cartFront.cartProducts}">
                         <p:column headerText="Image">
-                            <o:graphicImage value="#{imageUtility.getImage(cartProduct.product.mainImageId)}"/>
+                            <o:graphicImage value="#{imageUtility.getImage(cartProduct.product.mainImageId)}"
+                                            lastModified="#{imageUtility.lastModified}"/>
                         </p:column>
                         <p:column headerText="Name">
                             <p:outputLabel value="#{cartProduct.product.name}" />

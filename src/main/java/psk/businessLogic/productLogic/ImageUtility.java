@@ -1,7 +1,10 @@
 package psk.businessLogic.productLogic;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.omnifaces.cdi.GraphicImageBean;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import java.awt.*;
@@ -15,8 +18,19 @@ public class ImageUtility {
     private static Dimension MAX_DIMENSION = new Dimension(200, 200);
     private static Dimension MAX_DIMENSION_FULL = new Dimension(1200, 800);
 
+    @Getter
+    private long lastModified;
+
     @Inject
     private ImageProvider imageProvider;
+
+    @Inject
+    private LocalImageProvider localImageProvider;
+
+    @PostConstruct
+    private void init() {
+        lastModified = System.currentTimeMillis();
+    }
 
     public byte[] getImage(Integer imageId) {
 
@@ -31,6 +45,24 @@ public class ImageUtility {
         if(imageBytes == null) return new byte[0];
 
         return rescaleImage(imageBytes, MAX_DIMENSION_FULL);
+    }
+
+    public byte[] getImageLocal(Integer imageId) {
+        byte[] imageBytes = localImageProvider.getImage(imageId);
+        if(imageBytes == null) return new byte[0];
+
+        return rescaleImage(imageBytes, MAX_DIMENSION);
+    }
+
+    public byte[] getImageFullLocal(Integer imageId) {
+        byte[] imageBytes = localImageProvider.getImage(imageId);
+        if(imageBytes == null) return new byte[0];
+
+        return rescaleImage(imageBytes, MAX_DIMENSION);
+    }
+
+    public void setModified() {
+        lastModified = System.currentTimeMillis();
     }
 
     private byte[] rescaleImage(byte[] imageBytes, Dimension dimension) {

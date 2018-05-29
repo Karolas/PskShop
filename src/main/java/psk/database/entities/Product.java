@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -35,9 +36,9 @@ public class Product implements Serializable {
     @Column(name = "main_image_id")
     private Integer mainImageId;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImageList;
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<ProductImage> productImageList;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductAttribute> productAttributeList;
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<ProductAttribute> productAttributeList;
 }

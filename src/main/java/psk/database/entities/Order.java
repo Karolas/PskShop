@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -35,5 +36,5 @@ public class Order implements Serializable {
                        CascadeType.REMOVE},
             fetch = FetchType.EAGER
     )
-    private List<OrderProduct> products = new ArrayList<>();
+    private Set<OrderProduct> products;
 }

@@ -7,6 +7,7 @@
 
     <factory>
         <!-- http://showcase.omnifaces.org/exceptionhandlers/FullAjaxExceptionHandler -->
-        <exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>
+        <!--<exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>-->
+        <exception-handler-factory>psk.front.exceptions.JsfExceptionHandlerFactory</exception-handler-factory>
     </factory>
 </faces-config>

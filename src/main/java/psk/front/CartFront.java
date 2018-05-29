@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @ViewScoped
 @Named
@@ -25,7 +26,7 @@ public class CartFront implements Serializable {
     @Inject
     private CartUtility cartUtility;
 
-    public List<CartProducts> getCartProducts() {
+    public Set<CartProducts> getCartProducts() {
         return cartUtility.getCartProducts();
     }
 
