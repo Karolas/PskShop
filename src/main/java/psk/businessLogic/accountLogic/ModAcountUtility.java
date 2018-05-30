@@ -3,13 +3,14 @@ package psk.businessLogic.accountLogic;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class ModAcountUtility implements Serializable{
     @Inject
     private AccountDAO accountDAO;

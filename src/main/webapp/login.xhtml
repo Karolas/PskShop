@@ -13,6 +13,8 @@
             <h:form>
                 <p:messages id="msgs" />
 
+                <h:outputText value="Your account is blocked!" rendered="#{param['blocked']}" />
+
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="email" value="Email:" />
                     <p:inputText id="email" value="#{loginFront.email}" required="true" label="username" />

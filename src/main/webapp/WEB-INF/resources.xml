@@ -23,4 +23,24 @@
         jmxEnabled = true
     </Resource>
 
+    <!--<Resource id="ShopDataSource" type="DataSource">-->
+    <!--JdbcDriver = org.h2.Driver-->
+    <!--JdbcUrl = jdbc:h2:~/PskShop;AUTO_SERVER=TRUE-->
+    <!--UserName = sa-->
+    <!--Password = sa-->
+    <!--InitialSize = 1-->
+    <!--MaxActive = 10-->
+    <!--MaxWaitTime = 10 seconds-->
+    <!--MaxIdle = 2-->
+    <!--MinIdle = 1-->
+    <!--ValidationQuery = SELECT 1 FROM DUAL-->
+    <!--TestOnBorrow = true-->
+    <!--TestWhileIdle = true-->
+    <!--TimeBetweenEvictionRuns = 2 min-->
+    <!--removeAbandoned = true-->
+    <!--removeAbandonedTimeout = 600-->
+    <!--logAbandoned = true-->
+    <!--jmxEnabled = true-->
+    <!--</Resource>-->
+
 </tomee>

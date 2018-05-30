@@ -28,6 +28,7 @@ public abstract class cartAccAccessUtilityDecorator implements AccountAccessUtil
     public void loginAccount(String email, String password) {
         Set<CartProducts> cartProducts = cartUtility.getCartProducts();
         accountAccessUtility.loginAccount(email, password);
-        cartUtility.mergeCart(cartProducts);
+        if(!accountAccessUtility.isBlocked())
+            cartUtility.mergeCart(cartProducts);
     }
 }

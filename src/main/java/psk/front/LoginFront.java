@@ -2,10 +2,12 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.omnifaces.util.Faces;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -33,10 +35,6 @@ public class LoginFront implements Serializable {
 
     public void login(ActionEvent actionEvent) {
         accountAccessUtility.loginAccount(email, password);
-
-        if(accountAccessUtility.isLoggedIn()) {
-            password = null;
-        }
     }
 
     public void redirectLogin() {
@@ -47,6 +45,10 @@ public class LoginFront implements Serializable {
                 if(accountAccessUtility.isAdmin()) {
                     ec.redirect("index.xhtml");
                 } else if(accountAccessUtility.isUser()) {
+                    ec.redirect("index.xhtml");
+                } else if(accountAccessUtility.isBlocked()) {
+                    accountAccessUtility.logoutAccount();
+                } else {
                     ec.redirect("index.xhtml");
                 }
             }
