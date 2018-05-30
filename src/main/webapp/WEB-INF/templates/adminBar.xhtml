@@ -13,6 +13,9 @@
             #purchaseHistoryForm input, #productsForm input {
                 width: 100px !important;
             }
+          #adminSidebarForm .ui-panelgrid .ui-panelgrid-cell {
+              padding: 0px;
+          }
         </style>
         <title>Admin page</title>
     </h:head>
@@ -25,13 +28,13 @@
                     <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-home" />
                     <p:commandButton value="Users" action="/admin/users.xhtml?faces-redirect=true" ajax="false"
-                                     icon="ui-icon-extlink" />
+                                     icon="ui-icon-person" />
                     <p:commandButton value="Products" rendered="#{accountHolder.admin}"
                                      action="/admin/products.xhtml?faces-redirect=true" ajax="false"
-                                     icon="ui-icon-extlink" />
+                                     icon="ui-icon-tag" />
                     <p:commandButton value="Purchase history" rendered="#{accountHolder.admin}"
                                      action="/admin/purchaseHistory.xhtml?faces-redirect=true" ajax="false"
-                                     icon="ui-icon-extlink" />
+                                     icon="ui-icon-calendar" />
                 </f:facet>
 
                 <f:facet name="right">

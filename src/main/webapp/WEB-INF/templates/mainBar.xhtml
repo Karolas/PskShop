@@ -10,7 +10,11 @@
     <h:head>
         <meta charset="UTF-8"/>
         <title>test</title>
-        <!--<h:outputStylesheet name="/css/styles.css" />-->
+        <style type="text/css">
+            #sidebarForm .ui-panelgrid .ui-panelgrid-cell {
+                padding: 0px;
+            }
+        </style>
 
     </h:head>
 
@@ -56,9 +60,9 @@
                 </f:facet>
             </p:toolbar>
         </h:form>
-        <h:form id="sidebarForm" style="float:left; width: 20%;">
+        <h:form id="sidebarForm" style="float:left; width: 20%; ">
             <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
-            <p:panelGrid columns="1">
+            <p:panelGrid columns="1" styleClass="no-border">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">
                     <p:commandButton style="width: 100%; border: none; background-color: lightslategrey;" value="#{categorie.name}"
                         action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
