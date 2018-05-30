@@ -9,16 +9,17 @@ import org.primefaces.model.UploadedFile;
 import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
 import psk.database.entities.Order;
 import psk.database.entities.OrderProduct;
+import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ViewScoped
 @Named
@@ -34,6 +35,18 @@ public class ModPurchaseHistoryFront implements Serializable {
     @Getter
     @Setter
     private Order selectedOrder;
+
+    @Getter
+    @Setter
+    private Order selectedOrderr;
+
+    @Getter
+    @Setter
+    private Set<OrderProduct> orderProducts;
+
+    @Getter
+    @Setter
+    private OrderProduct orderProduct;
 
     @Getter
     @Setter
@@ -56,12 +69,15 @@ public class ModPurchaseHistoryFront implements Serializable {
         lazyModel.setRowCount(purchaseHistoryUtility.getProductsCountByFilters(new HashMap<String, Object>()));
     }
 
-    public void select() {
-        System.out.println("lala");
+    public void selectRowAndUpdate() {
         selectedOrder = this.lazyModel.getRowData();
         selectedOrder.setStatus("Completed");
         purchaseHistoryUtility.updateOrder(selectedOrder);
         this.updateTable();
+    }
+
+    public void selectItem(Set<OrderProduct> products) {
+        orderProducts = products;
     }
 
 //    public void updateProduct() {
@@ -83,5 +99,16 @@ public class ModPurchaseHistoryFront implements Serializable {
 
     public void updateTable() {
         RequestContext.getCurrentInstance().update("purchaseHistoryForm:lazyPurchaseHistoryItems");
+    }
+
+    public void redirectToOrderView(Order order) {
+        System.out.println(order.getId());
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        try {
+            ec.redirect("purchaseHistoryDetail.xhtml?orderId=" + order.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

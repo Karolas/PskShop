@@ -21,14 +21,7 @@
                          paginator="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="10,25,50" lazy="true">
-                <p:column headerText="Purchase ID" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
-                    <f:facet name="filter">
-                        <p:spinner onchange="PF('purchaseHistoryTable').filter()">
-                            <f:converter converterId="javax.faces.Integer" />
-                        </p:spinner>
-                    </f:facet>
-                    <h:outputText value="#{historyItem.id}" />
-                </p:column>
+
 
                 <p:column headerText="Date" sortBy="#{historyItem.orderCreated}">
                     <f:facet name="filter">
@@ -43,28 +36,17 @@
                     <h:outputText value="#{historyItem.account.firstName} #{historyItem.account.lastName}" />
                 </p:column>
 
-                <!--<p:column headerText="Products" filterBy="#{historyItem.products}" filterMatchMode="contains" sortBy="#{historyItem.products}">-->
-                    <!--<p:repeat value="#{historyItem.products}" var="product">-->
-                        <!--<h:outputText value="#{product.name}"/>-->
-                    <!--</p:repeat>-->
-                <!--</p:column>-->
-
-                <!--<p:dialog header="Products" widgetVar="dlg2" modal="true" height="100">-->
-                    <!--<p:repeat value="#{historyItem.products}" var="product">-->
-                        <!--<h:outputText value="#{product.name}"/>-->
-                    <!--</p:repeat>-->
-                <!--</p:dialog>-->
-
                 <p:column headerText="Status" filterBy="#{historyItem.status}" filterMatchMode="contains" sortBy="#{historyItem.status}">
                     <h:outputText value="#{historyItem.status}" />
                 </p:column>
 
                 <p:column headerText="Products" style="text-align: center; width: 100px;">
-                    <p:commandButton value="View" type="button" onclick="PF('dlg2').show()" />
+                    <h:commandButton value="View" action="#{modPurchaseHistoryFront.redirectToOrderView(historyItem)}" ajax="true">
+                    </h:commandButton>
                 </p:column>
 
                 <p:column style="text-align: center; width: 100px;">
-                    <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.select}" rendered="#{historyItem.status eq 'In Progress'}">
+                    <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.selectRowAndUpdate}" rendered="#{historyItem.status eq 'In Progress'}">
                         <p:confirm header="Confirmation" message="Do you really want to confirm this purchase?" icon="ui-icon-alert" />
                     </p:commandButton>
                 </p:column>
@@ -86,13 +68,6 @@
                 <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-
-            <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
-                <!--<h:form-->
-                <p:repeat value="#{historyItem.products}" var="product">
-                    <h:outputText value="#{product.name}"/>
-                </p:repeat>
-            </p:dialog>
 
         </h:form>
     </ui:define>
