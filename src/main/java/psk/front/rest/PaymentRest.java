@@ -83,7 +83,7 @@ public class PaymentRest {
             myResponse.put("status", status);
 
             return myResponse;
-        } else if(status == 402) {
+        } else if(status == 402 || status == 400 || status == 404) {
             InputStream errorStream = conn.getErrorStream();
             JSONObject errorResponse = new JSONObject(getStringFromInputStream(errorStream));
             System.out.println(errorResponse.getString("error"));

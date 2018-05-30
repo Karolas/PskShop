@@ -88,13 +88,15 @@ public class PaymentFront implements Serializable{
             messageHandler.addMessage("Successful", "Order placed.");
 
             redirectSuccessful();
+        } else if(status == 400) {
+            throwErrorMessage("Wrong card data.");
         } else {
             throwErrorMessage(response.getString("message"));
         }
     }
 
     private void throwErrorMessage(String message) {
-        messageHandler.addErrorMessage("Error", message);
+        messageHandler.addErrorMessage("Error: " + message, message);
     }
 
     private void redirectSuccessful() {

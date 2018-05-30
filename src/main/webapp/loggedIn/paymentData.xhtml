@@ -10,63 +10,73 @@
 <h:body>
     <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
         <ui:define name="content">
-            <p:tabView>
-                <p:tab title="Delivery and payment data">
-                    <h:form>
-                        <p:messages id="msgs" />
+            <h:form>
+                <p:messages id="msgs" globalOnly="true" display="text" autoUpdate="true" closable="true"/>
+            </h:form>
 
-                        <p:growl id="growl" showDetail="true" sticky="false" />
-
+            <h:form id="paymentDataForm">
+                <p:tabView>
+                    <p:tab title="Delivery and payment data">
                         <p:panel id="paymentDataPannel" header="Fill out payment information">
-                        <p:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="firstname" value="Delivery firstname:" />
-                            <p:inputText id="firstname" value="#{profileFront.account.firstName}"
-                                         label="Delivery firstname" required="true"/>
+                            <p:panelGrid columns="3" cellpadding="5" styleClass="ui-noborder">
+                                <p:outputLabel for="firstname" value="Delivery firstname:" />
+                                <p:inputText id="firstname" value="#{profileFront.account.firstName}"
+                                             label="Delivery firstname" required="true"/>
+                                <p:message for="firstname" />
 
-                            <p:outputLabel for="lastname" value="Delivery lastname:" />
-                            <p:inputText id="lastname" value="#{profileFront.account.lastName}"
-                                         label="Delivery lastname" required="true"/>
+                                <p:outputLabel for="lastname" value="Delivery lastname:" />
+                                <p:inputText id="lastname" value="#{profileFront.account.lastName}"
+                                             label="Delivery lastname" required="true"/>
+                                <p:message for="lastname" />
 
-                            <p:outputLabel for="address" value="Delivery address:" />
-                            <p:inputText id="address" value="#{profileFront.account.address}"
-                                         label="Delivery address" required="true"/>
+                                <p:outputLabel for="address" value="Delivery address:" />
+                                <p:inputText id="address" value="#{profileFront.account.address}"
+                                             label="Delivery address" required="true"/>
+                                <p:message for="address" />
 
-                            <p:outputLabel for="postalNr" value="Delivery postal Nr.:" />
-                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}"
-                                         label="Delivery postal Nr." required="true"/>
+                                <p:outputLabel for="postalNr" value="Delivery postal Nr.:" />
+                                <p:inputText id="postalNr" value="#{profileFront.account.postalNr}"
+                                             label="Delivery postal Nr." required="true"/>
+                                <p:message for="postalNr" />
 
-                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
-                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}"
-                                         label="Telephone Nr." required="true"/>
-                        </p:panelGrid>
-                        <p:separator/>
-                        <p:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="cardHolder" value="Card holder:" />
-                            <p:inputText id="cardHolder" value="#{paymentFront.cardHolder}"
-                                         label="Card holder" required="true"/>
+                                <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                                <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}"
+                                             label="Telephone Nr." required="true"/>
+                                <p:message for="telephoneNr" />
+                            </p:panelGrid>
+                            <p:separator/>
+                            <p:panelGrid columns="3" cellpadding="5" styleClass="ui-noborder">
+                                <p:outputLabel for="cardHolder" value="Card holder:" />
+                                <p:inputText id="cardHolder" value="#{paymentFront.cardHolder}"
+                                             label="Card holder" required="true"/>
+                                <p:message for="cardHolder" />
 
-                            <p:outputLabel for="cardNumber" value="Card number:" />
-                            <p:inputText id="cardNumber" value="#{paymentFront.cardNumber}"
-                                         label="Card number" required="true"/>
+                                <p:outputLabel for="cardNumber" value="Card number:" />
+                                <p:inputText id="cardNumber" value="#{paymentFront.cardNumber}"
+                                             label="Card number" required="true"/>
+                                <p:message for="cardNumber" />
 
-                            <p:outputLabel for="expirationYear" value="Card expiration year:" />
-                            <p:inputText id="expirationYear" value="#{paymentFront.expirationYear}"
-                                         label="Card expiration year" required="true"/>
+                                <p:outputLabel for="expirationYear" value="Card expiration year:" />
+                                <p:inputText id="expirationYear" value="#{paymentFront.expirationYear}"
+                                             label="Card expiration year" required="true"/>
+                                <p:message for="expirationYear" />
 
-                            <p:outputLabel for="expirationMonth" value="Card expiration month:" />
-                            <p:inputText id="expirationMonth" value="#{paymentFront.expirationMonth}"
-                                         label="Card expiration month" required="true"/>
+                                <p:outputLabel for="expirationMonth" value="Card expiration month:" />
+                                <p:inputText id="expirationMonth" value="#{paymentFront.expirationMonth}"
+                                             label="Card expiration month" required="true"/>
+                                <p:message for="expirationMonth" />
 
-                            <p:outputLabel for="cvv" value="cvv security code:" />
-                            <p:inputText id="cvv" value="#{paymentFront.cvv}"
-                                         label="cvv security code" required="true"/>
-                        </p:panelGrid>
+                                <p:outputLabel for="cvv" value="cvv security code:" />
+                                <p:inputText id="cvv" value="#{paymentFront.cvv}"
+                                             label="cvv security code" required="true"/>
+                                <p:message for="cvv" />
+                            </p:panelGrid>
 
-                        <p:commandButton value="Pay" action="#{paymentFront.pay()}" />
+                            <p:commandButton value="Pay" action="#{paymentFront.pay()}" update="paymentDataForm"/>
                         </p:panel>
-                    </h:form>
-                </p:tab>
-            </p:tabView>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
         </ui:define>
     </ui:composition>
 </h:body>

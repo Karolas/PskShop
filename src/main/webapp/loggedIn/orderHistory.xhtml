@@ -38,7 +38,7 @@
                         <hr style="background: grey; height: 3px"/>
                         <p:repeat value="#{order.products.toArray()}" var="product" rendered="#{not empty order.products}">
 
-                                <h:panelGrid  columns="9" cellpadding="20">
+                                <h:panelGrid  columns="8" cellpadding="20">
                                     <h:outputText value="Name:" />
                                     <h:outputText value="#{product.name}" style="font-weight: bold"/>
 

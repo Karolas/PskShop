@@ -17,10 +17,10 @@
 
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="email" value="Email:" />
-                    <p:inputText id="email" value="#{loginFront.email}" required="true" label="username" />
+                    <p:inputText id="email" value="#{loginFront.email}" required="true" label="Email" />
 
                     <h:outputLabel for="password" value="Password:" />
-                    <p:password id="password" value="#{loginFront.password}" required="true" label="password" />
+                    <p:password id="password" value="#{loginFront.password}" required="true" label="Password" />
 
                     <f:facet name="footer">
                         <p:commandButton value="Login" actionListener="#{loginFront.login}"

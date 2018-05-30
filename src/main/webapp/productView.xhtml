@@ -24,7 +24,7 @@
                     <p:panelGrid style="width: 100%;" layout="grid" columns="1">
                         <p:row>
                             <p:column rowspan="3" style="width: 60%; margin: 0px auto;">
-                                <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 500px;text-align:center" numVisible="1" cricular="true">
+                                <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 600px;text-align:center" numVisible="1" cricular="true">
                                     <h:panelGrid columns="1" style="width:100%">
                                         <o:graphicImage value="#{imageUtility.getImageFull(utils.getProperImgId(productImage.id))}"
                                                         lastModified="#{imageUtility.lastModified}"

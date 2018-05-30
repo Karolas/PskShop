@@ -16,7 +16,7 @@ import java.io.IOException;
 @GraphicImageBean
 public class ImageUtility {
     private static Dimension MAX_DIMENSION = new Dimension(200, 200);
-    private static Dimension MAX_DIMENSION_FULL = new Dimension(1200, 800);
+    private static Dimension MAX_DIMENSION_FULL = new Dimension(800, 600);
 
     @Getter
     private long lastModified;

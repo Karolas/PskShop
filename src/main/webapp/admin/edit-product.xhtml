@@ -69,7 +69,7 @@
                                     var="productImage"
                                     numVisible="1" style="width: 200px;">
                             <h3>Current products images</h3>
-                            <o:graphicImage value="#{imageUtility.getImage(productImage.id)}" lastModified="#{modProductEditFront.lastModified}"/>
+                            <o:graphicImage value="#{imageUtility.getImage(utils.getProperImgId(productImage.id))}" lastModified="#{modProductEditFront.lastModified}"/>
                             <p:commandButton action="#{modProductEditFront.markAsMainImage(productImage)}"
                                              value="Make main image" update=":edit-product:image-main"
                                              rendered="#{not modProductEditFront.isMarkedForRemoval(productImage)}"
