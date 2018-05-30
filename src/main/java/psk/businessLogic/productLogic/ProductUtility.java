@@ -102,21 +102,21 @@ public class ProductUtility implements Serializable {
         Product productDb = getProduct(product.getId());
 
         for(ProductAttribute productAttribute: productDb.getProductAttributeList()) {
-            boolean matchFound = false;
-            for(ProductAttribute productAttributeUpdated: productAttributes) {
+            if(productAttribute.getId() != null) {
+                boolean matchFound = false;
+                for(ProductAttribute productAttributeUpdated: productAttributes) {
 
-                if(productAttribute.getId().equals(productAttributeUpdated.getId()))
-                    matchFound = true;
+                    if(productAttributeUpdated.getId() != null &&
+                            productAttribute.getId().equals(productAttributeUpdated.getId()))
+                        matchFound = true;
+                }
+                if(!matchFound) productAttributeDAO.deleteProductAttribute(productAttribute);
             }
-            if(!matchFound) productAttributeDAO.deleteProductAttribute(productAttribute);
         }
 
         for (ProductAttribute productAttribute : productAttributes) {
             if (productAttribute.getId() == null) {
                 addAtrtributeToProduct(productDb, productAttribute);
-//                productAttributeDAO.createProductAttribute(productAttribute);
-//
-//                productAttribute.setProduct(productDb);
             }
         }
     }

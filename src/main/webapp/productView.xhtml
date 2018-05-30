@@ -23,7 +23,7 @@
                     </p:link>
                     <p:panelGrid style="width: 100%;" layout="grid" columns="1">
                         <p:row>
-                            <p:column rowspan="3" style="width: 60%; margin: 0px auto;">
+                            <p:column style="width: 60%; margin: 0px auto;">
                                 <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 600px;text-align:center" numVisible="1" cricular="true">
                                     <h:panelGrid columns="1" style="width:100%">
                                         <o:graphicImage value="#{imageUtility.getImageFull(utils.getProperImgId(productImage.id))}"
@@ -32,6 +32,8 @@
                                     </h:panelGrid>
                                 </p:carousel>
                             </p:column>
+                        </p:row>
+                        <p:row>
                             <p:column>
                                 <p:outputLabel style="font-weight: bold;" value="#{productDetailFront.product.name}" />
                             </p:column>
@@ -41,6 +43,11 @@
                                 <p:outputLabel value="#{productDetailFront.product.price}" >
                                     <f:convertNumber type="currency" currencySymbol="€" />
                                 </p:outputLabel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="#{productDetailFront.product.skuCode}" />
                             </p:column>
                         </p:row>
                         <p:row>

@@ -42,8 +42,13 @@
                         <p:inputText required="true" id="price" value="#{modProductEditFront.selectedProduct.price}"/>
                         <p:message for="price"/>
 
+                        <p:outputLabel for="skuCode" value="Sku code:"/>
+                        <p:inputText required="true" id="skuCode" value="#{modProductEditFront.selectedProduct.skuCode}"/>
+                        <p:message for="skuCode"/>
+
                         <p:outputLabel for="description" value="Description:"/>
-                        <p:inputText id="description" value="#{modProductEditFront.selectedProduct.description}"/>
+                        <p:inputTextarea id="description" rows="6" cols="33"
+                                         value="#{modProductEditFront.selectedProduct.description}"/>
                         <p:message for="description"/>
 
                         <p:outputLabel for="category" value="Product category:"/>
@@ -97,24 +102,24 @@
                               multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                               update=":edit-product:image-detail :edit-product:image-detail-local"/>
 
-                <p:panelGrid id="product-attributes" columns="1">
+                <p:panelGrid id="product-attributes" columns="1" styleClass="ui-noborder">
                     <p:dataTable id="attribute-table" value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
                                  widgetVar="attrNew" type="ordered">
 
-                        <p:column headerText="Attribute">
+                        <p:column headerText="Attribute" style="width: 25%;">
                             <p:outputLabel value="#{attribute.attributeName}"/>
                         </p:column>
-                        <p:column headerText="Description">
+                        <p:column headerText="Description" style="width: 65%;">
                             <p:outputLabel value="#{attribute.attributeDescription}"/>
                         </p:column>
                         <p:column>
-                            <h:commandLink value="Delete"
+                            <h:commandLink value="Delete" style="width: 10%;"
                                            action="#{modProductEditFront.onRowDelete(attribute)}"
                                            immediate="true"/>
                         </p:column>
                     </p:dataTable>
 
-                    <p:panelGrid columns="4" style="width: 100%;">
+                    <p:panelGrid columns="4" style="width: 70%;" styleClass="ui-noborder">
                         <p:outputLabel for="attributeName" value="Attribute name:"/>
                         <p:inputText id="attributeName" required="true" value="#{modProductEditFront.attributeName}"/>
 

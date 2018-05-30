@@ -33,6 +33,9 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "sku_code")
+    private String skuCode;
+
     @Column(name = "main_image_id")
     private Integer mainImageId;
 
