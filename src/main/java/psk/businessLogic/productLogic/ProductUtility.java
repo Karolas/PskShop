@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 
 @Named
 @RequestScoped
-@InterceptorLog
 public class ProductUtility implements Serializable {
     @Inject
     private ProductDAO productDAO;
@@ -47,14 +46,15 @@ public class ProductUtility implements Serializable {
         return productDAO.selectProductById(productId);
     }
 
+    @InterceptorLog
     public void updateProduct(Product product){
         productDAO.updateProduct(product);
     }
-
+    @InterceptorLog
     public void createProduct(Product product) {
         productDAO.insertProduct(product);
     }
-
+    @InterceptorLog
     public void deleteProduct(Product product) {
         productImageDAO.removeProduct(product.getId());
         productDAO.deleteProduct(product.getId());

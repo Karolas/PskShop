@@ -121,25 +121,30 @@ public class ModProductEditFront implements Serializable {
     }
 
     public String updateProduct() {
-        productUtility.updateProduct(selectedProduct);
-
-        for(int i = 0; i < imagesBytes.size(); i++){
-            if(i == mainImageLocal) {
-                productUtility.addMainImageToProduct(selectedProduct, imagesBytes.get(i));
-            } else {
-                productUtility.addImageToProduct(selectedProduct, imagesBytes.get(i));
+        try{
+            productUtility.updateProduct(selectedProduct);
+            for(int i = 0; i < imagesBytes.size(); i++){
+                if(i == mainImageLocal) {
+                    productUtility.addMainImageToProduct(selectedProduct, imagesBytes.get(i));
+                } else {
+                    productUtility.addImageToProduct(selectedProduct, imagesBytes.get(i));
+                }
             }
+
+            for (ProductImage productImage: imagesToBeRemoved) {
+                productUtility.removeImageFromProduct(productImage);
+            }
+
+            productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
+
+            imageUtility.setModified();
+        } catch (Exception e){
+            messageHandler.addErrorMessage("Error", "Concurrent updates!");
+            selectedProduct = productUtility.getProduct(selectedProduct.getId());
+            return null;
         }
-
-        for (ProductImage productImage: imagesToBeRemoved) {
-            productUtility.removeImageFromProduct(productImage);
-        }
-
-        productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
-
-        imageUtility.setModified();
         messageHandler.addMessage("Successful", "Product was updated!");
-        return "/admin/products.xhtml";
+        return "/admin/products.xhtml?faces-redirect=true";
     }
 
     public String createProduct() {
@@ -159,7 +164,7 @@ public class ModProductEditFront implements Serializable {
 
         imageUtility.setModified();
         messageHandler.addMessage("Successful", "Product was created!");
-        return "/admin/products.xhtml";
+        return "/admin/products.xhtml?faces-redirect=true";
     }
 
     public void markAsMainImage(ProductImage productImage){

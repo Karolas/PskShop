@@ -36,6 +36,10 @@ public class Product implements Serializable {
     @Column(name = "main_image_id")
     private Integer mainImageId;
 
+    @Version
+    @Column(name = "OPT_LOCK_VERSION")
+    private Integer optLockVersion;
+
     @JoinColumn(name = "category", referencedColumnName = "ID")
     @ManyToOne
     private ProductCategory category;

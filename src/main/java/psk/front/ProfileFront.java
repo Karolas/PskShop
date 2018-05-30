@@ -45,7 +45,7 @@ public class ProfileFront implements Serializable {
         try{
             account = accountAccessUtility.updateAccount(account);
             messageHandler.addMessage("Successful", "Profile has been updated!");
-        } catch (Exception e) {
+        } catch (OptimisticLockException oe) {
             messageHandler.addErrorMessage("Update was not successful!", "We got concurrent updates!");
             conflictingAccount = accountAccessUtility.getAccount(account);
             account.setOptLockVersion(conflictingAccount.getOptLockVersion());

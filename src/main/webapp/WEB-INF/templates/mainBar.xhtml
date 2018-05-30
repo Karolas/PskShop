@@ -60,7 +60,7 @@
             <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
             <p:panelGrid columns="1">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">
-                    <p:commandButton style="width: 100%; border: none; background-color: darkolivegreen" value="#{categorie.name}"
+                    <p:commandButton style="width: 100%; border: none; background-color: lightslategrey;" value="#{categorie.name}"
                         action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
                     <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
                         <p:commandButton style="width: 100%; border: none;" value="#{subCategorie.name}"

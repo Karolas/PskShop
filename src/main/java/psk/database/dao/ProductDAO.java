@@ -42,12 +42,7 @@ public class ProductDAO implements Serializable {
 
     @Transactional
     public void updateProduct(Product product) {
-        Product product1 = em.find(Product.class, product.getId());
-        product1.setName(product.getName());
-        product1.setPrice(product.getPrice());
-        product1.setAmount(product.getAmount());
-        product1.setDescription(product.getDescription());
-        product1.setMainImageId(product.getMainImageId());
+        em.merge(product);
     }
 
     @Transactional

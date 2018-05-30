@@ -1,5 +1,6 @@
 package psk.businessLogic.cartLogic;
 
+import psk.InterceptorLog;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.CartDAO;
@@ -72,6 +73,7 @@ public class CartUtility implements Serializable {
     }
 
     @Transactional
+    @InterceptorLog
     public void addProductToCart(Product product, Integer amount) {
         if(accountAccessUtility.isLoggedIn()) {
             Cart cart = cartDAO.getCartById(cartId);
@@ -106,6 +108,7 @@ public class CartUtility implements Serializable {
     }
 
     @Transactional
+    @InterceptorLog
     public void removeFromCart(CartProducts cartProduct) {
         if(accountAccessUtility.isLoggedIn()) {
             cartProductDAO.deleteCartProduct(cartProduct);

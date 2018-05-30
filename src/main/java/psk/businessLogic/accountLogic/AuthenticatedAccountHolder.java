@@ -1,6 +1,7 @@
 package psk.businessLogic.accountLogic;
 
 import lombok.Getter;
+import psk.InterceptorLog;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;

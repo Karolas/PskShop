@@ -1,6 +1,7 @@
 package psk.businessLogic.accountLogic;
 
 import org.omnifaces.util.Faces;
+import psk.InterceptorLog;
 import psk.Utilities.MessageHandler;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
@@ -14,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
+import javax.persistence.OptimisticLockException;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,6 +33,7 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
     @Inject
     private Provider<AuthenticatedAccountHolder> authenticatedAccountHolderProvider;
 
+    @InterceptorLog
     public void loginAccount(String email, String password) {
         Faces.invalidateSession();
         Faces.getSession(true);
@@ -65,9 +68,14 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
     }
 
     public Account updateAccount(Account account){
-        Account account1 = accountDAO.updateAccount(account);
+        Account account1;
+        try{
+            account1 = accountDAO.updateAccount(account);
+            authenticatedAccountHolderProvider.get().initUser(account.getEmail());
+        } catch (Exception e){
+            throw new OptimisticLockException(e.getMessage());
+        }
 
-        authenticatedAccountHolderProvider.get().initUser(account.getEmail());
         return account1;
     }
 

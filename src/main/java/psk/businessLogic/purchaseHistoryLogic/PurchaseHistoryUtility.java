@@ -1,6 +1,7 @@
 package psk.businessLogic.purchaseHistoryLogic;
 
 import org.primefaces.model.SortOrder;
+import psk.InterceptorLog;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.dao.AccountDAO;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 @Named
 @RequestScoped
+//@InterceptorLog
 public class PurchaseHistoryUtility implements Serializable {
 
     @Inject
@@ -42,17 +44,9 @@ public class PurchaseHistoryUtility implements Serializable {
     @Inject
     private OrderProductDAO orderProductDAO;
 
-    public int getProductsCount(String nameCriteria) {
-        return orderDAO.count(nameCriteria);
-    }
-
     public List<Order> getAllOrders(Account account){
         return orderDAO.getAllOrders(account);
     }
-
-//    public List<Order> getProductsPage(int first, int pageSize, String nameCriteria) {
-//        return orderDAO.getResultList(first, pageSize, nameCriteria);
-//    }
 
     public int getProductsCountByFilters(Map<String, Object> filters){
         return orderDAO.countWithilters(filters);
@@ -64,6 +58,7 @@ public class PurchaseHistoryUtility implements Serializable {
         orderDAO.updateOrder(order);
     }
 
+    @InterceptorLog
     @Transactional
     public void addOrder(String orderId, String timestamp) {
         Account accountDb = accountDAO.selectAccountById(account.getId());

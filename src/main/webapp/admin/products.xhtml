@@ -17,7 +17,7 @@
                              widgetVar="productsTable"
                              paginator="true"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                             rowsPerPageTemplate="10,25,50" lazy="true">
+                             rowsPerPageTemplate="10,25,50" lazy="true" style="width: 100%;">
                     <f:facet name="header">
                         <p:commandButton value="Create" actionListener="#{modProductFront.redirectToEditProductEdit(null)}">
                             <f:ajax />
@@ -28,7 +28,7 @@
                     </p:column>
 
                     <p:column headerText="Price" filterBy="#{product.price}" filterMatchMode="exact" sortBy="#{product.price}">
-                        <f:facet name="filter">
+                        <f:facet filterStyle="width: 16px;" name="filter">
                             <p:spinner onkeyup="PF('productsTable').filter()">
                                 <f:converter converterId="javax.faces.BigDecimal" />
                             </p:spinner>

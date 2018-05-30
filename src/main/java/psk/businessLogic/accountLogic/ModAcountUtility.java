@@ -1,5 +1,6 @@
 package psk.businessLogic.accountLogic;
 
+import psk.InterceptorLog;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Named
 @RequestScoped
+@InterceptorLog
 public class ModAcountUtility implements Serializable{
     @Inject
     private AccountDAO accountDAO;
