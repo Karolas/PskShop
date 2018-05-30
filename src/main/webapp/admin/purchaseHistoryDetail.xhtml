@@ -6,70 +6,22 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<head>
-    <title>Title</title>
-</head>
-<body>
+<h:head/>
+<h:body>
 <ui:composition template="/WEB-INF/templates/adminBar.xhtml">
     <ui:define name="content">
         <h:form id="purchaseDetailForm">
 
-            <!--<p:growl id="growl" showDetail="true" sticky="false" />-->
+            <h:outputText value="#{modPurchaseHistoryDetailFront.selectedOrder.id}"/>
+            <p:dataList value="#{modPurchaseHistoryDetailFront.selectedOrder.products.toArray()}" var="product" style="width:50%">
+                <f:facet name="header">
+                    Products:
+                </f:facet>
+                #{product.name}
+            </p:dataList>
 
-            <!--<p:dataTable id="lazyProducts" var="product" value="#{modProductFront.lazyModel}" rows="10"-->
-                         <!--widgetVar="productsTable"-->
-                         <!--paginator="true"-->
-                         <!--paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "-->
-                         <!--rowsPerPageTemplate="10,25,50" lazy="true">-->
-                <!--<f:facet name="header">-->
-                    <!--<p:commandButton value="Create" actionListener="#{modProductFront.redirectToEditProductEdit(null)}">-->
-                        <!--<f:ajax />-->
-                    <!--</p:commandButton>-->
-                <!--</f:facet>-->
-                <!--<p:column headerText="Name" filterBy="#{product.name}" filterMatchMode="contains" sortBy="#{product.name}" >-->
-                    <!--<h:outputText value="#{product.name}" />-->
-                <!--</p:column>-->
-
-                <!--<p:column headerText="Price" filterBy="#{product.price}" filterMatchMode="exact" sortBy="#{product.price}">-->
-                    <!--<f:facet name="filter">-->
-                        <!--<p:spinner onkeyup="PF('productsTable').filter()">-->
-                            <!--<f:converter converterId="javax.faces.BigDecimal" />-->
-                        <!--</p:spinner>-->
-                    <!--</f:facet>-->
-                    <!--<h:outputText value="#{product.price}">-->
-                        <!--<f:convertNumber type="currency" currencySymbol="€" />-->
-                    <!--</h:outputText>-->
-                <!--</p:column>-->
-
-                <!--<p:column headerText="Description" filterBy="#{product.description}" filterMatchMode="contains" sortBy="#{product.description}">-->
-                    <!--<h:outputText value="#{product.description}" />-->
-                <!--</p:column>-->
-
-                <!--<p:column style="text-align: center; width: 100px;">-->
-                    <!--<p:commandButton value="Edit" action="#{modProductFront.redirectToEditProductEdit(product)}" ajax="true"/>-->
-                <!--</p:column>-->
-
-                <!--<p:column style="text-align: center; width: 100px;">-->
-                    <!--<p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}" update=":topBarAdmin:growl">-->
-                        <!--<p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />-->
-                    <!--</p:commandButton>-->
-                <!--</p:column>-->
-
-
-                <!--<f:facet name="paginatorTopLeft">-->
-                    <!--<p:commandButton type="button" icon="fa fa-sync" />-->
-                <!--</f:facet>-->
-
-                <!--<f:facet name="paginatorBottomRight">-->
-                    <!--<p:commandButton type="button" icon="fa fa-cloud-upload" />-->
-                <!--</f:facet>-->
-            <!--</p:dataTable>-->
-            <!--<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">-->
-                <!--<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />-->
-                <!--<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />-->
-            <!--</p:confirmDialog>-->
         </h:form>
     </ui:define>
 </ui:composition>
-</body>
+</h:body>
 </html>

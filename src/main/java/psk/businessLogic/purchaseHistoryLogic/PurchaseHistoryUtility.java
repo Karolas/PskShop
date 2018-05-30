@@ -43,6 +43,14 @@ public class PurchaseHistoryUtility implements Serializable {
 
     @Inject
     private OrderProductDAO orderProductDAO;
+    
+    public Order getOrder(Integer orderId) {
+        return orderDAO.getOrderById(orderId);
+    }
+
+    public int getProductsCount(String nameCriteria) {
+        return orderDAO.count(nameCriteria);
+    }
 
     public List<Order> getAllOrders(Account account){
         return orderDAO.getAllOrders(account);

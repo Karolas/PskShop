@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 @ViewScoped
@@ -51,13 +52,14 @@ public class ModPurchaseHistoryFront implements Serializable {
     @Getter
     @Setter
     private UploadedFile uploadedFile;
-//
-//    @Getter
-//    @Setter
-//    private  selectedProducts ArrayList<Product>;
+
+    @Getter
+    @Setter
+    private List<String> orderStatuses = Arrays.asList("Pending", "Accepted", "In progress", "Sent", "Delivered");
 
     @PostConstruct
     public void init() {
+//        initOrders();
         lazyModel = new LazyDataModel<Order>() {
 
             @Override
@@ -67,6 +69,10 @@ public class ModPurchaseHistoryFront implements Serializable {
             }
         };
         lazyModel.setRowCount(purchaseHistoryUtility.getProductsCountByFilters(new HashMap<String, Object>()));
+    }
+
+    public void initOrders(){
+        List<String> orderStatuses =  Arrays.asList("Pending", "Accepted", "In progress", "Sent", "Delivered");
     }
 
     public void selectRowAndUpdate() {
@@ -80,22 +86,10 @@ public class ModPurchaseHistoryFront implements Serializable {
         orderProducts = products;
     }
 
-//    public void updateProduct() {
-//        selectedProduct.setImage(bytes);
-//        productUtility.updateProduct(selectedProduct);
-//    }
-//
-//    public void createProduct() {
-//        selectedProduct.setImage(bytes);
-//        productUtility.createProduct(selectedProduct);
-//    }
-//
-//    public void deleteProduct(){
-//        selectedProduct = this.lazyModel.getRowData();
-//        productUtility.deleteProduct(selectedProduct);
-//        this.init();
-//        this.updateTable();
-//    }
+    public BigDecimal calculateProductSum(Order order){
+        OrderFront orderFront = new OrderFront();
+        return orderFront.getTotalPriceOfOrder(order);
+    }
 
     public void updateTable() {
         RequestContext.getCurrentInstance().update("purchaseHistoryForm:lazyPurchaseHistoryItems");
@@ -110,5 +104,9 @@ public class ModPurchaseHistoryFront implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void onStatusChange(){
+        System.out.println();
     }
 }

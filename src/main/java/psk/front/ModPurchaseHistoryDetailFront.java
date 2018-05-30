@@ -1,12 +1,14 @@
 package psk.front;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.Setter;
 import org.omnifaces.cdi.Param;
-import psk.database.entities.Cart;
-import psk.database.entities.CartProducts;
-import psk.database.entities.Order;
-import psk.database.entities.Product;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
+import psk.businessLogic.productLogic.ProductUtility;
+import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
+import psk.database.dao.OrderDAO;
+import psk.database.entities.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -16,9 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @ViewScoped
 @Named
@@ -27,5 +27,32 @@ public class ModPurchaseHistoryDetailFront implements Serializable {
     @Inject
     @Param(name="orderId")
     private Integer orderId;
+
+    @Getter
+    @Setter
+    private Order selectedOrder;
+
+    @Getter
+    @Setter
+    private Set<OrderProduct> orderProducts;
+
+    @Getter
+    @Setter
+    private List<OrderProduct> list;
+    @Inject
+    private PurchaseHistoryUtility purchaseHistoryUtility;
+
+    @PostConstruct
+    public void init() {
+        selectedOrder = getOrderById(orderId);
+        orderProducts = selectedOrder.getProducts();
+        System.out.println(orderProducts.toArray().length);
+        list = new ArrayList<>();
+        list.add(new OrderProduct());
+    }
+
+    public Order getOrderById(Integer oId){
+        return purchaseHistoryUtility.getOrder(oId);
+    }
 
 }

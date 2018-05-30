@@ -12,7 +12,6 @@
 </head>
 <body>
 
-
 <ui:composition template="/WEB-INF/templates/adminBar.xhtml">
     <ui:define name="content">
         <h:form id="purchaseHistoryForm">
@@ -22,6 +21,14 @@
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="10,25,50" lazy="true">
 
+                <p:column headerText="Purchase ID" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
+                    <f:facet name="filter">
+                        <p:spinner onkeyup="PF('purchaseHistoryTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                        </p:spinner>
+                    </f:facet>
+                    <h:outputText value="#{historyItem.id}" />
+                </p:column>
 
                 <p:column headerText="Date" sortBy="#{historyItem.orderCreated}">
                     <f:facet name="filter">
@@ -41,14 +48,26 @@
                 </p:column>
 
                 <p:column headerText="Products" style="text-align: center; width: 100px;">
-                    <h:commandButton value="View" action="#{modPurchaseHistoryFront.redirectToOrderView(historyItem)}" ajax="true">
-                    </h:commandButton>
+                    <p:commandButton value="View" action="#{modPurchaseHistoryFront.redirectToOrderView(historyItem)}" ajax="true">
+                    </p:commandButton>
+                </p:column>
+
+                <p:column headerText="Sum" style="text-align: center; width: 100px;">
+                    <h:outputText value="#{orderFront.getTotalPriceOfOrder(historyItem)}" />
                 </p:column>
 
                 <p:column style="text-align: center; width: 100px;">
                     <p:commandButton value="Confirm" actionListener="#{modPurchaseHistoryFront.selectRowAndUpdate}" rendered="#{historyItem.status eq 'In Progress'}">
                         <p:confirm header="Confirmation" message="Do you really want to confirm this purchase?" icon="ui-icon-alert" />
                     </p:commandButton>
+                </p:column>
+
+                <p:column style="text-align: center; width: 100px;">
+                    <p:selectOneMenu id="status" value="#{historyItem.status}" style="width:150px" >
+                        <p:ajax listener="#{modPurchaseHistoryFront.onStatusChange}" update="city" />
+                        <f:selectItem itemLabel="Select Status" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{modPurchaseHistoryFront.orderStatuses}" />
+                    </p:selectOneMenu>
                 </p:column>
 
                 <f:facet name="paginatorTopLeft">
