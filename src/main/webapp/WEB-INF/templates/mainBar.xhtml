@@ -56,7 +56,8 @@
                 </f:facet>
             </p:toolbar>
         </h:form>
-        <h:form style="float:left; width: 20%;">
+        <h:form id="sidebarForm" style="float:left; width: 20%;">
+            <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
             <p:panelGrid columns="1">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">
                     <p:commandButton style="width: 100%; border: none; background-color: darkolivegreen" value="#{categorie.name}"

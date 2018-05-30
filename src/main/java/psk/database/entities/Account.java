@@ -3,6 +3,7 @@ package psk.database.entities;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import psk.InterceptorLog;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,4 +48,8 @@ public class Account implements Serializable {
 
     @Column(name = "role")
     private String role;
+
+    @Version
+    @Column(name = "OPT_LOCK_VERSION")
+    private Integer optLockVersion;
 }

@@ -43,26 +43,8 @@ public class AccountDAO implements Serializable {
     }
 
     @Transactional
-    public void updateAccount(Account account) {
-        Account account1 = em.find(Account.class, account.getId());
-
-//        if (!account1.getFirstName().equals(account.getFirstName()))
-            account1.setFirstName(account.getFirstName());
-//
-//        if (!account1.getLastName().equals(account.getLastName()))
-            account1.setLastName(account.getLastName());
-//
-//        if (!account1.getAddress().equals(account.getAddress()))
-            account1.setAddress(account.getAddress());
-//
-//        if (!account1.getPostalNr().equals(account.getPostalNr()))
-            account1.setPostalNr(account.getPostalNr());
-//
-//        if (!account1.getTelephoneNr().equals(account.getTelephoneNr()))
-            account1.setTelephoneNr(account.getTelephoneNr());
-//
-//        if (!account1.getRole().equals(account.getRole()))
-            account1.setRole(account.getRole());
+    public Account updateAccount(Account account) {
+        return em.merge(account);
     }
 
     @Transactional

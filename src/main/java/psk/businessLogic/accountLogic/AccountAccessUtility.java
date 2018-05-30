@@ -10,6 +10,7 @@ public interface AccountAccessUtility {
     boolean isAdmin();
     void logoutAccount();
     void addAccount(Account account, String password);
-    void updateAccount(Account account);
+    Account updateAccount(Account account);
     void updatePassword(Account account, String password);
+    Account getAccount(Account account);
 }

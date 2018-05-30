@@ -44,7 +44,7 @@ public class ModProductFront implements Serializable {
         };
     }
 
-    public void redirectToEditProductEdit(Product product, Boolean isButton) {
+    public void redirectToEditProductEdit(Product product) {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
         try {

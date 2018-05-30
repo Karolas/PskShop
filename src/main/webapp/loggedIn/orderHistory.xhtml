@@ -16,7 +16,7 @@
             <h:form>
                 <p:dataScroller value="#{orderFront.orderList}" var="order" chunkSize="10">
                     <p:panel header="Order information">
-                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                        <h:panelGrid columns="1" style="width:100%" columnClasses="logo,detail">
                               <p:outputPanel>
                                   <h:panelGrid columns="8" cellpadding="20">
                                       <h:outputText value="Order number:" />
@@ -38,7 +38,7 @@
                         <hr style="background: grey; height: 3px"/>
                         <p:repeat value="#{order.products.toArray()}" var="product" rendered="#{not empty order.products}">
 
-                                <h:panelGrid  columns="8" cellpadding="20">
+                                <h:panelGrid  columns="9" cellpadding="20">
                                     <h:outputText value="Name:" />
                                     <h:outputText value="#{product.name}" style="font-weight: bold"/>
 
@@ -50,7 +50,7 @@
                                         <f:convertNumber type="currency" currencySymbol="€" />
                                     </h:outputText>
                                     <h:outputText value="Total price:"/>
-                                    <p:outputLabel value="#{orderFront.getTotalPrice(product.amount, product.price)}">
+                                    <p:outputLabel style="border: solid 1px;" value="#{orderFront.getTotalPrice(product.amount, product.price)}">
                                         <f:convertNumber type="currency" currencySymbol="€" />
                                     </p:outputLabel>
                                 </h:panelGrid>

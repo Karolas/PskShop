@@ -64,10 +64,11 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
         accountDAO.insertAccount(account);
     }
 
-    public void updateAccount(Account account) {
-        accountDAO.updateAccount(account);
+    public Account updateAccount(Account account){
+        Account account1 = accountDAO.updateAccount(account);
 
         authenticatedAccountHolderProvider.get().initUser(account.getEmail());
+        return account1;
     }
 
     public void updatePassword(Account account, String password) {
@@ -86,6 +87,9 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
         return authenticatedAccountHolderProvider.get().isUser();
     }
 
+    public Account getAccount(Account account) {
+        return accountDAO.selectAccountByEmail(account.getEmail());
+    }
     public boolean isAdmin() {
         return authenticatedAccountHolderProvider.get().isAdmin();
     }

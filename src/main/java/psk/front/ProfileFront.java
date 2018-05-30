@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.OptimisticLockException;
 import java.io.Serializable;
 
 @ViewScoped
@@ -29,6 +30,9 @@ public class ProfileFront implements Serializable {
     private Account account;
 
     @Getter
+    private Account conflictingAccount;
+
+    @Getter
     @Setter
     private String password;
 
@@ -37,12 +41,24 @@ public class ProfileFront implements Serializable {
     private String repeatPassword;
 
     public void updateProfile(ActionEvent actionEvent) {
-        accountAccessUtility.updateAccount(account);
+        conflictingAccount = null;
+        try{
+            account = accountAccessUtility.updateAccount(account);
+            messageHandler.addMessage("Successful", "Profile has been updated!");
+        } catch (Exception e) {
+            messageHandler.addErrorMessage("Update was not successful!", "We got concurrent updates!");
+            conflictingAccount = accountAccessUtility.getAccount(account);
+            account.setOptLockVersion(conflictingAccount.getOptLockVersion());
+        }
     }
 
     public void updatePassword(ActionEvent actionEvent) {
-        accountAccessUtility.updatePassword(account, password);
-
+        try{
+            accountAccessUtility.updatePassword(account, password);
+            messageHandler.addMessage("Successful", "New password has been set!");
+        } catch (Exception e){
+            messageHandler.addErrorMessage("Error", "We got concurrent updates!");
+        }
         password = null;
         repeatPassword = null;
     }

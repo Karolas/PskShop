@@ -14,24 +14,50 @@
                 <p:tab title="Update profile">
                     <h:form>
                         <p:panel id="profilePannel" header="#{authenticatedAccount.email}">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="firstname" value="Firstname:" />
-                            <p:inputText id="firstname" value="#{profileFront.account.firstName}" label="Firstname"/>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h:outputText value="Your data" rendered="#{profileFront.conflictingAccount ne null}"/>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <p:outputLabel for="firstname" value="Firstname:" />
+                                            <p:inputText id="firstname" value="#{profileFront.account.firstName}" label="Firstname"/>
 
-                            <p:outputLabel for="lastname" value="Lastname:" />
-                            <p:inputText id="lastname" value="#{profileFront.account.lastName}" label="Lastname" />
+                                            <p:outputLabel for="lastname" value="Lastname:" />
+                                            <p:inputText id="lastname" value="#{profileFront.account.lastName}" label="Lastname" />
 
-                            <p:outputLabel for="address" value="Address:" />
-                            <p:inputText id="address" value="#{profileFront.account.address}" label="Address" />
+                                            <p:outputLabel for="address" value="Address:" />
+                                            <p:inputText id="address" value="#{profileFront.account.address}" label="Address" />
 
-                            <p:outputLabel for="postalNr" value="Postal Nr.:" />
-                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}" label="Postal Nr." />
+                                            <p:outputLabel for="postalNr" value="Postal Nr.:" />
+                                            <p:inputText id="postalNr" value="#{profileFront.account.postalNr}" label="Postal Nr." />
 
-                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
-                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}" label="Telephone Nr." />
-                        </h:panelGrid>
+                                            <p:outputLabel for="telephoneNr" value="Telephone Nr.:" />
+                                            <p:inputText id="telephoneNr" value="#{profileFront.account.telephoneNr}" label="Telephone Nr." />
+                                        </h:panelGrid>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Our data" rendered="#{profileFront.conflictingAccount ne null}"/>
+                                        <h:panelGrid columns="2" cellpadding="5" rendered="#{profileFront.conflictingAccount ne null}">
+                                            <p:outputLabel for="cfirstname" value="Firstname:" />
+                                            <p:inputText readonly="true" id="cfirstname" value="#{profileFront.conflictingAccount.firstName}" label="Firstname"/>
 
-                        <p:commandButton value="Save" update="profilePannel" actionListener="#{profileFront.updateProfile}" icon="ui-icon-check" />
+                                            <p:outputLabel for="clastname" value="Lastname:" />
+                                            <p:inputText readonly="true" id="clastname" value="#{profileFront.conflictingAccount.lastName}" label="Lastname" />
+
+                                            <p:outputLabel for="caddress" value="Address:" />
+                                            <p:inputText readonly="true" id="caddress" value="#{profileFront.conflictingAccount.address}" label="Address" />
+
+                                            <p:outputLabel for="cpostalNr" value="Postal Nr.:" />
+                                            <p:inputText readonly="true" id="cpostalNr" value="#{profileFront.conflictingAccount.postalNr}" label="Postal Nr." />
+
+                                            <p:outputLabel for="ctelephoneNr" value="Telephone Nr.:" />
+                                            <p:inputText readonly="true" id="ctelephoneNr" value="#{profileFront.conflictingAccount.telephoneNr}" label="Telephone Nr." />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p:commandButton value="Save anyway" update="profilePannel :sidebarForm:mainGrowl" actionListener="#{profileFront.updateProfile}" icon="ui-icon-check" rendered="#{profileFront.conflictingAccount ne null}"/>
+                            <p:commandButton value="Save" update="profilePannel :sidebarForm:mainGrowl" actionListener="#{profileFront.updateProfile}" icon="ui-icon-check" rendered="#{profileFront.conflictingAccount eq null}"/>
                         </p:panel>
                     </h:form>
                 </p:tab>
