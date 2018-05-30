@@ -1,4 +1,4 @@
-package psk.businessLogic;
+package psk.businessLogic.accountLogic;
 
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;

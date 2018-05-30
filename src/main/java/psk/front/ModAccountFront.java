@@ -6,14 +6,11 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.Utilities.MessageHandler;
-import psk.businessLogic.ModAcountUtility;
+import psk.businessLogic.accountLogic.ModAcountUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -56,7 +53,6 @@ public class ModAccountFront implements Serializable {
 //                return null;
 //            }
         };
-        lazyModel.setRowCount(accountDAO.count(new HashMap<String, Object>()));
     }
 
     public void block() {

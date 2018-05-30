@@ -3,29 +3,19 @@ package psk.front;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.primefaces.model.UploadedFile;
 import psk.Utilities.MessageHandler;
-import psk.businessLogic.ModAcountUtility;
-import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
-import psk.database.dao.ProductDAO;
 import psk.database.entities.Product;
-import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @ViewScoped
@@ -38,10 +28,6 @@ public class ModProductFront implements Serializable {
 
     @Inject
     private ProductUtility productUtility;
-
-    @Getter
-    @Setter
-    private Product selectedProduct;
 
     @Inject
     MessageHandler messageHandler;
@@ -56,15 +42,6 @@ public class ModProductFront implements Serializable {
                 return productUtility.getResultList(first, pageSize, sortField, sortOrder, filters);
             }
         };
-        lazyModel.setRowCount(productUtility.getProductsCountByFilters(new HashMap<String, Object>()));
-    }
-
-    public void select(boolean isNew){
-        if(isNew)  {
-            selectedProduct = new Product();
-        } else {
-            selectedProduct = this.lazyModel.getRowData();
-        }
     }
 
     public void redirectToEditProductEdit(Product product, Boolean isButton) {
@@ -82,8 +59,7 @@ public class ModProductFront implements Serializable {
     }
 
     public void deleteProduct(){
-        selectedProduct = this.lazyModel.getRowData();
-        productUtility.deleteProduct(selectedProduct);
+        productUtility.deleteProduct(this.lazyModel.getRowData());
         this.init();
         this.updateTable();
         messageHandler.addMessage("Successful", "Product was deleted!");

@@ -33,22 +33,11 @@ public class OrderFront implements Serializable {
     MessageHandler messageHandler;
 
     @Getter
-    @Setter
     private List<Order> orderList = new ArrayList<>();
-
-    @Getter
-    @Setter
-    private List<OrderProduct> orderProductList = new ArrayList<>();
 
     @PostConstruct
     private void init(){
         orderList = purchaseHistoryUtility.getAllOrders(account);
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.setName("Preke");
-        orderProduct.setAmount(20);
-        orderProduct.setPrice(new BigDecimal(20));
-        orderProductList.add(orderProduct);
-        orderProductList.add(orderProduct);
     }
 
     public BigDecimal getTotalPrice(Integer amount, BigDecimal price){
@@ -57,13 +46,11 @@ public class OrderFront implements Serializable {
 
     public BigDecimal getTotalPriceOfOrder(Order order) {
         BigDecimal totalPrice = new BigDecimal(0);
-
         for (OrderProduct orderProduct: order.getProducts()) {
             BigDecimal productPrice = orderProduct.getPrice()
                     .multiply(new BigDecimal(orderProduct.getAmount()));
             totalPrice = totalPrice.add(productPrice);
         }
-
         return totalPrice;
     }
 }

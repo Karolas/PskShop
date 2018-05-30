@@ -39,6 +39,7 @@ public class LayoutFront {
 
     @Inject
     ProductCategoryDAO productCategoryDAO;
+
     @PostConstruct
     private void init(){
         cats = productCategoryDAO.getAllCategories();
