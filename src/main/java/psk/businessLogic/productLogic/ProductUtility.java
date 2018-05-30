@@ -147,4 +147,7 @@ public class ProductUtility implements Serializable {
     public ProductCategory getProductCategoryById(Integer id){
         return productCategoryDAO.getCategoryById(id);
     }
+    public List<ProductCategory> getAllProductCategories(){
+        return productCategoryDAO.getAll();
+    }
 }

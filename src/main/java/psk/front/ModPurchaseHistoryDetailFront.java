@@ -31,7 +31,7 @@ public class ModPurchaseHistoryDetailFront implements Serializable {
     @Getter
     @Setter
     private Order selectedOrder;
-    
+
     @Inject
     private PurchaseHistoryUtility purchaseHistoryUtility;
 

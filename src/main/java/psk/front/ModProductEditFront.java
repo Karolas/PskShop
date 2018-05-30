@@ -9,6 +9,7 @@ import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.entities.Product;
 import psk.database.entities.ProductAttribute;
+import psk.database.entities.ProductCategory;
 import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
@@ -79,10 +80,14 @@ public class ModProductEditFront implements Serializable {
     @Inject
     MessageHandler messageHandler;
 
+    @Getter
+    @Setter
+    List<ProductCategory> productCategoryList;
+
     @PostConstruct
     public void init() {
         lastModified = System.currentTimeMillis();
-
+        productCategoryList = productUtility.getAllProductCategories();
         localImageProvider.clear();
         imagesBytes = localImageProvider.getImages();
 
@@ -218,5 +223,9 @@ public class ModProductEditFront implements Serializable {
         productAttribute.setAttributeDescription(attributeDescription);
 
         selectedProduct.getProductAttributeList().add(productAttribute);
+    }
+
+    public void onCategoryChange(ProductCategory productCategory){
+        System.out.println(productCategory);
     }
 }

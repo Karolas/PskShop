@@ -45,6 +45,13 @@
                         <p:outputLabel for="description" value="Description:"/>
                         <p:inputText id="description" value="#{modProductEditFront.selectedProduct.description}"/>
                         <p:message for="description"/>
+
+                        <p:outputLabel for="category" value="Product category:"/>
+                        <p:selectOneMenu  id="category" value="#{modProductEditFront.selectedProduct.category}" converter="categoryConverter">
+                            <f:selectItem itemLabel="Select category"  noSelectionOption="true" />
+                            <f:selectItems value="#{modProductEditFront.productCategoryList}" var="productCategory" itemLabel="#{productCategory.name}" itemValue="#{productCategory}"/>
+                        </p:selectOneMenu>
+                        <p:message for="category"/>
                     </p:panelGrid>
 
                     <p:panelGrid id="image-detail-local" columns="1" styleClass="ui-noborder">

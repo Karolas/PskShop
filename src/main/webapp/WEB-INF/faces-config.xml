@@ -10,4 +10,8 @@
         <!--<exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>-->
         <exception-handler-factory>psk.front.exceptions.JsfExceptionHandlerFactory</exception-handler-factory>
     </factory>
+    <converter>
+        <converter-id>categoryConverter</converter-id>
+        <converter-class>psk.Utilities.CategoryConverter</converter-class>
+    </converter>
 </faces-config>

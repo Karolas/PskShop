@@ -18,19 +18,31 @@ public class ProductCategoryDAO implements Serializable {
     private EntityManager em;
 
     @Transactional
+    public List<ProductCategory> getAll(){
+        return em.createQuery("SELECT c from ProductCategory c").getResultList();
+    }
+
+    @Transactional
     public List<ProductCategory> getAllCategories(){
         return em.createQuery("SELECT c from ProductCategory c WHERE parentCategory.id is null").getResultList();
     }
 
     @Transactional
     public List<ProductCategory> getSubCategorieByParent(Integer parentId){
-        return em.createQuery("SELECT c from ProductCategory c WHERE parentCategory.id = :parentId").setParameter("parentId", parentId).getResultList();
+        return em.createQuery("SELECT c from ProductCategory c WHERE parentCategory.id = :parentId")
+                .setParameter("parentId", parentId).getResultList();
     }
 
     @Transactional
     public ProductCategory getCategoryById(Integer id){
         return em.createQuery("SELECT c from ProductCategory c WHERE c.id = :id", ProductCategory.class)
                 .setParameter("id", id).getSingleResult();
+    }
+
+    @Transactional
+    public ProductCategory getCategoryByName(String name){
+        return em.createQuery("SELECT c from ProductCategory c WHERE c.name = :name", ProductCategory.class)
+                .setParameter("name", name).getSingleResult();
     }
 
 }
