@@ -2,19 +2,21 @@ package psk.Utilities;
 
 import psk.database.entities.Account;
 
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LoggerFile implements Logger, Serializable {
     public void log(String className, String methodName, Date logDate, Account account){
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(System.getProperty("user.dir") + "\\logs.log", true);
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String fileName = formatter.format(logDate) + ".log";
+            fos = new FileOutputStream(System.getProperty("user.dir") + "\\"+ fileName, true);
             fos.write(("Date: " + logDate.toString()).getBytes());
             fos.write((" Class name: " + className).getBytes());
             fos.write((" Method name: " + methodName).getBytes());
