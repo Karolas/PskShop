@@ -35,11 +35,11 @@
                     <p:panelGrid  id="product-detail" columns="3"
                                   columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
                         <p:outputLabel for="name" value="Name:"/>
-                        <p:inputText id="name" value="#{modProductEditFront.selectedProduct.name}"/>
+                        <p:inputText required="true" id="name" value="#{modProductEditFront.selectedProduct.name}"/>
                         <p:message for="name"/>
 
                         <p:outputLabel for="price" value="Price:"/>
-                        <p:inputText id="price" value="#{modProductEditFront.selectedProduct.price}"/>
+                        <p:inputText required="true" id="price" value="#{modProductEditFront.selectedProduct.price}"/>
                         <p:message for="price"/>
 
                         <p:outputLabel for="description" value="Description:"/>

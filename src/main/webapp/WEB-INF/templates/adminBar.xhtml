@@ -17,7 +17,7 @@
             <p:growl id="growl" showDetail="true" sticky="false"/>
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Main site" action="/index.xhtml?faces-redirect=true" ajax="false"
+                    <p:commandButton value="Home" action="/index.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-home" />
                     <p:commandButton value="Users" action="/admin/users.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-extlink" />
@@ -48,7 +48,22 @@
             </p:toolbar>
         </h:form>
 
-        <ui:insert name="content" />
+        <h:form id="sidebarForm" style="float:left; width: 20%;">
+            <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
+            <p:panelGrid columns="1">
+                <ui:repeat value="#{layoutFront.cats}" var="categorie">
+                    <p:commandButton style="width: 100%; border: none; background-color: darkolivegreen" value="#{categorie.name}"
+                                     action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
+                    <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
+                        <p:commandButton style="width: 100%; border: none;" value="#{subCategorie.name}"
+                                         action="#{layoutFront.redirectToProductSearchWithCategory(subCategorie.id)}"/>
+                    </ui:repeat>
+                </ui:repeat>
+            </p:panelGrid>
+        </h:form>
+        <div style="float:left; width: 80%;">
+            <ui:insert name="content" />
+        </div>
     </h:body>
 </f:view>
 </html>
