@@ -15,57 +15,58 @@
         <ui:define name="content">
             <h:form id="edit-product">
                 <p:growl sticky="false" id="growl" showDetail="true"></p:growl>
-                <p:panelGrid  id="product-detail" columns="1"
-                              columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
+
+                <p:panelGrid id="mainEditProductGrid" columns="4" style="width: 100%;" styleClass="ui-noborder">
                     <f:facet name="header">
                         <h:outputText value="Edit product" rendered="#{not modProductEditFront.newProduct}"/>
                         <h:outputText value="Create product" rendered="#{modProductEditFront.newProduct}"/>
                     </f:facet>
-                    <p:outputLabel for="name" value="Name:"/>
-                    <p:inputText id="name" value="#{modProductEditFront.selectedProduct.name}"/>
-                    <p:message for="name"/>
+                    <p:panel id="image-main">
+                        <p:outputLabel value="Product has no main image"
+                                       rendered="#{modProductEditFront.mainImageLocal eq -1 and modProductEditFront.mainImage eq -1 }"/>
+                        <o:graphicImage id="mainImageLocal" value="#{imageUtility.getImageLocal(modProductEditFront.mainImageLocal)}"
+                                        lastModified="#{modProductEditFront.lastModified}"
+                                        rendered="#{modProductEditFront.mainImageLocal ne -1}"/>
+                        <o:graphicImage id="mainImage" value="#{imageUtility.getImage(modProductEditFront.mainImage)}"
+                                        lastModified="#{modProductEditFront.lastModified}"
+                                        rendered="#{modProductEditFront.mainImage ne -1}"/>
+                    </p:panel>
 
-                    <p:outputLabel for="price" value="Price:"/>
-                    <p:inputText id="price" value="#{modProductEditFront.selectedProduct.price}"/>
-                    <p:message for="price"/>
+                    <p:panelGrid  id="product-detail" columns="3"
+                                  columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
+                        <p:outputLabel for="name" value="Name:"/>
+                        <p:inputText id="name" value="#{modProductEditFront.selectedProduct.name}"/>
+                        <p:message for="name"/>
 
-                    <p:outputLabel for="description" value="Description:"/>
-                    <p:inputText id="description" value="#{modProductEditFront.selectedProduct.description}"/>
-                    <p:message for="description"/>
-                </p:panelGrid>
+                        <p:outputLabel for="price" value="Price:"/>
+                        <p:inputText id="price" value="#{modProductEditFront.selectedProduct.price}"/>
+                        <p:message for="price"/>
 
-                <p:panelGrid id="image-main" columns="1" styleClass="ui-noborder">
-                    <p:outputLabel value="Main image: "
-                                   rendered="#{modProductEditFront.mainImageLocal ne -1 or modProductEditFront.mainImage ne -1 }"/>
-                    <o:graphicImage id="mainImageLocal" value="#{imageUtility.getImageLocal(modProductEditFront.mainImageLocal)}"
-                                    lastModified="#{modProductEditFront.lastModified}"
-                                    rendered="#{modProductEditFront.mainImageLocal ne -1}"/>
-                    <o:graphicImage id="mainImage" value="#{imageUtility.getImage(modProductEditFront.mainImage)}"
-                                    lastModified="#{modProductEditFront.lastModified}"
-                                    rendered="#{modProductEditFront.mainImage ne -1}"/>
-                </p:panelGrid>
+                        <p:outputLabel for="description" value="Description:"/>
+                        <p:inputText id="description" value="#{modProductEditFront.selectedProduct.description}"/>
+                        <p:message for="description"/>
+                    </p:panelGrid>
 
-                <p:panelGrid id="image-detail-local" columns="1" styleClass="ui-noborder">
-                    <p:carousel rendered="#{not empty modProductEditFront.imagesBytes}" value="#{modProductEditFront.imageIds}"
-                                var="imageId" headerText="New products images"
-                                numVisible="1" style="width:250px" cricular="true">
-                        <p:panelGrid columns="1">
+                    <p:panelGrid id="image-detail-local" columns="1" styleClass="ui-noborder">
+                        <p:carousel rendered="#{not empty modProductEditFront.imagesBytes}" value="#{modProductEditFront.imageIds}"
+                                    var="imageId"
+                                    numVisible="1" responsive="true" style="width: 200px;">
+                            <h3>New products images</h3>
                             <o:graphicImage value="#{imageUtility.getImageLocal(imageId)}" lastModified="#{modProductEditFront.lastModified}"/>
                             <p:commandButton action="#{modProductEditFront.makeAsMainImageLocal(imageId)}"
                                              value="Make main image" update=":edit-product:image-main" />
                             <p:commandButton action="#{modProductEditFront.deleteImageLocal(imageId)}"
                                              value="Remove image" update=":edit-product:image-detail-local :edit-product:image-main" />
-                        </p:panelGrid>
-                    </p:carousel>
-                </p:panelGrid>
+                        </p:carousel>
+                    </p:panelGrid>
 
-                <p:panelGrid id="image-detail" columns="1" styleClass="ui-noborder"
-                             rendered="#{not modProductEditFront.newProduct}">
-                    <p:carousel rendered="#{not empty modProductEditFront.selectedProduct.productImageList}"
-                                value="#{modProductEditFront.selectedProduct.productImageList}"
-                                var="productImage" headerText="Current products images"
-                                numVisible="1" style="width:250px" cricular="true">
-                        <p:panelGrid columns="1">
+                    <p:panelGrid id="image-detail" columns="1" styleClass="ui-noborder"
+                                 rendered="#{not modProductEditFront.newProduct}">
+                        <p:carousel rendered="#{not empty modProductEditFront.selectedProduct.productImageList}"
+                                    value="#{modProductEditFront.selectedProduct.productImageList}"
+                                    var="productImage"
+                                    numVisible="1" style="width: 200px;">
+                            <h3>Current products images</h3>
                             <o:graphicImage value="#{imageUtility.getImage(productImage.id)}" lastModified="#{modProductEditFront.lastModified}"/>
                             <p:commandButton action="#{modProductEditFront.markAsMainImage(productImage)}"
                                              value="Make main image" update=":edit-product:image-main"
@@ -76,13 +77,13 @@
                             <p:commandButton action="#{modProductEditFront.keepImage(productImage)}"
                                              value="Keep image" update=":edit-product:image-detail"
                                              rendered="#{modProductEditFront.isMarkedForRemoval(productImage)}"/>
-                        </p:panelGrid>
-                    </p:carousel>
-                    <p:fileUpload fileUploadListener="#{modProductEditFront.fileUpload}" mode="advanced" auto="true"
-                                  multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                  update=":edit-product:image-detail :edit-product:image-detail-local"/>
+                        </p:carousel>
+                    </p:panelGrid>
                 </p:panelGrid>
 
+                <p:fileUpload fileUploadListener="#{modProductEditFront.fileUpload}" mode="advanced" auto="true"
+                              multiple="false" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              update=":edit-product:image-detail :edit-product:image-detail-local"/>
 
                 <p:panelGrid id="product-attributes" columns="1">
                     <p:dataTable value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
@@ -100,7 +101,7 @@
                         </p:column>
                     </p:dataTable>
 
-                    <p:panelGrid columns="1">
+                    <p:panelGrid columns="4" style="width: 100%;">
                         <p:outputLabel for="attributeName" value="Attribute name:"/>
                         <p:inputText id="attributeName" value="#{modProductEditFront.attributeName}"/>
 
