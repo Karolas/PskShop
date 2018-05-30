@@ -211,10 +211,6 @@ public class ModProductEditFront implements Serializable {
         ProductAttribute productAttribute = new ProductAttribute();
         productAttribute.setAttributeName(attributeName);
         productAttribute.setAttributeDescription(attributeDescription);
-        if(!isNewProduct) {
-            productAttribute.setProductId(selectedProduct.getId());
-            productAttribute.setProduct(selectedProduct);
-        }
 
         selectedProduct.getProductAttributeList().add(productAttribute);
     }

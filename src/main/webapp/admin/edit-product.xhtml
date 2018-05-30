@@ -27,7 +27,7 @@
                         <o:graphicImage id="mainImageLocal" value="#{imageUtility.getImageLocal(modProductEditFront.mainImageLocal)}"
                                         lastModified="#{modProductEditFront.lastModified}"
                                         rendered="#{modProductEditFront.mainImageLocal ne -1}"/>
-                        <o:graphicImage id="mainImage" value="#{imageUtility.getImage(modProductEditFront.mainImage)}"
+                        <o:graphicImage id="mainImage" value="#{imageUtility.getImage(utils.getProperImgId(modProductEditFront.mainImage))}"
                                         lastModified="#{modProductEditFront.lastModified}"
                                         rendered="#{modProductEditFront.mainImage ne -1}"/>
                     </p:panel>
@@ -54,9 +54,11 @@
                             <h3>New products images</h3>
                             <o:graphicImage value="#{imageUtility.getImageLocal(imageId)}" lastModified="#{modProductEditFront.lastModified}"/>
                             <p:commandButton action="#{modProductEditFront.makeAsMainImageLocal(imageId)}"
-                                             value="Make main image" update=":edit-product:image-main" />
+                                             value="Make main image" update=":edit-product:image-main"
+                                             process=":edit-product:image-main, :edit-product:image-detail-local, :edit-product:image-detail"/>
                             <p:commandButton action="#{modProductEditFront.deleteImageLocal(imageId)}"
-                                             value="Remove image" update=":edit-product:image-detail-local :edit-product:image-main" />
+                                             value="Remove image" update=":edit-product:image-detail-local :edit-product:image-main"
+                                             process=":edit-product:image-main, :edit-product:image-detail-local, :edit-product:image-detail"/>
                         </p:carousel>
                     </p:panelGrid>
 
@@ -70,13 +72,16 @@
                             <o:graphicImage value="#{imageUtility.getImage(productImage.id)}" lastModified="#{modProductEditFront.lastModified}"/>
                             <p:commandButton action="#{modProductEditFront.markAsMainImage(productImage)}"
                                              value="Make main image" update=":edit-product:image-main"
-                                             rendered="#{not modProductEditFront.isMarkedForRemoval(productImage)}"/>
+                                             rendered="#{not modProductEditFront.isMarkedForRemoval(productImage)}"
+                                             process=":edit-product:image-main, :edit-product:image-detail-local, :edit-product:image-detail"/>
                             <p:commandButton action="#{modProductEditFront.deleteImage(productImage)}"
                                              value="Remove image" update=":edit-product:image-detail"
-                                             rendered="#{not modProductEditFront.isMarkedForRemoval(productImage)}"/>
+                                             rendered="#{not modProductEditFront.isMarkedForRemoval(productImage)}"
+                                             process=":edit-product:image-main, :edit-product:image-detail-local, :edit-product:image-detail"/>
                             <p:commandButton action="#{modProductEditFront.keepImage(productImage)}"
                                              value="Keep image" update=":edit-product:image-detail"
-                                             rendered="#{modProductEditFront.isMarkedForRemoval(productImage)}"/>
+                                             rendered="#{modProductEditFront.isMarkedForRemoval(productImage)}"
+                                             process=":edit-product:image-main, :edit-product:image-detail-local, :edit-product:image-detail"/>
                         </p:carousel>
                     </p:panelGrid>
                 </p:panelGrid>
@@ -86,7 +91,7 @@
                               update=":edit-product:image-detail :edit-product:image-detail-local"/>
 
                 <p:panelGrid id="product-attributes" columns="1">
-                    <p:dataTable value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
+                    <p:dataTable id="attribute-table" value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
                                  widgetVar="attrNew" type="ordered">
 
                         <p:column headerText="Attribute">
@@ -97,28 +102,32 @@
                         </p:column>
                         <p:column>
                             <h:commandLink value="Delete"
-                                           action="#{modProductEditFront.onRowDelete(attribute)}" />
+                                           action="#{modProductEditFront.onRowDelete(attribute)}"
+                                           immediate="true"/>
                         </p:column>
                     </p:dataTable>
 
                     <p:panelGrid columns="4" style="width: 100%;">
                         <p:outputLabel for="attributeName" value="Attribute name:"/>
-                        <p:inputText id="attributeName" value="#{modProductEditFront.attributeName}"/>
+                        <p:inputText id="attributeName" required="true" value="#{modProductEditFront.attributeName}"/>
 
                         <p:outputLabel for="attributeDescription" value="Attribute description:"/>
-                        <p:inputText id="attributeDescription" value="#{modProductEditFront.attributeDescription}"/>
+                        <p:inputText id="attributeDescription" required="true" value="#{modProductEditFront.attributeDescription}"/>
                     </p:panelGrid>
 
                     <p:commandButton value="Add new row"
-                                     actionListener="#{modProductEditFront.onAddNew()}" update="product-attributes"/>
+                                     actionListener="#{modProductEditFront.onAddNew()}" update="product-attributes"
+                                     process=":edit-product:product-attributes"/>
                 </p:panelGrid>
 
                 <p:commandButton value="Update" action="#{modProductEditFront.updateProduct}"
                                  icon="ui-icon-check" style="margin-top: 1em"
-                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{not modProductEditFront.newProduct}"/>
+                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{not modProductEditFront.newProduct}"
+                                 process=":edit-product:product-detail"/>
                 <p:commandButton value="Create" action="#{modProductEditFront.createProduct}"
                                  icon="ui-icon-check" style="margin-top: 1em"
-                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{modProductEditFront.newProduct}"/>
+                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{modProductEditFront.newProduct}"
+                                 process=":edit-product:product-detail"/>
                 <p:messages globalOnly="true"/>
             </h:form>
         </ui:define>

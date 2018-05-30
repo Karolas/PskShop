@@ -91,6 +91,7 @@ public class ProductUtility implements Serializable {
     }
 
     public void addAtrtributeToProduct(Product product, ProductAttribute productAttribute) {
+        productAttribute.setProductId(product.getId());
         productAttribute.setProduct(product);
 
         productAttributeDAO.createProductAttribute(productAttribute);
@@ -112,9 +113,10 @@ public class ProductUtility implements Serializable {
 
         for (ProductAttribute productAttribute : productAttributes) {
             if (productAttribute.getId() == null) {
-                productAttributeDAO.createProductAttribute(productAttribute);
-
-                productAttribute.setProduct(productDb);
+                addAtrtributeToProduct(productDb, productAttribute);
+//                productAttributeDAO.createProductAttribute(productAttribute);
+//
+//                productAttribute.setProduct(productDb);
             }
         }
     }
