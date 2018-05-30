@@ -28,8 +28,8 @@ public class ProductCategoryDAO implements Serializable {
     }
 
     @Transactional
-    public ProductCategory getTopCategoryById(Integer id){
-        return em.createQuery("SELECT c from ProductCategory c WHERE parentCategory.id is null AND c.id = :id", ProductCategory.class)
+    public ProductCategory getCategoryById(Integer id){
+        return em.createQuery("SELECT c from ProductCategory c WHERE c.id = :id", ProductCategory.class)
                 .setParameter("id", id).getSingleResult();
     }
 

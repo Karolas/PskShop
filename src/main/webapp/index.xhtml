@@ -20,7 +20,13 @@
                   <p:ajax event="keyup" update="products" />
                </p:inputText>
             </div>
-
+            <p:link outcome="index" value="#{productFront.selectedCategory.parentCategory.name}" rendered="#{productFront.selectedCategory.parentCategory ne null}">
+               <f:param name="categoryId" value="#{productFront.selectedCategory.parentCategory.id}" />
+            </p:link>
+            <h:outputText value=" > " rendered="#{productFront.selectedCategory.parentCategory ne null}"/>
+            <p:link outcome="index" value="#{productFront.selectedCategory.name} ">
+               <f:param name="categoryId" value="#{productFront.selectedCategory.id}" />
+            </p:link>
             <p:dataGrid var="product" value="#{productFront.products}" columns="4" layout="grid"
                         rows="24" paginator="true" id="products"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

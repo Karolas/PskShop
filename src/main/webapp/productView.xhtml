@@ -12,10 +12,17 @@
         <ui:define name="content">
             <h:form>
                 <p:panel header="Product info">
-                    <p:panelGrid style="width: 100%;">
+                    <p:link outcome="index" value="#{productDetailFront.product.category.parentCategory.name}" rendered="#{productDetailFront.product.category.parentCategory ne null}">
+                        <f:param name="categoryId" value="#{productDetailFront.product.category.parentCategory.name}" />
+                    </p:link>
+                    <h:outputText value=" > " rendered="#{productDetailFront.product.category.parentCategory ne null}"/>
+                    <p:link outcome="index" value="#{productDetailFront.product.category.name} ">
+                        <f:param name="categoryId" value="#{productDetailFront.product.category.id}" />
+                    </p:link>
+                    <p:panelGrid style="width: 100%;" layout="grid" columns="1">
                         <p:row>
                             <p:column rowspan="3" style="width: 60%; margin: 0px auto;">
-                                <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 100%;text-align:center" numVisible="1" style="width:1200px" cricular="true">
+                                <p:carousel value="#{productDetailFront.product.productImageList}" var="productImage" itemStyle="height: 100%;text-align:center" numVisible="1" cricular="true">
                                     <h:panelGrid columns="1" style="width:100%">
                                         <o:graphicImage value="#{imageUtility.getImageFull(productImage.id)}"
                                                         lastModified="#{imageUtility.lastModified}"

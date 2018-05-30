@@ -7,6 +7,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.entities.Product;
+import psk.database.entities.ProductCategory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -41,6 +42,9 @@ public class ProductFront implements Serializable {
     @Setter
     private int productAmount;
 
+    @Getter
+    private ProductCategory selectedCategory;
+
     @PostConstruct
     public void loadProducts() {
         products = new LazyDataModel<Product>() {
@@ -50,6 +54,9 @@ public class ProductFront implements Serializable {
                 return productUtility.getProductsPage(first, pageSize, searchString, categoryId);
             }
         };
+        if(categoryId != null){
+            selectedCategory = productUtility.getProductCategoryById(categoryId);
+        }
     }
 
     public void redirectToProductView(Product product) {
