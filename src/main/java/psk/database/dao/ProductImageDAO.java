@@ -33,4 +33,9 @@ public class ProductImageDAO implements Serializable {
 
         em.remove(productImage1Db);
     }
+
+    @Transactional
+    public void removeProduct(Integer id){
+        em.createQuery("DELETE FROM ProductImage WHERE product.id = :productId").setParameter("productId", id).executeUpdate();
+    }
 }

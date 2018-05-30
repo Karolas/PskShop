@@ -11,6 +11,7 @@ import psk.database.entities.ProductAttribute;
 import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -133,7 +134,8 @@ public class ModProductEditFront implements Serializable {
         productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
 
         imageUtility.setModified();
-
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful", "Product was updated!") );
         return "/admin/products.xhtml";
     }
 
@@ -153,7 +155,8 @@ public class ModProductEditFront implements Serializable {
         }
 
         imageUtility.setModified();
-
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful", "Product was created!") );
         return "/admin/products.xhtml";
     }
 

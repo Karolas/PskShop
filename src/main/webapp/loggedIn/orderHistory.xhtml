@@ -36,7 +36,7 @@
                               </p:outputPanel>
                           </h:panelGrid>
                         <hr style="background: grey; height: 3px"/>
-                        <p:repeat value="#{order.products}" var="product">
+                        <p:repeat value="#{order.products}" var="product" rendered="#{not empty order.products}">
 
                                 <h:panelGrid  columns="8" cellpadding="20">
                                     <h:outputText value="Name:" />

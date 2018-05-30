@@ -41,19 +41,7 @@ public class LayoutFront {
     ProductCategoryDAO productCategoryDAO;
     @PostConstruct
     private void init(){
-        menuModel = new DefaultMenuModel();
         cats = productCategoryDAO.getAllCategories();
-        for(int i=0; i<cats.size(); i++) {
-            DefaultSubMenu subMenu = new DefaultSubMenu(cats.get(i).getName());
-            subs = productCategoryDAO.getSubCategorieByParent(cats.get(i).getId());
-            for (int j = 0; j < subs.size(); j++) {
-                DefaultMenuItem item = new DefaultMenuItem( subs.get(j).getName());
-                item.setIcon("ui-icon-battery-0");
-                item.setCommand("#{layoutFront.redirectToProductSearchWithCategory(" + subs.get(j).getId() + ")}");
-                subMenu.addElement(item);
-            }
-            menuModel.addElement(subMenu);
-        }
     }
 
     public List<ProductCategory> getSubcategories(Integer parentId){

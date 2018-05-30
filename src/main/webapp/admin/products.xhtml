@@ -11,7 +11,10 @@
     <ui:composition template="/WEB-INF/templates/adminBar.xhtml">
         <ui:define name="content">
             <h:form id="productsForm">
+                <p:growl id="growl" showDetail="true" sticky="false" />
+
                 <p:dataTable id="lazyProducts" var="product" value="#{modProductFront.lazyModel}" rows="10"
+                             widgetVar="productsTable"
                              paginator="true"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                              rowsPerPageTemplate="10,25,50" lazy="true">
@@ -24,25 +27,27 @@
                         <h:outputText value="#{product.name}" />
                     </p:column>
 
-                    <p:column headerText="Price" filterBy="#{product.price}" filterMatchMode="contains" sortBy="#{product.price}">
-                        <h:outputText value="#{product.price}" />
-                    </p:column>
-
-                    <p:column headerText="Amount" filterBy="#{product.amount}" filterMatchMode="contains" sortBy="#{product.amount}">
-                        <h:outputText value="#{product.amount}" />
+                    <p:column headerText="Price" filterBy="#{product.price}" filterMatchMode="exact" sortBy="#{product.price}">
+                        <f:facet name="filter">
+                            <p:spinner onkeyup="PF('productsTable').filter()">
+                                <f:converter converterId="javax.faces.BigDecimal" />
+                            </p:spinner>
+                        </f:facet>
+                        <h:outputText value="#{product.price}">
+                            <f:convertNumber type="currency" currencySymbol="€" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Description" filterBy="#{product.description}" filterMatchMode="contains" sortBy="#{product.description}">
                         <h:outputText value="#{product.description}" />
                     </p:column>
-                    <!--TODO image-->
 
                     <p:column style="text-align: center; width: 100px;">
                         <p:commandButton value="Edit" action="#{modProductFront.redirectToEditProductEdit(product)}" ajax="true"/>
                     </p:column>
 
                     <p:column style="text-align: center; width: 100px;">
-                        <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}">
+                        <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}" update=":topBarAdmin:growl">
                             <p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />
                         </p:commandButton>
                     </p:column>

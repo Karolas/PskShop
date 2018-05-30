@@ -53,6 +53,7 @@ public class ProductUtility implements Serializable {
     }
 
     public void deleteProduct(Product product) {
+        productImageDAO.removeProduct(product.getId());
         productDAO.deleteProduct(product.getId());
     }
 

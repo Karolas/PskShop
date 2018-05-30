@@ -14,6 +14,7 @@
     <ui:composition template="/WEB-INF/templates/adminBar.xhtml">
         <ui:define name="content">
             <h:form id="edit-product">
+                <p:growl sticky="false" id="growl" showDetail="true"></p:growl>
                 <p:panelGrid  id="product-detail" columns="1"
                               columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
                     <f:facet name="header">
@@ -117,10 +118,10 @@
 
                 <p:commandButton value="Update" action="#{modProductEditFront.updateProduct}"
                                  icon="ui-icon-check" style="margin-top: 1em"
-                                 update=":edit-product:product-detail" rendered="#{not modProductEditFront.newProduct}"/>
+                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{not modProductEditFront.newProduct}"/>
                 <p:commandButton value="Create" action="#{modProductEditFront.createProduct}"
                                  icon="ui-icon-check" style="margin-top: 1em"
-                                 update=":edit-product:product-detail" rendered="#{modProductEditFront.newProduct}"/>
+                                 update=":edit-product:product-detail :edit-product:growl" rendered="#{modProductEditFront.newProduct}"/>
                 <p:messages globalOnly="true"/>
             </h:form>
         </ui:define>

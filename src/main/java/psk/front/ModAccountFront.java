@@ -11,6 +11,8 @@ import psk.database.entities.Account;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -56,15 +58,17 @@ public class ModAccountFront implements Serializable {
     public void block() {
         modUserUtility.BlockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("Blocked");
-//        DataTable dataTable = (DataTable)  FacesContext.getCurrentInstance().getViewRoot().findComponent("usersForm:lazyUsers");
-//        dataTable.loadLazyData();
         this.updateTable();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Success") );
     }
 
     public void unblock() {
         modUserUtility.UnblockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("User");
         this.updateTable();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Success") );
     }
 
     public void updateTable() {

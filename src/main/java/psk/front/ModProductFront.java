@@ -17,6 +17,7 @@ import psk.database.entities.ProductImage;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -62,7 +63,7 @@ public class ModProductFront implements Serializable {
         }
     }
 
-    public void redirectToEditProductEdit(Product product) {
+    public void redirectToEditProductEdit(Product product, Boolean isButton) {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
@@ -81,6 +82,9 @@ public class ModProductFront implements Serializable {
         productUtility.deleteProduct(selectedProduct);
         this.init();
         this.updateTable();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful", "Product was deleted!") );
+
     }
 
     public void updateTable() {

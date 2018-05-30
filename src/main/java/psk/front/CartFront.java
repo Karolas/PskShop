@@ -8,6 +8,7 @@ import psk.database.entities.CartProducts;
 import psk.database.entities.Product;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -32,6 +33,8 @@ public class CartFront implements Serializable {
 
     public void addToCart(Product product) {
         cartUtility.addProductToCart(product, 1);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful",  "You have added " + product.getName() + " to your cart!") );
     }
 
     public void removeFromCart(CartProducts cartProduct) {

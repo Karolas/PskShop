@@ -11,6 +11,8 @@
     <ui:composition template="/WEB-INF/templates/mainBar.xhtml">
         <ui:define name="content">
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="false" />
+
                 <p:panel header="Product info">
                     <p:link outcome="index" value="#{productDetailFront.product.category.parentCategory.name}" rendered="#{productDetailFront.product.category.parentCategory ne null}">
                         <f:param name="categoryId" value="#{productDetailFront.product.category.parentCategory.name}" />
@@ -59,7 +61,8 @@
 
                     <f:facet name="footer">
                         <p:commandButton value="Add to cart"
-                                         actionListener="#{cartFront.addToCart(productDetailFront.product)}" />
+                                         actionListener="#{cartFront.addToCart(productDetailFront.product)}"
+                                         update="growl"/>
                     </f:facet>
                 </p:panel>
             </h:form>

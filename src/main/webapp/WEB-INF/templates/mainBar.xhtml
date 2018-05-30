@@ -10,7 +10,7 @@
     <h:head>
         <meta charset="UTF-8"/>
         <title>test</title>
-        <h:outputStylesheet name="/css/styles.css" />
+        <!--<h:outputStylesheet name="/css/styles.css" />-->
 
     </h:head>
 
@@ -57,7 +57,6 @@
             </p:toolbar>
         </h:form>
         <h:form style="float:left; width: 20%;">
-            <!--<p:menu model="#{layoutFront.menuModel}" />-->
             <p:panelGrid columns="1">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">
                     <p:commandButton style="width: 100%; border: none; background-color: darkolivegreen" value="#{categorie.name}"

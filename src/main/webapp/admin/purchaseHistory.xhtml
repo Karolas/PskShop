@@ -17,14 +17,25 @@
     <ui:define name="content">
         <h:form id="purchaseHistoryForm">
             <p:dataTable id="lazyPurchaseHistoryItems" var="historyItem" value="#{modPurchaseHistoryFront.lazyModel}" rows="10"
+                         widgetVar="purchaseHistoryTable"
                          paginator="true"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                          rowsPerPageTemplate="10,25,50" lazy="true">
                 <p:column headerText="Purchase ID" filterBy="#{historyItem.id}" filterMatchMode="contains" sortBy="#{historyItem.id}" >
+                    <f:facet name="filter">
+                        <p:spinner onchange="PF('purchaseHistoryTable').filter()">
+                            <f:converter converterId="javax.faces.Integer" />
+                        </p:spinner>
+                    </f:facet>
                     <h:outputText value="#{historyItem.id}" />
                 </p:column>
 
-                <p:column headerText="Date" filterBy="#{historyItem.orderCreated}" filterMatchMode="contains" sortBy="#{historyItem.orderCreated}">
+                <p:column headerText="Date" sortBy="#{historyItem.orderCreated}">
+                    <f:facet name="filter">
+                        <p:spinner onchange="PF('purchaseHistoryTable').filter()" styleClass="year-spinner">
+                            <f:convertDateTime/>
+                        </p:spinner>
+                    </f:facet>
                     <h:outputText value="#{historyItem.orderCreated}" />
                 </p:column>
 

@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.Map;
 
 import static org.primefaces.component.datatable.DataTable.PropertyKeys.sortField;
@@ -17,10 +18,15 @@ public class Utils {
         Predicate filterCondition = cb.conjunction();
         String wildCard = "%";
         for (Map.Entry<String, Object> filter : filters.entrySet()) {
-            String value = wildCard + filter.getValue() + wildCard;
-            if (!filter.getValue().equals("")) {
+            if(filter.getValue() instanceof Integer || filter.getValue() instanceof BigDecimal){
                 javax.persistence.criteria.Path<String> path = myObj.get(filter.getKey());
-                filterCondition = cb.and(filterCondition, cb.like(path, value));
+                filterCondition = cb.and(filterCondition, cb.equal(path, filter.getValue()));
+            } else if(filter.getValue() instanceof String){
+                String value = wildCard + filter.getValue() + wildCard;
+                if (!filter.getValue().equals("")) {
+                    javax.persistence.criteria.Path<String> path = myObj.get(filter.getKey());
+                    filterCondition = cb.and(filterCondition, cb.like(path, value));
+                }
             }
         }
         return filterCondition;
