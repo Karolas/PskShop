@@ -6,6 +6,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
 import psk.database.entities.Order;
 import psk.database.entities.OrderProduct;
@@ -33,25 +34,8 @@ public class ModPurchaseHistoryFront implements Serializable {
     @Inject
     private PurchaseHistoryUtility purchaseHistoryUtility;
 
-    @Getter
-    @Setter
-    private Order selectedOrder;
-
-    @Getter
-    @Setter
-    private Order selectedOrderr;
-
-    @Getter
-    @Setter
-    private Set<OrderProduct> orderProducts;
-
-    @Getter
-    @Setter
-    private OrderProduct orderProduct;
-
-    @Getter
-    @Setter
-    private UploadedFile uploadedFile;
+    @Inject
+    private MessageHandler messageHandler;
 
     @Getter
     @Setter
@@ -59,7 +43,6 @@ public class ModPurchaseHistoryFront implements Serializable {
 
     @PostConstruct
     public void init() {
-//        initOrders();
         lazyModel = new LazyDataModel<Order>() {
 
             @Override
@@ -68,31 +51,6 @@ public class ModPurchaseHistoryFront implements Serializable {
                 return purchaseHistoryUtility.getResultList(first, pageSize, sortField, sortOrder, filters);
             }
         };
-        lazyModel.setRowCount(purchaseHistoryUtility.getProductsCountByFilters(new HashMap<String, Object>()));
-    }
-
-    public void initOrders(){
-        List<String> orderStatuses =  Arrays.asList("Pending", "Accepted", "In progress", "Sent", "Delivered");
-    }
-
-    public void selectRowAndUpdate() {
-        selectedOrder = this.lazyModel.getRowData();
-        selectedOrder.setStatus("Completed");
-        purchaseHistoryUtility.updateOrder(selectedOrder);
-        this.updateTable();
-    }
-
-    public void selectItem(Set<OrderProduct> products) {
-        orderProducts = products;
-    }
-
-    public BigDecimal calculateProductSum(Order order){
-        OrderFront orderFront = new OrderFront();
-        return orderFront.getTotalPriceOfOrder(order);
-    }
-
-    public void updateTable() {
-        RequestContext.getCurrentInstance().update("purchaseHistoryForm:lazyPurchaseHistoryItems");
     }
 
     public void redirectToOrderView(Order order) {
@@ -106,7 +64,8 @@ public class ModPurchaseHistoryFront implements Serializable {
         }
     }
 
-    public void onStatusChange(){
-        System.out.println();
+    public void onStatusChange(Order order){
+        purchaseHistoryUtility.updateOrder(order);
+        messageHandler.addMessage("Success", "Status has been changed to " + order.getStatus());
     }
 }

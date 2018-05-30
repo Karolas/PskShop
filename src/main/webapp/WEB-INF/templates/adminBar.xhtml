@@ -9,6 +9,11 @@
 <f:view>
     <h:head>
         <meta charset="UTF-8"/>
+        <style type="text/css">
+            #purchaseHistoryForm input, #productsForm input {
+                width: 100px !important;
+            }
+        </style>
         <title>Admin page</title>
     </h:head>
 
@@ -48,7 +53,7 @@
             </p:toolbar>
         </h:form>
 
-        <h:form id="sidebarForm" style="float:left; width: 20%;">
+        <h:form id="adminSidebarForm" style="float:left; width: 20%;">
             <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
             <p:panelGrid columns="1">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">

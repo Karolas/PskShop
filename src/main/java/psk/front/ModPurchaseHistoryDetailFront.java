@@ -31,24 +31,13 @@ public class ModPurchaseHistoryDetailFront implements Serializable {
     @Getter
     @Setter
     private Order selectedOrder;
-
-    @Getter
-    @Setter
-    private Set<OrderProduct> orderProducts;
-
-    @Getter
-    @Setter
-    private List<OrderProduct> list;
+    
     @Inject
     private PurchaseHistoryUtility purchaseHistoryUtility;
 
     @PostConstruct
     public void init() {
         selectedOrder = getOrderById(orderId);
-        orderProducts = selectedOrder.getProducts();
-        System.out.println(orderProducts.toArray().length);
-        list = new ArrayList<>();
-        list.add(new OrderProduct());
     }
 
     public Order getOrderById(Integer oId){
