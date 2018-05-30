@@ -10,6 +10,8 @@
         <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
 
         <class>psk.businessLogic.productLogic.FileImageProvider</class>
+
+        <class>psk.Utilities.LoggerFile</class>
     </alternatives>
     <decorators>
         <class>psk.businessLogic.cartLogic.cartAccAccessUtilityDecorator</class>

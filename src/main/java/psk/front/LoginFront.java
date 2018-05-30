@@ -2,6 +2,7 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 
 import javax.enterprise.context.SessionScoped;
@@ -19,6 +20,9 @@ import java.io.Serializable;
 public class LoginFront implements Serializable {
     @Inject
     private AccountAccessUtility accountAccessUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Getter
     @Setter

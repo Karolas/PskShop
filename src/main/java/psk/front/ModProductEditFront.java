@@ -3,6 +3,7 @@ package psk.front;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ImageUtility;
 import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
@@ -75,6 +76,9 @@ public class ModProductEditFront implements Serializable {
     @Setter
     private String attributeDescription;
 
+    @Inject
+    MessageHandler messageHandler;
+
     @PostConstruct
     public void init() {
         lastModified = System.currentTimeMillis();
@@ -134,8 +138,7 @@ public class ModProductEditFront implements Serializable {
         productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
 
         imageUtility.setModified();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful", "Product was updated!") );
+        messageHandler.addMessage("Successful", "Product was updated!");
         return "/admin/products.xhtml";
     }
 
@@ -155,8 +158,7 @@ public class ModProductEditFront implements Serializable {
         }
 
         imageUtility.setModified();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful", "Product was created!") );
+        messageHandler.addMessage("Successful", "Product was created!");
         return "/admin/products.xhtml";
     }
 

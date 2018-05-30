@@ -1,6 +1,7 @@
 package psk.front;
 
 import lombok.Getter;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.entities.Product;
 
@@ -17,6 +18,9 @@ import java.util.Map;
 public class ProductDetailFront implements Serializable {
     @Inject
     private ProductUtility productUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Getter
     private Product product;

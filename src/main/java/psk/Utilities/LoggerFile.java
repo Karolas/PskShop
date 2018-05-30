@@ -2,6 +2,7 @@ package psk.Utilities;
 
 import psk.database.entities.Account;
 
+import javax.enterprise.inject.Alternative;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Alternative
 public class LoggerFile implements Logger, Serializable {
     public void log(String className, String methodName, Date logDate, Account account){
         FileOutputStream fos = null;

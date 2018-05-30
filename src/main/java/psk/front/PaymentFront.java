@@ -3,6 +3,7 @@ package psk.front;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.json.JSONObject;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.businessLogic.cartLogic.CartUtility;
@@ -29,6 +30,9 @@ public class PaymentFront implements Serializable{
 
     @Inject
     private CartUtility cartUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Inject
     private PurchaseHistoryUtility purchaseHistoryUtility;
@@ -80,10 +84,7 @@ public class PaymentFront implements Serializable{
     }
 
     private void throwErrorMessage(String message) {
-        FacesContext.getCurrentInstance()
-                .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        message,
-                        message));
+        messageHandler.addErrorMessage("Error", message);
     }
 }
 

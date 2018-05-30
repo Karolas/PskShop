@@ -2,6 +2,7 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.database.entities.Account;
@@ -18,6 +19,9 @@ import java.io.Serializable;
 public class ProfileFront implements Serializable {
     @Inject
     private AccountAccessUtility accountAccessUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Inject
     @LoggedIn

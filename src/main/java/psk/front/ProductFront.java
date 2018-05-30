@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.omnifaces.cdi.Param;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
 import psk.database.entities.Product;
 import psk.database.entities.ProductCategory;
@@ -26,6 +27,9 @@ import java.util.Map;
 public class ProductFront implements Serializable {
     @Inject
     private ProductUtility productUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Getter
     @Setter

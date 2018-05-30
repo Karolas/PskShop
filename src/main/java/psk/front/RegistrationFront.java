@@ -2,6 +2,7 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.entities.Account;
@@ -21,6 +22,9 @@ import java.io.Serializable;
 public class RegistrationFront implements Serializable {
     @Inject
     private AccountAccessUtility accountAccessUtility;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Inject
     private CartUtility cartUtility;

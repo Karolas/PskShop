@@ -3,6 +3,7 @@ package psk.businessLogic.accountLogic;
 import lombok.Getter;
 import lombok.Setter;
 import org.omnifaces.util.Faces;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
@@ -33,6 +34,9 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
     private AccountDAO accountDAO;
 
     @Inject
+    private MessageHandler messageHandler;
+
+    @Inject
     private Provider<AuthenticatedAccountHolder> authenticatedAccountHolderProvider;
 
     private String baseRequestUri;
@@ -60,10 +64,8 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
 
             //cartUtility.mergeCart(cartProducts);
         } catch (ServletException e) {
-            FacesContext.getCurrentInstance()
-                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Login Error: Wrong user name or password. Please try again.",
-                            "Wrong user name or password."));
+
+            messageHandler.addErrorMessage("Login Error: Wrong user name or password. Please try again.", "Wrong user name or password.");
 //            Messages.addGlobalWarn("Wrong user name or password. Please try again.");
         }
 

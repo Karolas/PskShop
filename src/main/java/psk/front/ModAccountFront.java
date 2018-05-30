@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.ModAcountUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
@@ -25,6 +26,9 @@ public class ModAccountFront implements Serializable {
     @Getter
     @Setter
     private LazyDataModel<Account> lazyModel;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Inject
     private ModAcountUtility modUserUtility;
@@ -59,16 +63,14 @@ public class ModAccountFront implements Serializable {
         modUserUtility.BlockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("Blocked");
         this.updateTable();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Success") );
+        messageHandler.addMessage("Successful", "User has been blocked.");
     }
 
     public void unblock() {
         modUserUtility.UnblockUser(this.lazyModel.getRowData());
         this.lazyModel.getRowData().setRole("User");
         this.updateTable();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Success") );
+        messageHandler.addMessage("Successful", "User has been unblocked.");
     }
 
     public void updateTable() {

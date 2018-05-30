@@ -2,6 +2,7 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
 import psk.database.entities.Account;
@@ -27,6 +28,9 @@ public class OrderFront implements Serializable {
     @Inject
     @LoggedIn
     Account account;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @Getter
     @Setter

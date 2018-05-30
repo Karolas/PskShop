@@ -2,6 +2,7 @@ package psk.front;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.cartLogic.CartUtility;
 import psk.database.entities.Cart;
 import psk.database.entities.CartProducts;
@@ -27,24 +28,21 @@ public class CartFront implements Serializable {
     @Inject
     private CartUtility cartUtility;
 
+    @Inject
+    MessageHandler messageHandler;
+
     public Set<CartProducts> getCartProducts() {
         return cartUtility.getCartProducts();
     }
 
     public void addToCart(Product product) {
         cartUtility.addProductToCart(product, 1);
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful",  "You have added " + product.getName() + " to your cart!") );
+        messageHandler.addMessage("Successful", "You have added " + product.getName() + " to your cart!");
     }
 
-    public void removeFromCart(CartProducts cartProduct) {
+    public String removeFromCart(CartProducts cartProduct) {
         cartUtility.removeFromCart(cartProduct);
-
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return "cart.xhtml";
     }
 
     public BigDecimal getTotalPrice() {

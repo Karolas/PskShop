@@ -7,6 +7,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.UploadedFile;
+import psk.Utilities.MessageHandler;
 import psk.businessLogic.ModAcountUtility;
 import psk.businessLogic.productLogic.LocalImageProvider;
 import psk.businessLogic.productLogic.ProductUtility;
@@ -41,6 +42,9 @@ public class ModProductFront implements Serializable {
     @Getter
     @Setter
     private Product selectedProduct;
+
+    @Inject
+    MessageHandler messageHandler;
 
     @PostConstruct
     public void init() {
@@ -82,9 +86,7 @@ public class ModProductFront implements Serializable {
         productUtility.deleteProduct(selectedProduct);
         this.init();
         this.updateTable();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful", "Product was deleted!") );
-
+        messageHandler.addMessage("Successful", "Product was deleted!");
     }
 
     public void updateTable() {
