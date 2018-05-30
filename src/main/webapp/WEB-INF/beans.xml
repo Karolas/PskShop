@@ -14,4 +14,7 @@
     <decorators>
         <class>psk.businessLogic.cartLogic.cartAccAccessUtilityDecorator</class>
     </decorators>
+    <interceptors>
+        <class>psk.InterceptorLogImpl</class>
+    </interceptors>
 </beans>

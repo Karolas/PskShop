@@ -1,7 +1,7 @@
 package psk.database.dao;
 
 import org.primefaces.model.SortOrder;
-import psk.Utils;
+import psk.Utilities.Utils;
 import psk.database.entities.Account;
 
 import javax.enterprise.context.SessionScoped;

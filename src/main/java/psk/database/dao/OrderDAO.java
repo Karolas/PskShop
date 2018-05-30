@@ -2,10 +2,9 @@ package psk.database.dao;
 
 
 import org.primefaces.model.SortOrder;
-import psk.Utils;
+import psk.Utilities.Utils;
 import psk.database.entities.Account;
 import psk.database.entities.Order;
-import psk.database.entities.ProductImage;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;

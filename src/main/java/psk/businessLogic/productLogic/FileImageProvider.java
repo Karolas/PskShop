@@ -20,7 +20,7 @@ import java.util.Arrays;
 @ApplicationScoped
 @Named
 @Alternative
-public class FileImageProvider implements ImageProvider {
+public class FileImageProvider implements ImageProvider, Serializable {
 
     private String imageLocation = System.getProperty("image.location");
 

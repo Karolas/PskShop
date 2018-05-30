@@ -1,6 +1,7 @@
 package psk.businessLogic.productLogic;
 
 import org.primefaces.model.SortOrder;
+import psk.InterceptorLog;
 import psk.database.dao.ProductAttributeDAO;
 import psk.database.dao.ProductCategoryDAO;
 import psk.database.dao.ProductDAO;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 
 @Named
 @SessionScoped
+@InterceptorLog
 public class ProductUtility implements Serializable {
     @Inject
     private ProductDAO productDAO;

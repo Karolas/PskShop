@@ -10,11 +10,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 
 @ApplicationScoped
 @Named
 @Alternative
-public class DBImageProvider implements ImageProvider {
+public class DBImageProvider implements ImageProvider, Serializable {
 
     @Inject
     private ProductUtility productUtility;
