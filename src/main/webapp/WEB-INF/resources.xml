@@ -7,7 +7,7 @@
         JdbcDriver = org.postgresql.Driver
         JdbcUrl = jdbc:postgresql://localhost:5432/postgres
         UserName = postgres
-        Password = root
+        Password = admin
         InitialSize = 1
         MaxActive = 10
         MaxWaitTime = 10 seconds

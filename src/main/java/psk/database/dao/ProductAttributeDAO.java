@@ -3,6 +3,7 @@ package psk.database.dao;
 import psk.database.entities.Product;
 import psk.database.entities.ProductAttribute;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +12,7 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class ProductAttributeDAO implements Serializable {
     @Inject

@@ -5,6 +5,7 @@ import psk.database.entities.CartProducts;
 import psk.database.entities.Product;
 import psk.database.primaryKeys.CartProductsPK;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,7 +13,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class CartProductDAO implements Serializable {
     @Inject

@@ -7,6 +7,8 @@ import psk.database.dao.OrderDAO;
 import psk.database.dao.OrderProductDAO;
 import psk.database.entities.*;
 
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class PurchaseHistoryUtility implements Serializable {
 
     @Inject

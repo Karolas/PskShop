@@ -4,6 +4,7 @@ import org.primefaces.model.SortOrder;
 import psk.Utilities.Utils;
 import psk.database.entities.Product;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class ProductDAO implements Serializable {
     @Inject

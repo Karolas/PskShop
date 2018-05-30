@@ -11,6 +11,7 @@ import psk.database.entities.ProductAttribute;
 import psk.database.entities.ProductCategory;
 import psk.database.entities.ProductImage;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Named
-@SessionScoped
+@RequestScoped
 @InterceptorLog
 public class ProductUtility implements Serializable {
     @Inject
