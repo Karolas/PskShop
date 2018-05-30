@@ -53,7 +53,7 @@ public class LayoutFront {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
         try {
-            ec.redirect("index.xhtml?categoryId=" + categoryId);
+            ec.redirect("/index.xhtml?categoryId=" + categoryId);
         } catch (IOException e) {
             e.printStackTrace();
         }
