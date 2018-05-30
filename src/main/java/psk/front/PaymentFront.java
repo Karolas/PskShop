@@ -13,12 +13,15 @@ import psk.front.rest.PaymentRest;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.BigDecimalConverter;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -47,11 +50,11 @@ public class PaymentFront implements Serializable{
 
     @Getter
     @Setter
-    private int expirationYear;
+    private Integer expirationYear;
 
     @Getter
     @Setter
-    private int expirationMonth;
+    private Integer expirationMonth;
 
     @Getter
     @Setter
@@ -71,6 +74,7 @@ public class PaymentFront implements Serializable{
         return centsBig.intValueExact();
     }
 
+    @Transactional
     private void processResponse(JSONObject response) {
         int status = response.getInt("status");
 
@@ -78,6 +82,12 @@ public class PaymentFront implements Serializable{
             purchaseHistoryUtility.addOrder(
                     response.getString("id"),
                     response.getString("created_at"));
+
+            cartUtility.clearCart();
+
+            messageHandler.addMessage("Successful", "Order placed.");
+
+            redirectSuccessful();
         } else {
             throwErrorMessage(response.getString("message"));
         }
@@ -85,6 +95,15 @@ public class PaymentFront implements Serializable{
 
     private void throwErrorMessage(String message) {
         messageHandler.addErrorMessage("Error", message);
+    }
+
+    private void redirectSuccessful() {
+        try {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("/index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package psk.businessLogic.purchaseHistoryLogic;
 import org.primefaces.model.SortOrder;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.businessLogic.cartLogic.CartUtility;
+import psk.database.dao.AccountDAO;
 import psk.database.dao.OrderDAO;
 import psk.database.dao.OrderProductDAO;
 import psk.database.entities.*;
@@ -36,6 +37,9 @@ public class PurchaseHistoryUtility implements Serializable {
     private OrderDAO orderDAO;
 
     @Inject
+    private AccountDAO accountDAO;
+
+    @Inject
     private OrderProductDAO orderProductDAO;
 
     public int getProductsCount(String nameCriteria) {
@@ -62,10 +66,11 @@ public class PurchaseHistoryUtility implements Serializable {
 
     @Transactional
     public void addOrder(String orderId, String timestamp) {
+        Account accountDb = accountDAO.selectAccountById(account.getId());
+
         Order order = new Order();
         order.setStatus("Ordered");
-
-        order.setAccount(account);
+        order.setAccount(accountDb);
 
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'");

@@ -127,4 +127,11 @@ public class CartUtility implements Serializable {
             addProductToCart(cartProduct.getProduct(), cartProduct.getAmount());
         }
     }
+
+    @Transactional
+    public void clearCart() {
+        for(CartProducts cartProduct: cartDAO.getCartById(cartId).getProducts()) {
+            removeFromCart(cartProduct);
+        }
+    }
 }

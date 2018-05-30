@@ -4,6 +4,7 @@ import org.primefaces.model.SortOrder;
 import psk.Utilities.Utils;
 import psk.database.entities.Account;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class AccountDAO implements Serializable {
     @Inject
@@ -22,6 +23,11 @@ public class AccountDAO implements Serializable {
 
     @Inject
     private Utils utils;
+
+    @Transactional
+    public Account selectAccountById(Integer id) {
+        return em.find(Account.class, id);
+    }
 
     @Transactional
     public Account selectAccountByEmail(String email) {

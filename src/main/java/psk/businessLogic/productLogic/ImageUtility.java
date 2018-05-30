@@ -33,32 +33,43 @@ public class ImageUtility {
     }
 
     public byte[] getImage(Integer imageId) {
+        if(imageId >= 0) {
+            byte[] imageBytes = imageProvider.getImage(imageId);
+            if(imageBytes == null) return new byte[0];
 
-        byte[] imageBytes = imageProvider.getImage(imageId);
-        if(imageBytes == null) return new byte[0];
-
-        return rescaleImage(imageBytes, MAX_DIMENSION);
+            return rescaleImage(imageBytes, MAX_DIMENSION);
+        }
+        return new byte[0];
     }
 
     public byte[] getImageFull(Integer imageId) {
-        byte[] imageBytes = imageProvider.getImage(imageId);
-        if(imageBytes == null) return new byte[0];
+        if(imageId >= 0) {
+            byte[] imageBytes = imageProvider.getImage(imageId);
+            if(imageBytes == null) return new byte[0];
 
-        return rescaleImage(imageBytes, MAX_DIMENSION_FULL);
+            return rescaleImage(imageBytes, MAX_DIMENSION_FULL);
+        }
+        return new byte[0];
     }
 
     public byte[] getImageLocal(Integer imageId) {
-        byte[] imageBytes = localImageProvider.getImage(imageId);
-        if(imageBytes == null) return new byte[0];
+        if(imageId >= 0) {
+            byte[] imageBytes = localImageProvider.getImage(imageId);
+            if(imageBytes == null) return new byte[0];
 
-        return rescaleImage(imageBytes, MAX_DIMENSION);
+            return rescaleImage(imageBytes, MAX_DIMENSION);
+        }
+        return new byte[0];
     }
 
     public byte[] getImageFullLocal(Integer imageId) {
-        byte[] imageBytes = localImageProvider.getImage(imageId);
-        if(imageBytes == null) return new byte[0];
+        if(imageId >= 0) {
+            byte[] imageBytes = localImageProvider.getImage(imageId);
+            if(imageBytes == null) return new byte[0];
 
-        return rescaleImage(imageBytes, MAX_DIMENSION);
+            return rescaleImage(imageBytes, MAX_DIMENSION);
+        }
+        return new byte[0];
     }
 
     public void setModified() {

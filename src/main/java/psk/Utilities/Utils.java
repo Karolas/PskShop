@@ -3,6 +3,7 @@ package psk.Utilities;
 import org.primefaces.model.SortOrder;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import static org.primefaces.component.datatable.DataTable.PropertyKeys.sortField;
 
+@Named
 @ApplicationScoped
 public class Utils {
     public <T> Predicate getFilterCondition(CriteriaBuilder cb, Root<T> myObj, Map<String, Object> filters) {
@@ -41,5 +43,10 @@ public class Utils {
             }
         }
         return cq;
+    }
+
+    public Integer getProperImgId(Integer id) {
+        if(id == null) return -1;
+        else return id;
     }
 }

@@ -37,6 +37,7 @@ public class OrderDAO implements Serializable {
     @Transactional
     public void updateOrder(Order order) {
         Order order1 = getOrderById(order.getId());
+
         order1.setOrderCreated(order.getOrderCreated());
         order1.setStatus(order.getStatus());
         order1.setProducts(order.getProducts());
