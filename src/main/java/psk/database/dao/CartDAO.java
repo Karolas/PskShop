@@ -4,6 +4,7 @@ package psk.database.dao;
 import psk.database.entities.Account;
 import psk.database.entities.Cart;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class CartDAO implements Serializable {
     @Inject

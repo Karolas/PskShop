@@ -24,7 +24,6 @@ import java.util.Set;
 @Named
 @SessionScoped
 public class CartUtility implements Serializable {
-
     @Inject
     private AccountAccessUtility accountAccessUtility;
 
