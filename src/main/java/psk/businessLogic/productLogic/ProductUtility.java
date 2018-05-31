@@ -2,10 +2,7 @@ package psk.businessLogic.productLogic;
 
 import org.primefaces.model.SortOrder;
 import psk.InterceptorLog;
-import psk.database.dao.ProductAttributeDAO;
-import psk.database.dao.ProductCategoryDAO;
-import psk.database.dao.ProductDAO;
-import psk.database.dao.ProductImageDAO;
+import psk.database.dao.*;
 import psk.database.entities.Product;
 import psk.database.entities.ProductAttribute;
 import psk.database.entities.ProductCategory;
@@ -39,6 +36,9 @@ public class ProductUtility implements Serializable {
     private ProductAttributeDAO productAttributeDAO;
 
     @Inject
+    private CartProductDAO cartProductDAO;
+
+    @Inject
     private ImageProvider imageProvider;
 
     @Transactional
@@ -55,8 +55,12 @@ public class ProductUtility implements Serializable {
         productDAO.insertProduct(product);
     }
     @InterceptorLog
+    @Transactional
     public void deleteProduct(Product product) {
         productImageDAO.removeProduct(product.getId());
+        productAttributeDAO.removeProduct(product.getId());
+        cartProductDAO.removeProduct(product.getId());
+
         productDAO.deleteProduct(product.getId());
     }
 
@@ -98,7 +102,7 @@ public class ProductUtility implements Serializable {
     }
 
     @Transactional
-    public void updateProductAttributeSet(Product product, Set<ProductAttribute> productAttributes) {
+    public void updateProductAttributeSet(Product product, List<ProductAttribute> productAttributes) {
         Product productDb = getProduct(product.getId());
 
         for(ProductAttribute productAttribute: productDb.getProductAttributeList()) {

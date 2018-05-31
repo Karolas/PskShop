@@ -85,6 +85,10 @@ public class ModProductEditFront implements Serializable {
     @Setter
     List<ProductCategory> productCategoryList;
 
+    @Getter
+    @Setter
+    private List<ProductAttribute> productAttributeList = new ArrayList<>();
+
     @PostConstruct
     public void init() {
         lastModified = System.currentTimeMillis();
@@ -97,6 +101,7 @@ public class ModProductEditFront implements Serializable {
         if(params.size() > 0){
             Integer productId = new Integer(params.get("productId"));
             selectedProduct = productUtility.getProduct(productId);
+            productAttributeList.addAll(selectedProduct.getProductAttributeList());
             if(selectedProduct.getMainImageId() != null) {
                 mainImage = selectedProduct.getMainImageId();
             }
@@ -142,7 +147,7 @@ public class ModProductEditFront implements Serializable {
                 productUtility.removeImageFromProduct(productImage);
             }
 
-            productUtility.updateProductAttributeSet(selectedProduct, selectedProduct.getProductAttributeList());
+            productUtility.updateProductAttributeSet(selectedProduct, productAttributeList);
 
             imageUtility.setModified();
 //        } catch (Exception e){
@@ -156,6 +161,7 @@ public class ModProductEditFront implements Serializable {
 
     @Transactional
     public String createProduct() {
+        selectedProduct.setId(null);
         productUtility.createProduct(selectedProduct);
 
         for(int i = 0; i < imagesBytes.size(); i++){
@@ -166,7 +172,7 @@ public class ModProductEditFront implements Serializable {
             }
         }
 
-        for(ProductAttribute productAttribute: selectedProduct.getProductAttributeList()) {
+        for(ProductAttribute productAttribute: productAttributeList) {
             productUtility.addAtrtributeToProduct(selectedProduct, productAttribute);
         }
 
@@ -217,15 +223,16 @@ public class ModProductEditFront implements Serializable {
     }
 
     public void onRowDelete(ProductAttribute attribute) {
-        selectedProduct.getProductAttributeList().remove(attribute);
+        productAttributeList.remove(attribute);
     }
 
     public void onAddNew() {
         ProductAttribute productAttribute = new ProductAttribute();
         productAttribute.setAttributeName(attributeName);
         productAttribute.setAttributeDescription(attributeDescription);
+        productAttribute.setProductId(selectedProduct.getId());
 
-        selectedProduct.getProductAttributeList().add(productAttribute);
+        productAttributeList.add(productAttribute);
     }
 
     public void onCategoryChange(ProductCategory productCategory){

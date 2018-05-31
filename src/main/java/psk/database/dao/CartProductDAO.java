@@ -68,4 +68,9 @@ public class CartProductDAO implements Serializable {
 
         em.remove(cartProducts);
     }
+
+    @Transactional
+    public void removeProduct(Integer id){
+        em.createQuery("DELETE FROM CartProducts WHERE product.id = :productId").setParameter("productId", id).executeUpdate();
+    }
 }

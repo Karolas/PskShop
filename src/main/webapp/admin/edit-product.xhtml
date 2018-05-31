@@ -103,7 +103,7 @@
                               update=":edit-product:image-detail :edit-product:image-detail-local"/>
 
                 <p:panelGrid id="product-attributes" columns="1" styleClass="ui-noborder">
-                    <p:dataTable id="attribute-table" value="#{modProductEditFront.selectedProduct.productAttributeList}" var="attribute"
+                    <p:dataTable id="attribute-table" value="#{modProductEditFront.productAttributeList}" var="attribute"
                                  widgetVar="attrNew" type="ordered">
 
                         <p:column headerText="Attribute" style="width: 25%;">
@@ -115,7 +115,7 @@
                         <p:column>
                             <h:commandLink value="Delete" style="width: 10%;"
                                            action="#{modProductEditFront.onRowDelete(attribute)}"
-                                           immediate="true"/>
+                                           immediate="true" />
                         </p:column>
                     </p:dataTable>
 

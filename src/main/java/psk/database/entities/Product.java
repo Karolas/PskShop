@@ -27,9 +27,6 @@ public class Product implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "amount")
-    private Integer amount;
-
     @Column(name = "description")
     private String description;
 
@@ -47,9 +44,11 @@ public class Product implements Serializable {
     @ManyToOne
     private ProductCategory category;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product",
+               fetch = FetchType.EAGER)
     private Set<ProductImage> productImageList;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product",
+               fetch = FetchType.EAGER)
     private Set<ProductAttribute> productAttributeList;
 }

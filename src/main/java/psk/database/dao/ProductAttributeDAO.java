@@ -42,4 +42,9 @@ public class ProductAttributeDAO implements Serializable {
 
         em.remove(currentProductAttribute);
     }
+
+    @Transactional
+    public void removeProduct(Integer id){
+        em.createQuery("DELETE FROM ProductAttribute WHERE product.id = :productId").setParameter("productId", id).executeUpdate();
+    }
 }
