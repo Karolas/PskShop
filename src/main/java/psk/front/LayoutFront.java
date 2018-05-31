@@ -22,23 +22,12 @@ import java.util.List;
 @Named
 @ApplicationScoped
 public class LayoutFront {
-    @Getter
-    @Setter
-    private List<String> categories;
-    @Getter
-    @Setter
-    private List<String> subCategories;
 
     @Getter
-    List<ProductCategory> cats;
-    @Getter
-    List<ProductCategory> subs;
-    @Getter
-    @Setter
-    private MenuModel menuModel;
+    private List<ProductCategory> cats;
 
     @Inject
-    ProductCategoryDAO productCategoryDAO;
+    private ProductCategoryDAO productCategoryDAO;
 
     @PostConstruct
     private void init(){

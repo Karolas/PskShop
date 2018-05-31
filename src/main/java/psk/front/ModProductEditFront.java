@@ -234,8 +234,4 @@ public class ModProductEditFront implements Serializable {
 
         productAttributeList.add(productAttribute);
     }
-
-    public void onCategoryChange(ProductCategory productCategory){
-        System.out.println(productCategory);
-    }
 }

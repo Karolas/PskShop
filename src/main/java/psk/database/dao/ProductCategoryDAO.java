@@ -1,7 +1,7 @@
 package psk.database.dao;
 
 import psk.database.entities.ProductCategory;
-import psk.database.entities.ProductImage;
+import psk.database.entities.Product;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 @RequestScoped
 @Named
@@ -41,8 +42,25 @@ public class ProductCategoryDAO implements Serializable {
 
     @Transactional
     public ProductCategory getCategoryByName(String name){
-        return em.createQuery("SELECT c from ProductCategory c WHERE c.name = :name", ProductCategory.class)
-                .setParameter("name", name).getSingleResult();
+        List<ProductCategory> results = em.createQuery("SELECT c from ProductCategory c WHERE c.name = :name", ProductCategory.class)
+                .setParameter("name", name).getResultList();
+        if(!results.isEmpty()) return results.get(0);
+        return null;
     }
 
+    @Transactional
+    public void insertCategory(ProductCategory productCategory){
+        em.persist(productCategory);
+    }
+
+
+    @Transactional
+    public void deleteById(Integer id){
+        em.createQuery("UPDATE Product p SET p.category = null WHERE p.category.id = :id")
+                .setParameter("id", id).executeUpdate();
+        em.createQuery("UPDATE ProductCategory c SET c.parentCategory = null " +
+                "WHERE c.parentCategory.id = :parentId").setParameter("parentId", id).executeUpdate();
+        em.createQuery("DELETE FROM ProductCategory c where c.id = :id")
+                .setParameter("id", id).executeUpdate();
+    }
 }

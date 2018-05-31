@@ -37,7 +37,9 @@
                             <f:convertDateTime/>
                         </p:spinner>
                     </f:facet>
-                    <h:outputText value="#{historyItem.orderCreated}" />
+                    <h:outputText value="#{historyItem.orderCreated}">
+                        <f:convertDateTime type="both" dateType="short" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Ordered by" filterBy="#{historyItem.account.firstName}" filterMatchMode="contains" sortBy="#{historyItem.account.firstName}">
@@ -59,7 +61,7 @@
                 </p:column>
 
                 <p:column headerText="Products" style="text-align: center; width: 100px;">
-                    <p:commandButton value="View" action="#{modPurchaseHistoryFront.redirectToOrderView(historyItem)}" ajax="true">
+                    <p:commandButton icon="ui-icon-search" value="View" action="#{modPurchaseHistoryFront.redirectToOrderView(historyItem)}" ajax="true">
                     </p:commandButton>
                 </p:column>
 

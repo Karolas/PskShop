@@ -42,12 +42,16 @@
                         <h:outputText value="#{product.description}" />
                     </p:column>
 
-                    <p:column style="text-align: center; width: 100px;">
-                        <p:commandButton value="Edit" action="#{modProductFront.redirectToEditProductEdit(product)}" ajax="true"/>
+                    <p:column headerText="Category">
+                        <h:outputText value="#{product.category.name}" />
                     </p:column>
 
                     <p:column style="text-align: center; width: 100px;">
-                        <p:commandButton value="Delete" actionListener="#{modProductFront.deleteProduct}" update=":topBarAdmin:growl">
+                        <p:commandButton icon="ui-icon-pencil" value="Edit" action="#{modProductFront.redirectToEditProductEdit(product)}" ajax="true"/>
+                    </p:column>
+
+                    <p:column style="text-align: center; width: 100px;">
+                        <p:commandButton icon="ui-icon-trash" value="Delete" actionListener="#{modProductFront.deleteProduct}" update=":topBarAdmin:growl">
                             <p:confirm header="Confirmation" message="Do you really want to delete this product?" icon="ui-icon-alert" />
                         </p:commandButton>
                     </p:column>

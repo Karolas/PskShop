@@ -26,7 +26,9 @@
                                       <h:outputText value="#{order.status}" style="font-weight: bold"/>
 
                                       <h:outputText value="Order date:" />
-                                      <h:outputText value="#{order.orderCreated}" style="font-weight: bold"/>
+                                      <h:outputText value="#{order.orderCreated}" style="font-weight: bold">
+                                          <f:convertDateTime type="date" dateType="short" />
+                                      </h:outputText>
 
                                       <h:outputText value="Price:" />
                                       <h:outputText value="#{orderFront.getTotalPriceOfOrder(order)}" style="font-weight: bold">

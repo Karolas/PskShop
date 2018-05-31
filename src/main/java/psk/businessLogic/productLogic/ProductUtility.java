@@ -151,7 +151,20 @@ public class ProductUtility implements Serializable {
     public ProductCategory getProductCategoryById(Integer id){
         return productCategoryDAO.getCategoryById(id);
     }
+
     public List<ProductCategory> getAllProductCategories(){
         return productCategoryDAO.getAll();
+    }
+
+    public List<ProductCategory> getAllTopLevelCategories(){
+        return productCategoryDAO.getAllCategories();
+    }
+
+    public void createCategory(ProductCategory productCategory){
+        productCategoryDAO.insertCategory(productCategory);
+    }
+
+    public void deleteCategory(ProductCategory productCategory){
+        productCategoryDAO.deleteById(productCategory.getId());
     }
 }

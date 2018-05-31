@@ -35,6 +35,9 @@
                     <p:commandButton value="Purchase history" rendered="#{accountHolder.admin}"
                                      action="/admin/purchaseHistory.xhtml?faces-redirect=true" ajax="false"
                                      icon="ui-icon-calendar" />
+                    <p:commandButton value="Categories" rendered="#{accountHolder.admin}"
+                                     action="/admin/categoriesEdit.xhtml?faces-redirect=true" ajax="false"
+                                     icon="ui-icon-folder-open" />
                 </f:facet>
 
                 <f:facet name="right">
@@ -59,7 +62,7 @@
         <h:form id="adminSidebarForm" style="float:left; width: 20%;">
             <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
             <p:panelGrid columns="1">
-                <ui:repeat value="#{layoutFront.cats}" var="categorie">
+                <ui:repeat id="catList" value="#{layoutFront.cats}" var="categorie">
                     <p:commandButton style="width: 100%; border: none; background-color: lightslategrey" value="#{categorie.name}"
                                      action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
                     <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
