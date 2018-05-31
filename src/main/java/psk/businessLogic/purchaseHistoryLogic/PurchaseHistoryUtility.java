@@ -72,7 +72,7 @@ public class PurchaseHistoryUtility implements Serializable {
         Account accountDb = accountDAO.selectAccountById(account.getId());
 
         Order order = new Order();
-        order.setStatus("Ordered");
+        order.setStatus("Pending");
         order.setAccount(accountDb);
 
         try {
