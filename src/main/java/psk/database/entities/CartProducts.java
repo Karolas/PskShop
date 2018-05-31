@@ -16,12 +16,15 @@ public class CartProducts implements Serializable {
     @EmbeddedId
     private CartProductsPK id;
 
+    @Column(name = "cart_id", insertable = false, updatable = false)
+    private  Integer cartId;
+
     @Column(name = "amount")
     private Integer amount;
 
     @ManyToOne
     @MapsId("cartId") //This is the name of attr in EmployerDeliveryAgentPK class
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "cart_id" )
     private Cart cart;
 
     @ManyToOne

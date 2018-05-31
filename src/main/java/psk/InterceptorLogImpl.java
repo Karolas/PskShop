@@ -24,7 +24,6 @@ public class InterceptorLogImpl implements Serializable {
 
     @AroundInvoke
     public Object log(InvocationContext ctx) throws Exception {
-        System.out.println("----Intercepted----");
         Date now = new Date();
         new Thread(() -> logger.log(ctx.getTarget().getClass().toString(), ctx.getMethod().getName(), now, account)).start();
         return ctx.proceed();

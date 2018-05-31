@@ -9,6 +9,7 @@ import javax.decorator.Delegate;
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Decorator
@@ -24,7 +25,7 @@ public abstract class cartAccAccessUtilityDecorator implements AccountAccessUtil
 
     @Override
     public void loginAccount(String email, String password) {
-        Set<CartProducts> cartProducts = cartUtility.getCartProducts();
+        List<CartProducts> cartProducts = cartUtility.getCartProducts();
         accountAccessUtility.loginAccount(email, password);
         if(!accountAccessUtility.isBlocked())
             cartUtility.mergeCart(cartProducts);

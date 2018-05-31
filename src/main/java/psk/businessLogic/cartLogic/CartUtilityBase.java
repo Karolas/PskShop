@@ -40,7 +40,7 @@ public class CartUtilityBase implements Serializable, CartUtility {
     @Inject
     private CartProductDAO cartProductDAO;
 
-    private Set<CartProducts> offlineCartProducts = new HashSet<>();
+    private List<CartProducts> offlineCartProducts = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -59,14 +59,14 @@ public class CartUtilityBase implements Serializable, CartUtility {
         return price;
     }
 
-    public Set<CartProducts> getCartProducts() {
+    public List<CartProducts> getCartProducts() {
         if(accountAccessUtility.isLoggedIn())
         {
-            Cart cart = cartDAO.getCartById(cartId);
+//            Cart cart = cartDAO.getCartById(cartId);
+//
+//            Set<CartProducts> cartProducts = cart.getProducts();
 
-            Set<CartProducts> cartProducts = cart.getProducts();
-
-            return cartProducts;
+            return cartProductDAO.selectCartProductsByCartId(cartId);
         }
         else
             return offlineCartProducts;
@@ -107,6 +107,7 @@ public class CartUtilityBase implements Serializable, CartUtility {
     }
 
     @InterceptorLog
+    @Transactional
     public void removeFromCart(CartProducts cartProduct) {
         if(accountAccessUtility.isLoggedIn()) {
             cartProductDAO.deleteCartProduct(cartProduct);
@@ -123,7 +124,7 @@ public class CartUtilityBase implements Serializable, CartUtility {
     }
 
     @Transactional
-    public void mergeCart(Set<CartProducts> cartProducts) {
+    public void mergeCart(List<CartProducts> cartProducts) {
         for (CartProducts cartProduct: cartProducts) {
             addProductToCart(cartProduct.getProduct(), cartProduct.getAmount());
         }

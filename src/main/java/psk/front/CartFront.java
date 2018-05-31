@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @ViewScoped
@@ -28,7 +29,7 @@ public class CartFront implements Serializable {
     @Inject
     MessageHandler messageHandler;
 
-    public Set<CartProducts> getCartProducts() {
+    public List<CartProducts> getCartProducts() {
         return cartUtility.getCartProducts();
     }
 
@@ -38,7 +39,6 @@ public class CartFront implements Serializable {
         messageHandler.addMessage("Successful", "You have added " + product.getName() + " to your cart!");
     }
 
-    @Transactional
     public String removeFromCart(CartProducts cartProduct) {
         cartUtility.removeFromCart(cartProduct);
         return "cart.xhtml";

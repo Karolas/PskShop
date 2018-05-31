@@ -17,8 +17,8 @@ public class LoggerFile implements Logger, Serializable {
         FileOutputStream fos = null;
         try {
             Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String fileName = formatter.format(logDate) + ".log";
-            fos = new FileOutputStream(System.getProperty("user.dir") + "\\"+ fileName, true);
+            String fileName = "\\logs\\" + formatter.format(logDate) + ".log";
+            fos = new FileOutputStream(System.getProperty("user.dir") + fileName, true);
             fos.write(("Date: " + logDate.toString()).getBytes());
             fos.write((" Class name: " + className).getBytes());
             fos.write((" Method name: " + methodName).getBytes());

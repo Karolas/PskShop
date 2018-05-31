@@ -12,6 +12,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @RequestScoped
 @Named
@@ -26,6 +28,12 @@ public class CartProductDAO implements Serializable {
         cartProductsPK.setCartId(cart.getId());
 
         return em.find(CartProducts.class, cartProductsPK);
+    }
+
+    @Transactional
+    public List<CartProducts> selectCartProductsByCartId(Integer cartId) {
+       return em.createQuery("SELECT cp FROM CartProducts cp WHERE cp.cartId = :cartId", CartProducts.class)
+             .setParameter("cartId", cartId).getResultList();
     }
 
     @Transactional
