@@ -7,6 +7,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
+import psk.businessLogic.productLogic.ProductUtilityBase;
 import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
+import psk.businessLogic.productLogic.ProductUtilityBase;
 import psk.database.entities.ProductCategory;
 
 import javax.annotation.PostConstruct;

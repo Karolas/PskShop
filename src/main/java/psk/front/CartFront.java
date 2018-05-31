@@ -1,15 +1,12 @@
 package psk.front;
 
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.context.RequestContext;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.cartLogic.CartUtility;
+import psk.businessLogic.cartLogic.CartUtilityBase;
 import psk.database.entities.Cart;
 import psk.database.entities.CartProducts;
 import psk.database.entities.Product;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -19,7 +16,6 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @ViewScoped

@@ -1,10 +1,10 @@
 package psk.front;
 
 import lombok.Getter;
-import lombok.Setter;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.authentication.LoggedIn;
 import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
+import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtilityBase;
 import psk.database.entities.Account;
 import psk.database.entities.Order;
 import psk.database.entities.OrderProduct;
@@ -16,21 +16,20 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @ViewScoped
 @Named
 public class OrderFront implements Serializable {
     @Inject
-    PurchaseHistoryUtility purchaseHistoryUtility;
+    private PurchaseHistoryUtility purchaseHistoryUtility;
 
     @Inject
     @LoggedIn
-    Account account;
+    private Account account;
 
     @Inject
-    MessageHandler messageHandler;
+    private MessageHandler messageHandler;
 
     @Getter
     private List<Order> orderList = new ArrayList<>();

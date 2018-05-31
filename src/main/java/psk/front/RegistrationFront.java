@@ -5,9 +5,9 @@ import lombok.Setter;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.cartLogic.CartUtility;
+import psk.businessLogic.cartLogic.CartUtilityBase;
 import psk.database.entities.Account;
 
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;

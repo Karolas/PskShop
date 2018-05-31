@@ -2,7 +2,6 @@ package psk.businessLogic.cartLogic;
 
 import psk.businessLogic.accountLogic.AccountAccessUtility;
 import psk.businessLogic.accountLogic.AccountAccessUtilityBase;
-import psk.database.entities.Account;
 import psk.database.entities.CartProducts;
 
 import javax.decorator.Decorator;
@@ -10,7 +9,6 @@ import javax.decorator.Delegate;
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Decorator

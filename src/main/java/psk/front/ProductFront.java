@@ -7,11 +7,11 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
+import psk.businessLogic.productLogic.ProductUtilityBase;
 import psk.database.entities.Product;
 import psk.database.entities.ProductCategory;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;

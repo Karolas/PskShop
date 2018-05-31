@@ -2,15 +2,12 @@ package psk.front;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.primefaces.model.UploadedFile;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtility;
+import psk.businessLogic.purchaseHistoryLogic.PurchaseHistoryUtilityBase;
 import psk.database.entities.Order;
-import psk.database.entities.OrderProduct;
-import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -20,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.*;
 
 @ViewScoped

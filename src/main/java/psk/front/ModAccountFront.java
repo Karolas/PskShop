@@ -6,7 +6,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import psk.Utilities.MessageHandler;
-import psk.businessLogic.accountLogic.ModAcountUtility;
+import psk.businessLogic.accountLogic.ModAccountUtility;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
@@ -28,7 +28,7 @@ public class ModAccountFront implements Serializable {
     MessageHandler messageHandler;
 
     @Inject
-    private ModAcountUtility modUserUtility;
+    private ModAccountUtility modUserUtility;
 
     @Inject
     private AccountDAO accountDAO;

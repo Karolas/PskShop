@@ -3,6 +3,7 @@ package psk.front;
 import lombok.Getter;
 import psk.Utilities.MessageHandler;
 import psk.businessLogic.productLogic.ProductUtility;
+import psk.businessLogic.productLogic.ProductUtilityBase;
 import psk.database.entities.Product;
 
 import javax.annotation.PostConstruct;

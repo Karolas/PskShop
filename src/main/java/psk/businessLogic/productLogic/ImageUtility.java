@@ -1,7 +1,6 @@
 package psk.businessLogic.productLogic;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.omnifaces.cdi.GraphicImageBean;
 
 import javax.annotation.PostConstruct;

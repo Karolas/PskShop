@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Named
 @RequestScoped
 @InterceptorLog
-public class ModAcountUtility implements Serializable{
+public class ModAccountUtilityBase implements Serializable, ModAccountUtility{
     @Inject
     private AccountDAO accountDAO;
 

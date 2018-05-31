@@ -6,16 +6,10 @@ import psk.Utilities.MessageHandler;
 import psk.database.dao.AccountDAO;
 import psk.database.entities.Account;
 
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-import javax.persistence.OptimisticLockException;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.Serializable;

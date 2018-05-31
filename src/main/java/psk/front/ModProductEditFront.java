@@ -13,7 +13,6 @@ import psk.database.entities.ProductCategory;
 import psk.database.entities.ProductImage;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
