@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
+import javax.transaction.TransactionalException;
 import java.io.Serializable;
 
 @ViewScoped
@@ -47,7 +48,7 @@ public class ProfileFront implements Serializable {
         try{
             account = accountAccessUtility.updateAccount(account);
             messageHandler.addMessage("Successful", "Profile has been updated!");
-        } catch (OptimisticLockException oe) {
+        } catch (TransactionalException oe) {
             messageHandler.addErrorMessage("Update was not successful!", "We got concurrent updates!");
             updateProfileOptLock();
         }

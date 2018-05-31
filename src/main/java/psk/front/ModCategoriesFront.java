@@ -47,6 +47,7 @@ public class ModCategoriesFront implements Serializable {
 
     public void addCategory(){
         productCategoryList.add(productCategory);
+        layoutFront.getCats().add(productCategory);
         productUtility.createCategory(productCategory);
         productCategory = new ProductCategory();
         messageHandler.addMessage("Successful", null);

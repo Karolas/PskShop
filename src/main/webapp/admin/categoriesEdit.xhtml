@@ -23,7 +23,7 @@
                                 <h:outputText value="#{category.parentCategory.name}"/>
                             </p:column>
                             <p:column style="width: 125px;">
-                                <p:commandButton action="#{modCategoriesFront.deleteCategory(category)}" update=":categoriesForm:product-categories :adminSidebarForm:mainGrowl" value="Delete" icon="ui-icon-trash"/>
+                                <p:commandButton action="#{modCategoriesFront.deleteCategory(category)}" update=":categoriesForm:product-categories adminSidebarForm" value="Delete" icon="ui-icon-trash"/>
                             </p:column>
                         </p:dataTable>
                     </p:panelGrid>
@@ -40,7 +40,8 @@
                             </p:selectOneMenu>
 
                             <p:commandButton value="Add new category"  icon="ui-icon-folder-open"
-                                             actionListener="#{modCategoriesFront.addCategory}" update=":categoriesForm:product-categories :adminSidebarForm:mainGrowl"/>
+                                             actionListener="#{modCategoriesFront.addCategory}" update=":categoriesForm:product-categories adminSidebarForm"
+                                             />
                         </p:panelGrid>
             </h:form>
         </p:panel>

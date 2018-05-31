@@ -69,7 +69,7 @@
                     <p:commandButton style="width: 100%; border: none; background-color: lightslategrey" value="#{categorie.name}"
                                      action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
                     <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
-                        <p:commandButton style="width: 100%; border: none;" value="#{subCategorie.name}"
+                        <p:commandButton style="width: 80%; border: none; display: block; margin: 0px auto; width: 80%;" value="#{subCategorie.name}"
                                          action="#{layoutFront.redirectToProductSearchWithCategory(subCategorie.id)}"/>
                     </ui:repeat>
                 </ui:repeat>

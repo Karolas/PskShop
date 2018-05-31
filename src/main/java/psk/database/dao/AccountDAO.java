@@ -9,8 +9,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import javax.transaction.TransactionalException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +52,9 @@ public class AccountDAO implements Serializable {
 
     @Transactional
     public Account updateAccount(Account account) {
-        return em.merge(account);
+        Account account1 = em.merge(account);
+
+        return account1;
     }
 
     @Transactional

@@ -67,14 +67,11 @@ public class AccountAccessUtilityBase implements Serializable, AccountAccessUtil
         accountDAO.insertAccount(account);
     }
 
-    public Account updateAccount(Account account){
+    public Account updateAccount(Account account) {
         Account account1;
-        try{
-            account1 = accountDAO.updateAccount(account);
-            authenticatedAccountHolderProvider.get().initUser(account.getEmail());
-        } catch (Exception e){
-            throw new OptimisticLockException(e.getMessage());
-        }
+
+        account1 = accountDAO.updateAccount(account);
+        authenticatedAccountHolderProvider.get().initUser(account.getEmail());
 
         return account1;
     }

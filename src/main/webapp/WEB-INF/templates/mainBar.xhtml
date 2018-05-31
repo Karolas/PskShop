@@ -63,14 +63,14 @@
                 </f:facet>
             </p:toolbar>
         </h:form>
-        <h:form id="sidebarForm" style="float:left; width: 20%; ">
+        <h:form id="sidebarForm" style="float:left; width: 20%;">
             <p:growl id="mainGrowl" sticky="false" showDetail="true"/>
             <p:panelGrid columns="1" styleClass="no-border">
                 <ui:repeat value="#{layoutFront.cats}" var="categorie">
                     <p:commandButton style="width: 100%; border: none; background-color: lightslategrey;" value="#{categorie.name}"
                         action="#{layoutFront.redirectToProductSearchWithCategory(categorie.id)}"/>
                     <ui:repeat value="#{layoutFront.getSubcategories(categorie.id)}" var="subCategorie">
-                        <p:commandButton style="width: 100%; border: none;" value="#{subCategorie.name}"
+                        <p:commandButton style="display: block; margin: 0px auto; width: 80%; border: none;" value="#{subCategorie.name}"
                                          action="#{layoutFront.redirectToProductSearchWithCategory(subCategorie.id)}"/>
                     </ui:repeat>
                 </ui:repeat>

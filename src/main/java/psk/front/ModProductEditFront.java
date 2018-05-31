@@ -19,6 +19,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
+import javax.transaction.TransactionalException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -133,7 +134,7 @@ public class ModProductEditFront implements Serializable {
 
     @Transactional
     public String updateProduct() {
-//        try{
+        try{
             productUtility.updateProduct(selectedProduct);
             for(int i = 0; i < imagesBytes.size(); i++){
                 if(i == mainImageLocal) {
@@ -150,11 +151,11 @@ public class ModProductEditFront implements Serializable {
             productUtility.updateProductAttributeSet(selectedProduct, productAttributeList);
 
             imageUtility.setModified();
-//        } catch (Exception e){
-//            messageHandler.addErrorMessage("Error", "Concurrent updates!");
-//            selectedProduct = productUtility.getProduct(selectedProduct.getId());
-//            return null;
-//        }
+        } catch (TransactionalException e){
+            messageHandler.addErrorMessage("Error", "Concurrent updates!");
+            selectedProduct = productUtility.getProduct(selectedProduct.getId());
+            return null;
+        }
         messageHandler.addMessage("Successful", "Product was updated!");
         return "/admin/products.xhtml?faces-redirect=true";
     }
