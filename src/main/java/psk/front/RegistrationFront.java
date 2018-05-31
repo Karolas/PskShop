@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -61,6 +62,7 @@ public class RegistrationFront implements Serializable {
     @Setter
     private String telephoneNr;
 
+    @Transactional
     public void register(ActionEvent actionEvent) {
         Account account = new Account();
         account.setEmail(email);

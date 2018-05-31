@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -35,11 +36,13 @@ public class CartFront implements Serializable {
         return cartUtility.getCartProducts();
     }
 
+    @Transactional
     public void addToCart(Product product) {
         cartUtility.addProductToCart(product, 1);
         messageHandler.addMessage("Successful", "You have added " + product.getName() + " to your cart!");
     }
 
+    @Transactional
     public String removeFromCart(CartProducts cartProduct) {
         cartUtility.removeFromCart(cartProduct);
         return "cart.xhtml";

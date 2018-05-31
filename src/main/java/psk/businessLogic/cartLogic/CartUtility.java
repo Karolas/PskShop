@@ -72,7 +72,6 @@ public class CartUtility implements Serializable {
             return offlineCartProducts;
     }
 
-    @Transactional
     @InterceptorLog
     public void addProductToCart(Product product, Integer amount) {
         if(accountAccessUtility.isLoggedIn()) {
@@ -107,7 +106,6 @@ public class CartUtility implements Serializable {
 
     }
 
-    @Transactional
     @InterceptorLog
     public void removeFromCart(CartProducts cartProduct) {
         if(accountAccessUtility.isLoggedIn()) {
@@ -117,7 +115,6 @@ public class CartUtility implements Serializable {
         }
     }
 
-    @Transactional
     public void createCart(Integer accountId) {
         Cart cart = new Cart();
         cart.setAccountId(accountId);
@@ -125,6 +122,7 @@ public class CartUtility implements Serializable {
         cartDAO.createCart(cart);
     }
 
+    @Transactional
     public void mergeCart(Set<CartProducts> cartProducts) {
         for (CartProducts cartProduct: cartProducts) {
             addProductToCart(cartProduct.getProduct(), cartProduct.getAmount());
